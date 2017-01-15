@@ -61,13 +61,27 @@ public class Chord {
 	}
 	
 	/**
+	 * Returns the inversion number of this chord
+	 * The number is obtained by looking up the root in the internal tones array.
+	 * If there is no root in the array, the result is -1.
+	 */
+	public int getInversion() {
+		int rootIndex = Arrays.asList(tones).indexOf(this.root);
+		if (rootIndex < 0) {
+			return -1;
+		} else {
+			return (size - rootIndex) % size;
+		}
+	}
+	
+	/**
 	 * Returns the ith inversion of this chord as a new object. 0th inversion is the
 	 * root position, increasing the inversion number by one means moving the lowest
 	 * Tone to the top of the chord. 
 	 * @param inversion An integer number between 0 and (size-1).
 	 * @return A new Chord object.
 	 */
-	public Chord getInversion(int inversion) {
+	public Chord makeInversion(int inversion) {
 		if (inversion < 0 && inversion >= size) {
 			throw new IllegalArgumentException("The chord"+this+"has only"+size+"inversions.");
 		}
@@ -100,6 +114,14 @@ public class Chord {
 			this.size = intervals.length + 1;
 		}
 		
+		public String getSymbol() {
+			return symbol;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
 		/**
 		 * Builds the chord prescribed by this chord type on the given root.
 		 * @param root A Tone object representing the root of the desired chord.
@@ -113,6 +135,5 @@ public class Chord {
 			}
 			return tones;
 		}
-		
 	}
 }
