@@ -245,4 +245,8 @@ public enum Tone {
 		return base;
 	}
 	
+	@Override
+	public String toString() {
+		return this.name();
+	}
 }
