@@ -1,7 +1,5 @@
 package cz.slanyj.music;
 
-import static cz.slanyj.music.Interval.*;
-
 import java.util.Arrays;
 
 /**
@@ -74,13 +72,16 @@ public class ChordVoicing {
 		this(bass, new Chord(bass.tone, type).makeInversion(inversion));
 	}
 	
+	public Chord getChord() {
+		return chord;
+	}
+	
+	public Note[] voicing() {
+		return voicing.clone();
+	}
+	
 	@Override
 	public String toString() {
 		return Arrays.toString(voicing);
 	}
-	
-	public Note[] voicing() {
-		return voicing;
-	}
-	
 }
