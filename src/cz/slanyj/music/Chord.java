@@ -61,6 +61,36 @@ public class Chord {
 	}
 	
 	/**
+	 * A copy constructor
+	 */
+	public Chord(Chord chord) {
+		// Will this work? Those are private fields!
+		this(chord.root, chord.tones);
+	}
+	
+	/**
+	 * Returns the bass tone.
+	 */
+	public Tone getBass() {
+		return tones[0];
+	}
+	
+	/**
+	 * Returns the nth tone.
+	 */
+	public Tone get(int i) {
+		return tones[i];
+	}
+	
+	public Tone[] getTones() {
+		return tones.clone();
+	}
+	
+	public int getSize() {
+		return size;
+	}
+	
+	/**
 	 * Returns the inversion number of this chord
 	 * The number is obtained by looking up the root in the internal tones array.
 	 * If there is no root in the array, the result is -1.
@@ -85,9 +115,14 @@ public class Chord {
 		if (inversion < 0 && inversion >= size) {
 			throw new IllegalArgumentException("The chord"+this+"has only"+size+"inversions.");
 		}
+		int shift = (inversion-getInversion())%size;
+		if (shift==0) {
+			// Or return this, since it is immutable
+			return new Chord(this);
+		}
 		Tone[] inversionTones = new Tone[size];
 		for (int i=0; i<size; i++) {
-			inversionTones[i] = tones[(size+inversion)%size];
+			inversionTones[i] = tones[(size+shift)%size];
 		}
 		return new Chord(this.root, inversionTones);
 	}
