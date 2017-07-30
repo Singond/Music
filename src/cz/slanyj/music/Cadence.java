@@ -25,7 +25,7 @@ public enum Cadence {
 	 * @param crotchet Duration of crotchet in ticks
 	 * @return
 	 */
-	public ChordVoicing[] getCadence(Note tonic, int crotchet) {
+	public ChordVoicing[] getCadence(Note tonic) {
 		// Voice the chords from the pattern and feed them to array
 		ChordVoicing[] chords = new ChordVoicing[pattern.length];
 		int i=0;
