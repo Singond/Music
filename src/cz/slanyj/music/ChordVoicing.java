@@ -72,12 +72,21 @@ public class ChordVoicing {
 		this(bass, new Chord(bass.tone, type).makeInversion(inversion));
 	}
 	
+	public ChordVoicing(ChordVoicing voicing) {
+		this.chord = voicing.chord;
+		this.voicing = voicing.voicing;
+	}
+	
 	public Chord getChord() {
 		return chord;
 	}
 	
 	public Note[] voicing() {
 		return voicing.clone();
+	}
+	
+	public int getSize() {
+		return voicing.length;
 	}
 	
 	@Override
