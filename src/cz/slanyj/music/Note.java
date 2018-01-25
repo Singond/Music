@@ -20,7 +20,7 @@ public class Note {
 	
 	/* CONSTRUCTORS */
 	/** Create a new Note object of a given tone in a given octave.
-	 * @param tone (Tone)	A Tone object (cz.slanyj.melodEar.Tone)
+	 * @param tone (Tone)	A Tone object
 	 * @param octave (int)	The octave number in scientific notation (C4 = middle C = c' in Helmholtz notation).
 	 */
 	public Note(Tone tone, int octave) {		// In scientfic notation | 4 (scientific) = 1 line (Helmholtz)
@@ -45,7 +45,7 @@ public class Note {
 	 * For example, given a pitch for C#/Db; create C# when given C as a base note
 	 * and create Db when given D.
 	 * @param pitch (int)	MIDI pitch
-	 * @param base (Tone)	(cz.slanyj.melodEar) The base tone. Will be converted to natural if entered with accidentals.
+	 * @param base (Tone)	The base tone. Will be converted to natural if entered with accidentals.
 	 */
 	public Note(int pitch, Tone base) {
 		this.pitch = pitch;
@@ -101,7 +101,7 @@ public class Note {
 	 * If an ehnarmonic tone is to be produced, it is always higher, ie transposed by an octave up.
 	 * @param tone
 	 * @param skip (int) Number of octaves to skip before looking for the matching pitch class.
-	 * E.g. from C4 to G6, skip = 1. 
+	 * E.g. from C4 to G6, skip = 1.
 	 * @return
 	 */
 	public Note higher(Tone tone, int skip) {
