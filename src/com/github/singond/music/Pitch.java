@@ -2,10 +2,13 @@ package com.github.singond.music;
 
 /**
  * An exact pitch; that is a pitch class and an octave.
+ * <p>
+ * This class has a natural ordering which is consistent with {@code equals}
+ * and represents the ascending order from lower pitches to higher pitches.
  *
  * @author Singon
  */
-public class Pitch {
+public class Pitch implements Comparable<Pitch> {
 
 	/** The pitch class */
 	private final PitchClass pitchClass;
@@ -39,6 +42,28 @@ public class Pitch {
 	 */
 	public int midiNumber() {
 		return pitch + 12;
+	}
+
+	/**
+	 * Checks whether the given pitch is the same number of semitones
+	 * above the reference as this pitch.
+	 *
+	 * @param other the pitch to be compared with this one
+	 * @return {@code true} if the difference of the semitones above
+	 *         reference of the two pitches is 0
+	 */
+	public boolean isEnharmonicWith(Pitch other) {
+		return this.pitch == other.pitch;
+	}
+
+	/**
+	 * Compares another pitch to this one.
+	 * This method is consistent with {@code equals} and orders the pitches
+	 * in ascending order (from lowest pitch to highest pitch).
+	 */
+	@Override
+	public int compareTo(Pitch o) {
+		return this.pitch - o.pitch;
 	}
 
 	@Override
@@ -92,15 +117,8 @@ public class Pitch {
 		return true;
 	}
 	
-	/**
-	 * Checks whether the given pitch is the same number of semitones
-	 * above the reference as this pitch.
-	 *
-	 * @param other the pitch to be compared with this one
-	 * @return {@code true} if the difference of the semitones above
-	 *         reference of the two pitches is 0
-	 */
-	public boolean isEnharmonicWith(Pitch other) {
-		return this.pitch == other.pitch;
+	@Override
+	public String toString() {
+		return pitchClass.toString() + "octave";
 	}
 }
