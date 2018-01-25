@@ -3,8 +3,11 @@ package com.github.singond.music;
 /**
  * An exact pitch; that is a pitch class and an octave.
  * <p>
- * This class has a natural ordering which is consistent with {@code equals}
- * and represents the ascending order from lower pitches to higher pitches.
+ * This class has a natural ordering which represents the ascending order
+ * from lower pitches to higher pitches.
+ * This ordering is <em>inconsistent with</em> {@code equals}, because
+ * it treats enharmonic pitches as being equal, unlike the {@code equals}
+ * method.
  *
  * @author Singon
  */
@@ -34,6 +37,15 @@ public class Pitch implements Comparable<Pitch> {
 		this.pitch = (octave * 12) + pitchClass.stepsAboveReference();
 	}
 	
+	public static Pitch of(PitchClass pitchClass, int octave) {
+		return new Pitch(pitchClass, octave);
+	}
+	
+	public static Pitch of(BasePitchClass base, Accidental accidental,
+	                       int octave) {
+		return new Pitch(PitchClass.of(base, accidental), octave);
+	}
+	
 	/**
 	 * Returns the MIDI number of the pitch.
 	 * The MIDI number is the number of semitones above C-1 in scientific
@@ -58,8 +70,9 @@ public class Pitch implements Comparable<Pitch> {
 
 	/**
 	 * Compares another pitch to this one.
-	 * This method is consistent with {@code equals} and orders the pitches
-	 * in ascending order (from lowest pitch to highest pitch).
+	 * This method orders the pitches in ascending order (from lowest pitch
+	 * to highest pitch) and treats enharmonic pitches as equal.
+	 * Thus, this ordering is <strong>inconsistent with {@code equals}</strong>.
 	 */
 	@Override
 	public int compareTo(Pitch o) {
@@ -119,6 +132,6 @@ public class Pitch implements Comparable<Pitch> {
 	
 	@Override
 	public String toString() {
-		return pitchClass.toString() + "octave";
+		return pitchClass.toString() + octave;
 	}
 }
