@@ -68,6 +68,18 @@ public class PitchClass {
 		return result;
 	}
 
+	/**
+	 * Indicates whether a given object is equal to this object.
+	 * Two pitch classes are considered equal if they are formed from the
+	 * same natural pitch class and accidental.
+	 * Enharmonic pitch classes are not considered to be equal, for example
+	 * D# is <strong>not</strong> equal to Eb.
+	 *
+	 * @param obj {@inheritDoc}
+	 * @return {@code true} if {@code obj} is also a {@code PitchClass} and
+	 *         if both {@code this} and {code @obj} are formed from the same
+	 *         base pitch class and accidental
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
