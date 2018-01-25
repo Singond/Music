@@ -58,4 +58,38 @@ public class PitchClass {
 	public String toString() {
 		return base + accidental.symbolAscii();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accidental == null) ? 0 : accidental.hashCode());
+		result = prime * result + ((base == null) ? 0 : base.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof PitchClass)) {
+			return false;
+		}
+		PitchClass other = (PitchClass) obj;
+		if (accidental == null) {
+			if (other.accidental != null) {
+				return false;
+			}
+		} else if (!accidental.equals(other.accidental)) {
+			return false;
+		}
+		if (base != other.base) {
+			return false;
+		}
+		return true;
+	}
 }

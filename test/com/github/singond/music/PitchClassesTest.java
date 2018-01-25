@@ -171,4 +171,17 @@ public class PitchClassesTest {
 			pitchClass = pitchClass.advance(step);
 		}
 	}
+	
+	@Test
+	public void equality() {
+		PitchClass first, second;
+		
+		first = PitchClass.of(F, SHARP);
+		second = PitchClass.of(F, Accidental.ofSteps(1));
+		assertEquals(first, second);
+		
+		first = PitchClass.of(F, SHARP);
+		second = PitchClass.of(G, Accidental.ofSteps(-1));
+		assertNotEquals(first, second);
+	}
 }
