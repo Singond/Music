@@ -154,7 +154,18 @@ public class PitchClassesTest {
 	public void sequence() {
 		int count = 22;
 		int step = 1;
-		BasePitchClass pitchClass = C;
+		
+		BasePitchClass pitchClass = G;
+		System.out.println("This should print the white keys of a piano spanning three octaves from G to G, going up:");
+		for (int i = 0; i < count; i++) {
+			System.out.print(pitchClass.toString() + ",");
+			pitchClass = pitchClass.advance(step);
+		}
+		System.out.println(System.lineSeparator());
+		
+		step = -1;
+		pitchClass = G;
+		System.out.println("This should print the white keys of a piano spanning three octaves from G to G, going down:");
 		for (int i = 0; i < count; i++) {
 			System.out.print(pitchClass.toString() + ",");
 			pitchClass = pitchClass.advance(step);

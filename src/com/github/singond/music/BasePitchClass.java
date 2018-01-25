@@ -54,7 +54,8 @@ public enum BasePitchClass {
 	 */
 	public BasePitchClass advance(int shift) {
 		int thisIndex = ordinal();
-		return values()[(thisIndex + shift) % 7];
+		int nextIndex = (((thisIndex + shift) % 7) + 7) % 7;
+		return values()[nextIndex];
 	}
 	
 	/**
