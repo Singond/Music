@@ -40,6 +40,24 @@ public enum BasePitchClass {
 	}
 	
 	/**
+	 * Returns the base pitch class which is the given number of degrees
+	 * ahead of this pitch class, wrapping around if necessary.
+	 * Considering the available base pitch classes as a circular list
+	 * of {@code [C, D, E, F, G, A, B]}, this method walks through the ring
+	 * forward by the number of steps given in the argument.
+	 * The list is circular, meaning that upon reaching the end (or start)
+	 * of the list, the iteration resumes at the start (or end, respectively).
+	 * For example, the element directly ahead of {@code B} is {@code C}.
+	 *
+	 * @param shift the number of degrees to go forward
+	 * @return
+	 */
+	public BasePitchClass advance(int shift) {
+		int thisIndex = ordinal();
+		return values()[(thisIndex + shift) % 7];
+	}
+	
+	/**
 	 * Returns the name of the pitch class in upper case, e.g. "C".
 	 */
 	public String toString() {

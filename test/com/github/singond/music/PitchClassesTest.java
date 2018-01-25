@@ -150,4 +150,14 @@ public class PitchClassesTest {
 				+ first + " and " + second, first.isEnharmonicWith(second));
 	}
 
+	@Test
+	public void sequence() {
+		int count = 22;
+		int step = 1;
+		BasePitchClass pitchClass = C;
+		for (int i = 0; i < count; i++) {
+			System.out.print(pitchClass.toString() + ",");
+			pitchClass = pitchClass.advance(step);
+		}
+	}
 }
