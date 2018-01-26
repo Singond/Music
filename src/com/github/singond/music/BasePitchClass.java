@@ -31,6 +31,15 @@ public enum BasePitchClass {
 	}
 	
 	/**
+	 * Returns the number of diatonic degrees above the reference pitch class
+	 * (which is C).
+	 * @return
+	 */
+	int degreesAboveReference() {
+		return ordinal();
+	}
+
+	/**
 	 * Returns the number of semitone steps above the reference pitch class
 	 * (which is C).
 	 * @return

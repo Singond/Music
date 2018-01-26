@@ -1,9 +1,19 @@
 package com.github.singond.music;
 
+/**
+ * A set of all pitches which are a perfect octave apart.
+ * <p>
+ * Instances of this class are immutable.
+ *
+ * @author Singon
+ */
 public class PitchClass {
 
 	private final BasePitchClass base;
 	private final Accidental accidental;
+	
+	private static final int DEGREES = 7;
+	private static final int SEMITONES = 12;
 
 	private PitchClass(BasePitchClass base, Accidental accidental) {
 		this.base = base;
@@ -52,6 +62,17 @@ public class PitchClass {
 	 */
 	public boolean isEnharmonicWith(PitchClass other) {
 		return (stepsAboveReference() - other.stepsAboveReference()) % 12 == 0;
+	}
+	
+	public PitchClass transposeUp(Interval interval) {
+		BasePitchClass newBase = base.advance(interval.degrees());
+		int steps = stepsAboveReference() + interval.semitones();
+		int delta = steps - newBase.stepsAboveReference();
+		int newAccidental = Math.floorMod(delta, SEMITONES);
+		if (newAccidental > SEMITONES/2) {
+			newAccidental -= SEMITONES;
+		}
+		return of(newBase, Accidental.ofSteps(newAccidental));
 	}
 
 	@Override

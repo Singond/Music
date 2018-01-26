@@ -2,6 +2,13 @@ package com.github.singond.music;
 
 import java.util.Collections;
 
+/**
+ * A distance of the actual pitch from its corresponding natural pitch.
+ * <p>
+ * Instances of this class are immutable.
+ *
+ * @author Singon
+ */
 public class Accidental {
 
 	// Preset most widely-used values
