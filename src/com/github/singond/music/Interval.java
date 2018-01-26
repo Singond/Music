@@ -57,4 +57,15 @@ public interface Interval {
 	 * @return the interval number. For example, for a major third, returns 3.
 	 */
 	int intervalNumber();
+	
+	/**
+	 * Indicates whether a given interval is enharmonic with this interval,
+	 * that is, if it spans the same number of semitones.
+	 * Two intervals with the same width in semitones are always considered
+	 * enharmonic, even if they represent a different number of degrees.
+	 * For example, augmented third is enharmonic with perfect fourth.
+	 * @param other
+	 * @return
+	 */
+	boolean isEnharmonicWith(Interval other);
 }

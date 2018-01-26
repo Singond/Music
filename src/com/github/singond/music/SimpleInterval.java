@@ -81,6 +81,11 @@ public enum SimpleInterval implements Interval {
 	public String symbol() {
 		return symbol;
 	}
+	
+	@Override
+	public boolean isEnharmonicWith(Interval other) {
+		return this.semitones == other.semitones();
+	}
 
 	@Override
 	public String toString() {
