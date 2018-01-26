@@ -12,7 +12,6 @@ public class PitchClass {
 	private final BasePitchClass base;
 	private final Accidental accidental;
 	
-	private static final int DEGREES = 7;
 	private static final int SEMITONES = 12;
 
 	private PitchClass(BasePitchClass base, Accidental accidental) {
@@ -61,7 +60,8 @@ public class PitchClass {
 	 *         reference of the two pitch classes is a multiple of 12
 	 */
 	public boolean isEnharmonicWith(PitchClass other) {
-		return (stepsAboveReference() - other.stepsAboveReference()) % 12 == 0;
+		return (stepsAboveReference() - other.stepsAboveReference())
+				% SEMITONES == 0;
 	}
 	
 	public PitchClass transposeUp(Interval interval) {
