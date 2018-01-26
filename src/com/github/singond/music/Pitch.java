@@ -48,9 +48,9 @@ public class Pitch implements Comparable<Pitch> {
 	
 	/**
 	 * Returns the MIDI number of the pitch.
-	 * The MIDI number is the number of semitones above C-1 in scientific
-	 * notation. That is, C0 is assigned the MIDI number 12.
-	 * @return
+	 * The MIDI number of a pitch is the number of semitones above C-1
+	 * in scientific notation. That is, C0 is assigned the MIDI number 12.
+	 * @return a number representing this pitch in MIDI
 	 */
 	public int midiNumber() {
 		return pitch + 12;
