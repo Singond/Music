@@ -65,8 +65,16 @@ public class PitchClass {
 	}
 	
 	public PitchClass transposeUp(Interval interval) {
-		BasePitchClass newBase = base.advance(interval.degrees());
-		int steps = stepsAboveReference() + interval.semitones();
+		return transposeUp(interval.degrees(), interval.semitones());
+	}
+	
+	public PitchClass transposeDown(Interval interval) {
+		return transposeUp(-interval.degrees(), -interval.semitones());
+	}
+	
+	private PitchClass transposeUp(int degrees, int semitones) {
+		BasePitchClass newBase = base.advance(degrees);
+		int steps = stepsAboveReference() + semitones;
 		int delta = steps - newBase.stepsAboveReference();
 		int newAccidental = Math.floorMod(delta, SEMITONES);
 		if (newAccidental > SEMITONES/2) {
