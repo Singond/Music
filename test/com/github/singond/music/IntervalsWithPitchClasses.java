@@ -13,7 +13,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class IntervalCalculation {
+public class IntervalsWithPitchClasses {
 
 	private static final List<PitchClass> circleOfFifths;
 	private static final List<PitchClass> circleOfFourths;
