@@ -8,6 +8,8 @@ package com.github.singond.music;
  * This ordering is <em>inconsistent with</em> {@code equals}, because
  * it treats enharmonic pitches as being equal, unlike the {@code equals}
  * method.
+ * <p>
+ * Instances of this class are immutable.
  *
  * @author Singon
  */
@@ -27,14 +29,16 @@ public class Pitch implements Comparable<Pitch> {
 	/**
 	 * The absolute pitch number, here defined as the number of semitones
 	 * above C0 in scientific notation.
-	 * Note that in MIDI, C0 is assigned the number 12.
 	 */
 	transient private final int pitch;
+	
+	/** The number of semitones in an octave */
+	private static final int SEMITONES = 12;
 	
 	private Pitch(PitchClass pitchClass, int octave) {
 		this.pitchClass = pitchClass;
 		this.octave = octave;
-		this.pitch = (octave * 12) + pitchClass.stepsAboveReference();
+		this.pitch = (octave * SEMITONES) + pitchClass.stepsAboveReference();
 	}
 	
 	public static Pitch of(PitchClass pitchClass, int octave) {
@@ -44,6 +48,17 @@ public class Pitch implements Comparable<Pitch> {
 	public static Pitch of(BasePitchClass base, Accidental accidental,
 	                       int octave) {
 		return new Pitch(PitchClass.of(base, accidental), octave);
+	}
+	
+	private static Pitch ofAbsolutePitch(PitchClass pitchClass,
+	                                     int pitchNumber) {
+		int difference = pitchNumber - pitchClass.stepsAboveReference();
+		if (difference % SEMITONES != 0) {
+			throw new IllegalArgumentException("The pitch class of "
+					+ pitchNumber + " is not " + pitchClass + ", as desired");
+		}
+		int octave = difference / SEMITONES;	// No remainder
+		return Pitch.of(pitchClass, octave);
 	}
 	
 	/**
@@ -128,6 +143,21 @@ public class Pitch implements Comparable<Pitch> {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Returns a pitch which is the specified amount above this pitch.
+	 * The original remains unchanged.
+	 *
+	 * @param interval the interval between this pitch and the (higher)
+	 *        pitch to be returned
+	 * @return the pitch resulting from transposing this pitch up by
+	 *         {@code interval}
+	 */
+	public Pitch transposeUp(Interval interval) {
+		PitchClass newPitchClass = pitchClass.transposeUp(interval);
+		int targetPitch = pitch + interval.semitones();
+		return ofAbsolutePitch(newPitchClass, targetPitch);
 	}
 	
 	@Override
