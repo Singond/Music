@@ -7,7 +7,6 @@ package com.github.singond.music;
  * expressed as an absolute value.
  * This definition prohibits pitches with negative number of semitones,
  * like what is sometimes called the "diminished unison".
- * 
  *
  * @author Singon
  */
@@ -64,8 +63,10 @@ public interface Interval {
 	 * Two intervals with the same width in semitones are always considered
 	 * enharmonic, even if they represent a different number of degrees.
 	 * For example, augmented third is enharmonic with perfect fourth.
-	 * @param other
-	 * @return
+	 *
+	 * @param other the interval to compare with this interval
+	 * @return {@code true} if this interval has the same width in semitones
+	 *         as {@code other}
 	 */
 	boolean isEnharmonicWith(Interval other);
 }
