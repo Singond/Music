@@ -1,7 +1,6 @@
 package com.github.singond.music;
 
 import static com.github.singond.music.Accidental.*;
-import static com.github.singond.music.BasePitchClass.*;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -20,6 +19,58 @@ public class PitchClass {
 	
 	private static final int SEMITONES = 12;
 	
+	public static final PitchClass
+			C_DBL_FLAT, C_FLAT, C, C_SHARP, C_DBL_SHARP,
+			D_DBL_FLAT, D_FLAT, D, D_SHARP, D_DBL_SHARP,
+			E_DBL_FLAT, E_FLAT, E, E_SHARP, E_DBL_SHARP,
+			F_DBL_FLAT, F_FLAT, F, F_SHARP, F_DBL_SHARP,
+			G_DBL_FLAT, G_FLAT, G, G_SHARP, G_DBL_SHARP,
+			A_DBL_FLAT, A_FLAT, A, A_SHARP, A_DBL_SHARP,
+			B_DBL_FLAT, B_FLAT, B, B_SHARP, B_DBL_SHARP;
+	static {
+		C_DBL_FLAT  = new PitchClass(BasePitchClass.C, DOUBLE_FLAT);
+		C_FLAT      = new PitchClass(BasePitchClass.C, FLAT);
+		C           = new PitchClass(BasePitchClass.C, NATURAL);
+		C_SHARP     = new PitchClass(BasePitchClass.C, SHARP);
+		C_DBL_SHARP = new PitchClass(BasePitchClass.C, DOUBLE_SHARP);
+		
+		D_DBL_FLAT  = new PitchClass(BasePitchClass.D, DOUBLE_FLAT);
+		D_FLAT      = new PitchClass(BasePitchClass.D, FLAT);
+		D           = new PitchClass(BasePitchClass.D, NATURAL);
+		D_SHARP     = new PitchClass(BasePitchClass.D, SHARP);
+		D_DBL_SHARP = new PitchClass(BasePitchClass.D, DOUBLE_SHARP);
+		
+		E_DBL_FLAT  = new PitchClass(BasePitchClass.E, DOUBLE_FLAT);
+		E_FLAT      = new PitchClass(BasePitchClass.E, FLAT);
+		E           = new PitchClass(BasePitchClass.E, NATURAL);
+		E_SHARP     = new PitchClass(BasePitchClass.E, SHARP);
+		E_DBL_SHARP = new PitchClass(BasePitchClass.E, DOUBLE_SHARP);
+		
+		F_DBL_FLAT  = new PitchClass(BasePitchClass.F, DOUBLE_FLAT);
+		F_FLAT      = new PitchClass(BasePitchClass.F, FLAT);
+		F           = new PitchClass(BasePitchClass.F, NATURAL);
+		F_SHARP     = new PitchClass(BasePitchClass.F, SHARP);
+		F_DBL_SHARP = new PitchClass(BasePitchClass.F, DOUBLE_SHARP);
+		
+		G_DBL_FLAT  = new PitchClass(BasePitchClass.G, DOUBLE_FLAT);
+		G_FLAT      = new PitchClass(BasePitchClass.G, FLAT);
+		G           = new PitchClass(BasePitchClass.G, NATURAL);
+		G_SHARP     = new PitchClass(BasePitchClass.G, SHARP);
+		G_DBL_SHARP = new PitchClass(BasePitchClass.G, DOUBLE_SHARP);
+		
+		A_DBL_FLAT  = new PitchClass(BasePitchClass.A, DOUBLE_FLAT);
+		A_FLAT      = new PitchClass(BasePitchClass.A, FLAT);
+		A           = new PitchClass(BasePitchClass.A, NATURAL);
+		A_SHARP     = new PitchClass(BasePitchClass.A, SHARP);
+		A_DBL_SHARP = new PitchClass(BasePitchClass.A, DOUBLE_SHARP);
+		
+		B_DBL_FLAT  = new PitchClass(BasePitchClass.B, DOUBLE_FLAT);
+		B_FLAT      = new PitchClass(BasePitchClass.B, FLAT);
+		B           = new PitchClass(BasePitchClass.B, NATURAL);
+		B_SHARP     = new PitchClass(BasePitchClass.B, SHARP);
+		B_DBL_SHARP = new PitchClass(BasePitchClass.B, DOUBLE_SHARP);
+	}
+	
 	private static final Map<BasePitchClass, PitchClass> doubleFlats;
 	private static final Map<BasePitchClass, PitchClass> flats;
 	private static final Map<BasePitchClass, PitchClass> naturals;
@@ -27,49 +78,49 @@ public class PitchClass {
 	private static final Map<BasePitchClass, PitchClass> doubleSharps;
 	static {
 		doubleFlats = new EnumMap<>(BasePitchClass.class);
-		doubleFlats.put(C, new PitchClass(C, DOUBLE_FLAT));
-		doubleFlats.put(D, new PitchClass(D, DOUBLE_FLAT));
-		doubleFlats.put(E, new PitchClass(E, DOUBLE_FLAT));
-		doubleFlats.put(F, new PitchClass(F, DOUBLE_FLAT));
-		doubleFlats.put(G, new PitchClass(G, DOUBLE_FLAT));
-		doubleFlats.put(A, new PitchClass(A, DOUBLE_FLAT));
-		doubleFlats.put(B, new PitchClass(B, DOUBLE_FLAT));
+		doubleFlats.put(BasePitchClass.C, C_DBL_FLAT);
+		doubleFlats.put(BasePitchClass.D, D_DBL_FLAT);
+		doubleFlats.put(BasePitchClass.E, E_DBL_FLAT);
+		doubleFlats.put(BasePitchClass.F, F_DBL_FLAT);
+		doubleFlats.put(BasePitchClass.G, G_DBL_FLAT);
+		doubleFlats.put(BasePitchClass.A, A_DBL_FLAT);
+		doubleFlats.put(BasePitchClass.B, B_DBL_FLAT);
 		
 		flats = new EnumMap<>(BasePitchClass.class);
-		flats.put(C, new PitchClass(C, FLAT));
-		flats.put(D, new PitchClass(D, FLAT));
-		flats.put(E, new PitchClass(E, FLAT));
-		flats.put(F, new PitchClass(F, FLAT));
-		flats.put(G, new PitchClass(G, FLAT));
-		flats.put(A, new PitchClass(A, FLAT));
-		flats.put(B, new PitchClass(B, FLAT));
+		flats.put(BasePitchClass.C, C_FLAT);
+		flats.put(BasePitchClass.D, D_FLAT);
+		flats.put(BasePitchClass.E, E_FLAT);
+		flats.put(BasePitchClass.F, F_FLAT);
+		flats.put(BasePitchClass.G, G_FLAT);
+		flats.put(BasePitchClass.A, A_FLAT);
+		flats.put(BasePitchClass.B, B_FLAT);
 		
 		naturals = new EnumMap<>(BasePitchClass.class);
-		naturals.put(C, new PitchClass(C, NATURAL));
-		naturals.put(D, new PitchClass(D, NATURAL));
-		naturals.put(E, new PitchClass(E, NATURAL));
-		naturals.put(F, new PitchClass(F, NATURAL));
-		naturals.put(G, new PitchClass(G, NATURAL));
-		naturals.put(A, new PitchClass(A, NATURAL));
-		naturals.put(B, new PitchClass(B, NATURAL));
+		naturals.put(BasePitchClass.C, C);
+		naturals.put(BasePitchClass.D, D);
+		naturals.put(BasePitchClass.E, E);
+		naturals.put(BasePitchClass.F, F);
+		naturals.put(BasePitchClass.G, G);
+		naturals.put(BasePitchClass.A, A);
+		naturals.put(BasePitchClass.B, B);
 		
 		sharps = new EnumMap<>(BasePitchClass.class);
-		sharps.put(C, new PitchClass(C, SHARP));
-		sharps.put(D, new PitchClass(D, SHARP));
-		sharps.put(E, new PitchClass(E, SHARP));
-		sharps.put(F, new PitchClass(F, SHARP));
-		sharps.put(G, new PitchClass(G, SHARP));
-		sharps.put(A, new PitchClass(A, SHARP));
-		sharps.put(B, new PitchClass(B, SHARP));
+		sharps.put(BasePitchClass.C, C_SHARP);
+		sharps.put(BasePitchClass.D, D_SHARP);
+		sharps.put(BasePitchClass.E, E_SHARP);
+		sharps.put(BasePitchClass.F, F_SHARP);
+		sharps.put(BasePitchClass.G, G_SHARP);
+		sharps.put(BasePitchClass.A, A_SHARP);
+		sharps.put(BasePitchClass.B, B_SHARP);
 		
 		doubleSharps = new EnumMap<>(BasePitchClass.class);
-		doubleSharps.put(C, new PitchClass(C, DOUBLE_SHARP));
-		doubleSharps.put(D, new PitchClass(D, DOUBLE_SHARP));
-		doubleSharps.put(E, new PitchClass(E, DOUBLE_SHARP));
-		doubleSharps.put(F, new PitchClass(F, DOUBLE_SHARP));
-		doubleSharps.put(G, new PitchClass(G, DOUBLE_SHARP));
-		doubleSharps.put(A, new PitchClass(A, DOUBLE_SHARP));
-		doubleSharps.put(B, new PitchClass(B, DOUBLE_SHARP));
+		doubleSharps.put(BasePitchClass.C, C_DBL_SHARP);
+		doubleSharps.put(BasePitchClass.D, D_DBL_SHARP);
+		doubleSharps.put(BasePitchClass.E, E_DBL_SHARP);
+		doubleSharps.put(BasePitchClass.F, F_DBL_SHARP);
+		doubleSharps.put(BasePitchClass.G, G_DBL_SHARP);
+		doubleSharps.put(BasePitchClass.A, A_DBL_SHARP);
+		doubleSharps.put(BasePitchClass.B, B_DBL_SHARP);
 	}
 
 	private PitchClass(BasePitchClass base, Accidental accidental) {
