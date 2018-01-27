@@ -147,7 +147,7 @@ public class Pitch implements Comparable<Pitch> {
 	
 	/**
 	 * Returns a pitch which is the specified amount above this pitch.
-	 * The original remains unchanged.
+	 * The original object remains unchanged.
 	 *
 	 * @param interval the interval between this pitch and the (higher)
 	 *        pitch to be returned
@@ -157,6 +157,21 @@ public class Pitch implements Comparable<Pitch> {
 	public Pitch transposeUp(Interval interval) {
 		PitchClass newPitchClass = pitchClass.transposeUp(interval);
 		int targetPitch = pitch + interval.semitones();
+		return ofAbsolutePitch(newPitchClass, targetPitch);
+	}
+	
+	/**
+	 * Returns a pitch which is the specified amount below this pitch.
+	 * The original object remains unchanged.
+	 *
+	 * @param interval the interval between this pitch and the (lower)
+	 *        pitch to be returned
+	 * @return the pitch resulting from transposing this pitch down by
+	 *         {@code interval}
+	 */
+	public Pitch transposeDown(Interval interval) {
+		PitchClass newPitchClass = pitchClass.transposeDown(interval);
+		int targetPitch = pitch - interval.semitones();
 		return ofAbsolutePitch(newPitchClass, targetPitch);
 	}
 	
