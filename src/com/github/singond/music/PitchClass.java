@@ -244,9 +244,6 @@ public class PitchClass {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
 		if (!(obj instanceof PitchClass)) {
 			return false;
 		}
