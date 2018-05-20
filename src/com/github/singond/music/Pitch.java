@@ -30,7 +30,7 @@ public class Pitch implements Comparable<Pitch> {
 	 * The absolute pitch number, here defined as the number of semitones
 	 * above C0 in scientific notation.
 	 */
-	transient private final int pitch;
+	private final transient int pitch;
 	
 	/** The number of semitones in an octave */
 	private static final int SEMITONES = 12;
