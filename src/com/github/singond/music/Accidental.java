@@ -3,7 +3,9 @@ package com.github.singond.music;
 import java.util.Collections;
 
 /**
- * A distance of the actual pitch from its corresponding natural pitch.
+ * A modifier which changes the pitch of a note relative to its basic
+ * (or "natural") pitch. This encompasses the notion of sharps and flats,
+ * while allowing for more unusual accidentals like double or triple sharps.
  * <p>
  * Instances of this class are immutable.
  *
@@ -34,10 +36,11 @@ public class Accidental {
 	/**
 	 * Returns an accidental object which represents the given number
 	 * of semitone steps above the natural pitch.
+	 *
 	 * @param shift number of semitones above natural pitch
 	 * @return for the most commonly used values (double flat, flat,
 	 *         natural, sharp and double sharp) returns a cached object,
-	 *         otherwise may create a new object
+	 *         otherwise this method may create a new object
 	 */
 	public static Accidental ofSteps(int shift) {
 		switch (shift) {
@@ -59,6 +62,10 @@ public class Accidental {
 	/**
 	 * Returns the number of steps above natural pitch that this accidental
 	 * represents.
+	 * For example, a sharp ('#') returns {@code +1}, because a note like
+	 * C sharp ("C#") is one step higher that its natural, C.
+	 *
+	 * @return the number of steps above natural
 	 */
 	public int stepsAboveNatural() {
 		return shift;
@@ -80,6 +87,7 @@ public class Accidental {
 	 * Returns the ascii approximation of the common symbol for the
 	 * accidental given by its number of steps.
 	 * The basic five are "bb", "b", "", "#", "x".
+	 *
 	 * @param steps
 	 * @return
 	 */
@@ -106,6 +114,14 @@ public class Accidental {
 		return shift;
 	}
 
+	/**
+	 * Indicates whether some other object is "equal to" this one.
+	 * In order for the other object to be equal to this one, it must be
+	 * also an {@code Accidental} ant it must represent the same relative
+	 * position to the respective natural pitch.
+	 *
+	 * @return {@code true}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
