@@ -225,7 +225,7 @@ public final class Pitch implements Comparable<Pitch> {
 				return comparison;
 			}
 			/*
-			 * The two pitches have equal value (the absolute pich);
+			 * The two pitches have equal value (the absolute pitch);
 			 * so we proceed to comparing their base notes:
 			 * We want e.g. C# to be ordered before Db,
 			 * so we *reverse* the order of their respective accidentals.
