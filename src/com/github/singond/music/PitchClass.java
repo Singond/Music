@@ -3,6 +3,7 @@ package com.github.singond.music;
 import static com.github.singond.music.Accidental.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
  *
  * @author Singon
  */
-public final class PitchClass {
+public final class PitchClass implements Comparable<PitchClass> {
 
 	private final BasePitchClass base;
 	private final Accidental accidental;
@@ -127,6 +128,12 @@ public final class PitchClass {
 		doubleSharps.put(BasePitchClass.A, A_DBL_SHARP);
 		doubleSharps.put(BasePitchClass.B, B_DBL_SHARP);
 	}
+	
+	private static final Comparator<PitchClass> STRICT_COMPARATOR
+			= new StrictComparator();
+	
+	private static final Comparator<PitchClass> ENHARMONIC_COMPARATOR
+			= new EnharmonicComparator();
 
 	private PitchClass(BasePitchClass base, Accidental accidental) {
 		this.base = base;
@@ -140,7 +147,8 @@ public final class PitchClass {
 	 *
 	 * @param base the natural pitch class (e.g. {@code C} for {@code C#})
 	 * @param accidental the accidental relating the pitch class to the natural
-	 * @return
+	 * @return a {@code PitchClass} with the given {@code base}
+	 *         and {@code accidental}
 	 */
 	public static PitchClass of(BasePitchClass base, Accidental accidental) {
 		if (accidental.equals(DOUBLE_FLAT)) {
@@ -179,6 +187,7 @@ public final class PitchClass {
 	/**
 	 * Returns the number of semitone steps of this pitch class above the
 	 * reference pitch class, which is C.
+	 *
 	 * @return number of semitones above C
 	 */
 	public int stepsAboveReference() {
@@ -266,6 +275,83 @@ public final class PitchClass {
 		return true;
 	}
 	
+	/**
+	 * Compares another pitch class to this one.
+	 * This method orders the pitch classes in ascending order from C,
+	 * and then orders any enharmonic pitches in the order of their naturals.
+	 * For example, D#4 is sorted before Eb4.
+	 * This ordering is consistent with {@code equals}.
+	 *
+	 * @param o {@inheritDoc}
+	 * @return  {@inheritDoc}
+	 */
+	@Override
+	public int compareTo(PitchClass o) {
+		return STRICT_COMPARATOR.compare(this, o);
+	}
+	
+	/**
+	 * Returns a comparator which compares pitch classes based on both
+	 * their height above the reference pitch class (C) and their naturals.
+	 * The comparator first orders the pitches in ascending order from C
+	 * and then orders any enharmonic pitches in the order of their naturals.
+	 * <p>
+	 * The ordering imposed by this comparator is the same as the natural
+	 * ordering of {@code PitchClass}.
+	 *
+	 * @return a comparator taking into account both absolute height
+	 *         and base note
+	 */
+	public static Comparator<PitchClass> strictComparator() {
+		return STRICT_COMPARATOR;
+	}
+	
+	/**
+	 * Returns a comparator which compares pitch classes based on their
+	 * height above the reference pith class (C) only, treating enharmonic
+	 * pitch classes as equal.
+	 * For example, comparing C# and Db will return {@code 0}.
+	 *
+	 * @return a comparator taking into account the absolute height only
+	 */
+	public static Comparator<PitchClass> enharmonicComparator() {
+		return ENHARMONIC_COMPARATOR;
+	}
+	
+	/**
+	 * A comparator which compares pitch classes based on both their height
+	 * above the reference pitch class (C) and their naturals.
+	 * This class first orders the pitches in ascending order from C
+	 * and then orders any enharmonic pitches in the order of their naturals.
+	 */
+	private static class StrictComparator implements Comparator<PitchClass> {
+		
+		@Override
+		public int compare(PitchClass p1, PitchClass p2) {
+			int comparison = Integer.compare(p1.stepsAboveReference(),
+			                                 p2.stepsAboveReference());
+			if (comparison != 0) {
+				return comparison;
+			}
+			return p1.base.compareTo(p2.base);
+		}
+	}
+	
+	/**
+	 * A comparator which compares pitch classes based on their height
+	 * above the reference pith class (C) only, treating enharmonic pitch
+	 * classes as equal.
+	 * For example, comparing C# and Db will return {@code 0}.
+	 */
+	private static class EnharmonicComparator implements Comparator<PitchClass> {
+		
+		@Override
+		public int compare(PitchClass p1, PitchClass p2) {
+			return Integer.compare(p1.stepsAboveReference(),
+			                       p2.stepsAboveReference());
+		}
+	}
+
 	/**
 	 * Returns the list of the basic pitch classes, that is all pitch
 	 * classes composed of the natural C, D, E, F, G, A or B,
