@@ -69,6 +69,11 @@ public final class Pitch implements Comparable<Pitch> {
 		return Pitch.of(pitchClass, octave);
 	}
 	
+//	public static Pitch nearestAbove(PitchClass target, Pitch lowerBound) {
+//		int octave = lowerBound.octave;
+//		PitchClass
+//	}
+	
 	/**
 	 * Returns the MIDI number of the pitch.
 	 * The MIDI number of a pitch is the number of semitones above C-1
@@ -180,6 +185,9 @@ public final class Pitch implements Comparable<Pitch> {
 	 * to highest pitch), and further orders enharmonic pitches
 	 * so that for example D#4 is sorted before Eb4.
 	 * This ordering is consistent with {@code equals}.
+	 *
+	 * @param o {@inheritDoc}
+	 * @return  {@inheritDoc}
 	 */
 	@Override
 	public int compareTo(Pitch o) {
@@ -194,6 +202,9 @@ public final class Pitch implements Comparable<Pitch> {
 	 * so that for example D#4 is sorted before Eb4.
 	 * <p>
 	 * This ordering is equal to the natural ordering of {@code Pitch}.
+	 *
+	 * @return a {@code Comparator} which considers both absolute pitch
+	 *         and pitch class
 	 */
 	public static Comparator<Pitch> strictComparator() {
 		return STRICT_COMPARATOR;
@@ -204,6 +215,8 @@ public final class Pitch implements Comparable<Pitch> {
 	 * pitch only, treating enharmonic pitches as equal
 	 * (that is, disregarding the pitch class completely).
 	 * For example, comparing C#4 and Db4 will give the result {@code 0}.
+	 *
+	 * @return a {@code Comparator} which considers the absolute pitch only
 	 */
 	public static Comparator<Pitch> enharmonicComparator() {
 		return ENHARMONIC_COMPARATOR;
