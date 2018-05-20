@@ -2,7 +2,9 @@ package com.github.singond.music;
 
 import static com.github.singond.music.Accidental.*;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Map;
  *
  * @author Singon
  */
-public class PitchClass {
+public final class PitchClass {
 
 	private final BasePitchClass base;
 	private final Accidental accidental;
@@ -71,6 +73,9 @@ public class PitchClass {
 		B_DBL_SHARP = new PitchClass(BasePitchClass.B, DOUBLE_SHARP);
 	}
 	
+	/*
+	 * Maps used to cache the most frequent pitch classes.
+	 */
 	private static final Map<BasePitchClass, PitchClass> doubleFlats;
 	private static final Map<BasePitchClass, PitchClass> flats;
 	private static final Map<BasePitchClass, PitchClass> naturals;
@@ -259,5 +264,23 @@ public class PitchClass {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Returns the list of the basic pitch classes, that is all pitch
+	 * classes composed of the natural C, D, E, F, G, A or B,
+	 * where the accidental is one of double flat, flat, natural, sharp
+	 * or double sharp.
+	 *
+	 * @return a new list on every invocation
+	 */
+	public static List<PitchClass> basicPitchClasses() {
+		List<PitchClass> list = new ArrayList<>(35);
+		list.addAll(naturals.values());
+		list.addAll(flats.values());
+		list.addAll(sharps.values());
+		list.addAll(doubleFlats.values());
+		list.addAll(doubleSharps.values());
+		return list;
 	}
 }
