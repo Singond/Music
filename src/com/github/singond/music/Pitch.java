@@ -1,5 +1,7 @@
 package com.github.singond.music;
 
+import java.util.Comparator;
+
 /**
  * An exact pitch; that is a pitch class and an octave.
  * <p>
@@ -13,7 +15,7 @@ package com.github.singond.music;
  *
  * @author Singon
  */
-public class Pitch implements Comparable<Pitch> {
+public final class Pitch implements Comparable<Pitch> {
 
 	/** The pitch class */
 	private final PitchClass pitchClass;
@@ -34,6 +36,12 @@ public class Pitch implements Comparable<Pitch> {
 	
 	/** The number of semitones in an octave */
 	private static final int SEMITONES = 12;
+	
+	private static final Comparator<Pitch> STRICT_COMPARATOR
+	= new StrictComparator();
+	
+	private static final Comparator<Pitch> ENHARMONIC_COMPARATOR
+			= new EnharmonicComparator();
 	
 	private Pitch(PitchClass pitchClass, int octave) {
 		this.pitchClass = pitchClass;
@@ -81,17 +89,6 @@ public class Pitch implements Comparable<Pitch> {
 	 */
 	public boolean isEnharmonicWith(Pitch other) {
 		return this.pitch == other.pitch;
-	}
-
-	/**
-	 * Compares another pitch to this one.
-	 * This method orders the pitches in ascending order (from lowest pitch
-	 * to highest pitch) and treats enharmonic pitches as equal.
-	 * Thus, this ordering is <strong>inconsistent with {@code equals}</strong>.
-	 */
-	@Override
-	public int compareTo(Pitch o) {
-		return this.pitch - o.pitch;
 	}
 
 	@Override
@@ -175,5 +172,81 @@ public class Pitch implements Comparable<Pitch> {
 	@Override
 	public String toString() {
 		return pitchClass.toString() + octave;
+	}
+	
+	/**
+	 * Compares another pitch to this one.
+	 * This method orders the pitches in ascending order (from lowest pitch
+	 * to highest pitch), and further orders enharmonic pitches
+	 * so that for example D#4 is sorted before Eb4.
+	 * This ordering is consistent with {@code equals}.
+	 */
+	@Override
+	public int compareTo(Pitch o) {
+		return STRICT_COMPARATOR.compare(this, o);
+	}
+
+	/**
+	 * A comparator which compares pitches based on both their absolute
+	 * pitch and their pitch class.
+	 * This class first orders the pitches in ascending order from lowest
+	 * pitch to highest pitch, and then further orders enharmonic pitches
+	 * so that for example D#4 is sorted before Eb4.
+	 */
+	private static class StrictComparator implements Comparator<Pitch> {
+		
+		@Override
+		public int compare(Pitch p1, Pitch p2) {
+			int comparison = p1.pitch - p2.pitch;
+			if (comparison != 0) {
+				return comparison;
+			}
+			/*
+			 * The two pitches have equal value (the absolute pich);
+			 * so we proceed to comparing their base notes:
+			 * We want e.g. C# to be ordered before Db,
+			 * so we *reverse* the order of their respective accidentals.
+			 */
+			comparison = -p1.pitchClass.accidental()
+			              .compareTo(p2.pitchClass.accidental());
+			return comparison;
+		}
+	}
+	
+	/**
+	 * A comparator which compares pitches based on their absolute
+	 * pitch only, treating enharmonic pitches as equal
+	 * (that is, disregarding the pitch class completely).
+	 * For example, comparing C#4 and Db4 will give the result {@code 0}.
+	 */
+	private static class EnharmonicComparator implements Comparator<Pitch> {
+
+		@Override
+		public int compare(Pitch p1, Pitch p2) {
+			return p1.pitch - p2.pitch;
+		}
+	}
+
+	/**
+	 * Returns a comparator which compares pitches based on both their
+	 * absolute pitch and their pitch class.
+	 * The comparator first orders the pitches in ascending order from lowest
+	 * pitch to highest pitch, and then further orders enharmonic pitches
+	 * so that for example D#4 is sorted before Eb4.
+	 * <p>
+	 * This ordering is equal to the natural ordering of {@code Pitch}.
+	 */
+	public static Comparator<Pitch> strictComparator() {
+		return STRICT_COMPARATOR;
+	}
+
+	/**
+	 * Returns a comparator which compares pitches based on their absolute
+	 * pitch only, treating enharmonic pitches as equal
+	 * (that is, disregarding the pitch class completely).
+	 * For example, comparing C#4 and Db4 will give the result {@code 0}.
+	 */
+	public static Comparator<Pitch> enharmonicComparator() {
+		return ENHARMONIC_COMPARATOR;
 	}
 }
