@@ -187,6 +187,29 @@ public final class Pitch implements Comparable<Pitch> {
 	}
 
 	/**
+	 * Returns a comparator which compares pitches based on both their
+	 * absolute pitch and their pitch class.
+	 * The comparator first orders the pitches in ascending order from lowest
+	 * pitch to highest pitch, and then further orders enharmonic pitches
+	 * so that for example D#4 is sorted before Eb4.
+	 * <p>
+	 * This ordering is equal to the natural ordering of {@code Pitch}.
+	 */
+	public static Comparator<Pitch> strictComparator() {
+		return STRICT_COMPARATOR;
+	}
+
+	/**
+	 * Returns a comparator which compares pitches based on their absolute
+	 * pitch only, treating enharmonic pitches as equal
+	 * (that is, disregarding the pitch class completely).
+	 * For example, comparing C#4 and Db4 will give the result {@code 0}.
+	 */
+	public static Comparator<Pitch> enharmonicComparator() {
+		return ENHARMONIC_COMPARATOR;
+	}
+
+	/**
 	 * A comparator which compares pitches based on both their absolute
 	 * pitch and their pitch class.
 	 * This class first orders the pitches in ascending order from lowest
@@ -225,28 +248,5 @@ public final class Pitch implements Comparable<Pitch> {
 		public int compare(Pitch p1, Pitch p2) {
 			return p1.pitch - p2.pitch;
 		}
-	}
-
-	/**
-	 * Returns a comparator which compares pitches based on both their
-	 * absolute pitch and their pitch class.
-	 * The comparator first orders the pitches in ascending order from lowest
-	 * pitch to highest pitch, and then further orders enharmonic pitches
-	 * so that for example D#4 is sorted before Eb4.
-	 * <p>
-	 * This ordering is equal to the natural ordering of {@code Pitch}.
-	 */
-	public static Comparator<Pitch> strictComparator() {
-		return STRICT_COMPARATOR;
-	}
-
-	/**
-	 * Returns a comparator which compares pitches based on their absolute
-	 * pitch only, treating enharmonic pitches as equal
-	 * (that is, disregarding the pitch class completely).
-	 * For example, comparing C#4 and Db4 will give the result {@code 0}.
-	 */
-	public static Comparator<Pitch> enharmonicComparator() {
-		return ENHARMONIC_COMPARATOR;
 	}
 }
