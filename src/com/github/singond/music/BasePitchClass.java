@@ -6,6 +6,9 @@ package com.github.singond.music;
  * These are the pitches that correspond to the white keys on the piano.
  * This package uses the English-world convention, where the seventh
  * degree of the C major scale is called "B".
+ * <p>
+ * The natural ordering of this enum sorts the constants in the ascending
+ * order starting from {@code C}, that is {@code [C, D, E, F, G, A, B]}.
  *
  * @author Singon
  */
