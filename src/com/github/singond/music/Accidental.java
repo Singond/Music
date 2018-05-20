@@ -11,7 +11,7 @@ import java.util.Collections;
  *
  * @author Singon
  */
-public class Accidental {
+public class Accidental implements Comparable<Accidental> {
 
 	// Preset most widely-used values
 	public static final Accidental DOUBLE_FLAT = new Accidental(-2);
@@ -153,5 +153,19 @@ public class Accidental {
 			default:
 				return shift + " steps";
 		}
+	}
+
+	/**
+	 * Compares this object with another accidental for size.
+	 * An accidental is "greater than" another accidental if it is "sharper";
+	 * that is, when applied to a given note, a "greater" accidental
+	 * produces a higher resulting pitch.
+	 *
+	 * @return a negative integer if this object is less than {@code o},
+	 *         {@code 0} if they are the same, and a positive integer otherwise
+	 */
+	@Override
+	public int compareTo(Accidental o) {
+		return Integer.compare(this.shift, o.shift);
 	}
 }
