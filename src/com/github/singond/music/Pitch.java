@@ -76,7 +76,7 @@ public final class Pitch implements Comparable<Pitch> {
 	 * @param target the target pitch class of the pitch to be returned
 	 * @param lowerBound the pitch which must be exceeded by the
 	 *        returned pitch
-	 * @return
+	 * @return the lowest higher pitch of {@code target} pitch class
 	 */
 	public static Pitch nearestAbove(PitchClass target, Pitch lowerBound) {
 		int absDifference = target.stepsAboveReference()
@@ -84,6 +84,23 @@ public final class Pitch implements Comparable<Pitch> {
 		int modDifference = Math.floorMod(absDifference, SEMITONES);
 		if (modDifference == 0) modDifference += SEMITONES;
 		return Pitch.ofAbsolutePitch(target, lowerBound.pitch + modDifference);
+	}
+	
+	/**
+	 * Returns the highest pitch of a given pitch class which is strictly
+	 * lower than a specified pitch.
+	 *
+	 * @param target the target pitch class of the pitch to be returned
+	 * @param upperBound the pitch which must be higher than the
+	 *        returned pitch
+	 * @return the highest lower pitch of {@code target} pitch class
+	 */
+	public static Pitch nearestBelow(PitchClass target, Pitch upperBound) {
+		int absDifference = upperBound.pitchClass.stepsAboveReference()
+		                    - target.stepsAboveReference();
+		int modDifference = Math.floorMod(absDifference, SEMITONES);
+		if (modDifference == 0) modDifference += SEMITONES;
+		return Pitch.ofAbsolutePitch(target, upperBound.pitch - modDifference);
 	}
 	
 	/**
