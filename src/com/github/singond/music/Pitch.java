@@ -79,16 +79,6 @@ public final class Pitch implements Comparable<Pitch> {
 	 * @return
 	 */
 	public static Pitch nearestAbove(PitchClass target, Pitch lowerBound) {
-//		int octave = lowerBound.octave();
-//		int octave = lowerBound.enharmonicOctave();
-//		int octave = lowerBound.octave()
-//				+ lowerBound.pitchClass.relativeOctave()
-//				- target.relativeOctave();
-//		if (lowerBound.pitchClass.compareTo(target) < 0) {
-//			return Pitch.of(target, octave);
-//		} else {
-//			return Pitch.of(target, octave + 1);
-//		}
 		int absDifference = target.stepsAboveReference()
 		                    - lowerBound.pitchClass.stepsAboveReference();
 		int modDifference = Math.floorMod(absDifference, SEMITONES);
