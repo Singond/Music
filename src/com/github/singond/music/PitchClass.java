@@ -193,6 +193,20 @@ public final class PitchClass implements Comparable<PitchClass> {
 	public int stepsAboveReference() {
 		return base.stepsAboveReference() + accidental.stepsAboveNatural();
 	}
+	
+	/**
+	 * Returns the difference between the octave of this pitch class
+	 * and the octave of its natural.
+	 * For example, the relative octave of most common pitch classes is zero,
+	 * but the relative octave of Cb (C flat) is -1, because the Cb sounds
+	 * in the octave below the C.
+	 * Similarly, the relative octave of Bx (B sharp) is +1.
+	 *
+	 * @return the octave number relative to natural
+	 */
+	public int relativeOctave() {
+		return Math.floorDiv(stepsAboveReference(), SEMITONES);
+	}
 
 	/**
 	 * Checks whether the given pitch class is the same number of semitones

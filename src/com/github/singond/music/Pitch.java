@@ -69,11 +69,70 @@ public final class Pitch implements Comparable<Pitch> {
 		return Pitch.of(pitchClass, octave);
 	}
 	
-//	public static Pitch nearestAbove(PitchClass target, Pitch lowerBound) {
-//		int octave = lowerBound.octave;
-//		PitchClass
-//	}
+	/**
+	 * Returns the lowest pitch of a given pitch class which is strictly
+	 * higher than a specified pitch.
+	 *
+	 * @param target the target pitch class of the pitch to be returned
+	 * @param lowerBound the pitch which must be exceeded by the
+	 *        returned pitch
+	 * @return
+	 */
+	public static Pitch nearestAbove(PitchClass target, Pitch lowerBound) {
+//		int octave = lowerBound.octave();
+//		int octave = lowerBound.enharmonicOctave();
+//		int octave = lowerBound.octave()
+//				+ lowerBound.pitchClass.relativeOctave()
+//				- target.relativeOctave();
+//		if (lowerBound.pitchClass.compareTo(target) < 0) {
+//			return Pitch.of(target, octave);
+//		} else {
+//			return Pitch.of(target, octave + 1);
+//		}
+		int absDifference = target.stepsAboveReference()
+		                    - lowerBound.pitchClass.stepsAboveReference();
+		int modDifference = Math.floorMod(absDifference, SEMITONES);
+		if (modDifference == 0) modDifference += SEMITONES;
+		return Pitch.ofAbsolutePitch(target, lowerBound.pitch + modDifference);
+	}
 	
+	/**
+	 * Returns the pitch class of this pitch.
+	 *
+	 * @return the pitch class of this object
+	 */
+	public PitchClass pitchClass() {
+		return pitchClass;
+	}
+	
+	/**
+	 * Returns the octave number of the natural of this pitch in scientific
+	 * pitch notation. Note that this may not be the actual sounding octave,
+	 * for example the pitch Bx3 (B double sharp in octave 3) returns 3,
+	 * while the actual pitch is higher than C4.
+	 * <p>
+	 * In scientific pitch notation, the octaves are numbered in ascending
+	 * order, starting with 0 for the sub-contra octave and proceeding up.
+	 * The octave starting at middle C is assigned the number 4.
+	 *
+	 * @return the octave number
+	 */
+	public int octave() {
+		return octave;
+	}
+	
+	/**
+	 * Returns the number of the octave (in scientific pitch notation)
+	 * containing the absolute pitch of this pitch object.
+	 * Exactly speaking, this method returns the octave of the highest
+	 * C pitch which is lower than or equal to this pitch.
+	 *
+	 * @return the sounding octave number
+	 */
+//	int enharmonicOctave() {
+//		return Math.floorDiv(pitch, SEMITONES);
+//	}
+
 	/**
 	 * Returns the MIDI number of the pitch.
 	 * The MIDI number of a pitch is the number of semitones above C-1

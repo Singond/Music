@@ -184,4 +184,21 @@ public class PitchClassesTest {
 		second = PitchClass.of(G, Accidental.ofSteps(-1));
 		assertNotEquals(first, second);
 	}
+	
+	@Test
+	public void relativeOctaveNumber() {
+		relativeOct(PitchClass.C_DBL_FLAT, -1);
+		relativeOct(PitchClass.C_FLAT, -1);
+		relativeOct(PitchClass.C, 0);
+		relativeOct(PitchClass.D_DBL_FLAT, 0);
+		relativeOct(PitchClass.D_FLAT, 0);
+		relativeOct(PitchClass.B_FLAT, 0);
+		relativeOct(PitchClass.B, 0);
+		relativeOct(PitchClass.B_SHARP, 1);
+		relativeOct(PitchClass.B_DBL_SHARP, 1);
+	}
+	
+	private void relativeOct(PitchClass pc, int expected) {
+		assertEquals("Bad relative octave", expected, pc.relativeOctave());
+	}
 }

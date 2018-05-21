@@ -101,4 +101,23 @@ public class PitchTest {
 		
 		return pitches;
 	}
+	
+	@Test
+	public void octaveNumbering() {
+		octaveNumbering(PitchClass.C_FLAT, -1, -2);
+		octaveNumbering(PitchClass.C, -1, -1);
+		octaveNumbering(PitchClass.B_DBL_SHARP, -1, 0);
+		octaveNumbering(PitchClass.C, 0, 0);
+		octaveNumbering(PitchClass.B_SHARP, 3, 4);
+		octaveNumbering(PitchClass.C_FLAT, 4, 3);
+		octaveNumbering(PitchClass.C, 4, 4);
+	}
+	
+	private void octaveNumbering(PitchClass pc, int oct, int soundingOct) {
+		Pitch pitch = Pitch.of(pc, oct);
+		assertEquals("The declared octave does not match",
+		             oct, pitch.octave());
+		assertEquals("The sounding octave does not match", soundingOct,
+		             pitch.octave() + pitch.pitchClass().relativeOctave());
+	}
 }
