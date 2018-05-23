@@ -30,7 +30,7 @@ public class PitchRangeGeneration {
 		      Pitch.of(E, 5),
 		      Pitch.of(F_SHARP, 5),
 		      Pitch.of(G, 5)
-				);
+		);
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class PitchRangeGeneration {
 		      Pitch.of(E_SHARP, 5),
 		      Pitch.of(F, 5),
 		      Pitch.of(G, 5)
-				);
+		);
 	}
 	
 	@Test
