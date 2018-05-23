@@ -80,10 +80,42 @@ public final class Pitch implements Comparable<Pitch> {
 	 */
 	public static Pitch nearestAbove(PitchClass target, Pitch lowerBound) {
 		int absDifference = target.stepsAboveReference()
-		                    - lowerBound.pitchClass.stepsAboveReference();
+				- lowerBound.pitchClass.stepsAboveReference();
 		int modDifference = Math.floorMod(absDifference, SEMITONES);
 		if (modDifference == 0) modDifference += SEMITONES;
 		return Pitch.ofAbsolutePitch(target, lowerBound.pitch + modDifference);
+	}
+	
+	/**
+	 * Returns the lowest pitch of a given pitch class which is higher
+	 * than or equal to a specified pitch.
+	 *
+	 * @param target the target pitch class of the pitch to be returned
+	 * @param lowerBound the lowest allowable pitch to be returned
+	 * @return the lowest higher or equal pitch of {@code target} pitch class
+	 */
+	public static Pitch nearestAboveOrEqual(PitchClass target, Pitch lowerBound) {
+		if (lowerBound.pitchClass.equals(target)) {
+			return lowerBound;
+		} else {
+			return nearestAbove(target, lowerBound);
+		}
+	}
+	
+	/**
+	 * Returns the lowest pitch of a given pitch class which is higher
+	 * than or enharmonic to a specified pitch.
+	 *
+	 * @param target the target pitch class of the pitch to be returned
+	 * @param lowerBound the lowest allowable pitch to be returned
+	 * @return the lowest higher or enharmonic pitch of {@code target} pitch class
+	 */
+	public static Pitch nearestAboveOrEnharmonic(PitchClass target, Pitch lowerBound) {
+		if (lowerBound.pitchClass.isEnharmonicWith(target)) {
+			return Pitch.ofAbsolutePitch(target, lowerBound.pitch);
+		} else {
+			return nearestAbove(target, lowerBound);
+		}
 	}
 	
 	/**
@@ -97,10 +129,42 @@ public final class Pitch implements Comparable<Pitch> {
 	 */
 	public static Pitch nearestBelow(PitchClass target, Pitch upperBound) {
 		int absDifference = upperBound.pitchClass.stepsAboveReference()
-		                    - target.stepsAboveReference();
+				- target.stepsAboveReference();
 		int modDifference = Math.floorMod(absDifference, SEMITONES);
 		if (modDifference == 0) modDifference += SEMITONES;
 		return Pitch.ofAbsolutePitch(target, upperBound.pitch - modDifference);
+	}
+	
+	/**
+	 * Returns the highest pitch of a given pitch class which is lower
+	 * than or equal to a specified pitch.
+	 *
+	 * @param target the target pitch class of the pitch to be returned
+	 * @param upperBound the highest allowable pitch to be returned
+	 * @return the highest lower or equal pitch of {@code target} pitch class
+	 */
+	public static Pitch nearestBelowOrEqual(PitchClass target, Pitch upperBound) {
+		if (upperBound.pitchClass.equals(target)) {
+			return upperBound;
+		} else {
+			return nearestBelow(target, upperBound);
+		}
+	}
+	
+	/**
+	 * Returns the highest pitch of a given pitch class which is lower
+	 * than or enharmonic to a specified pitch.
+	 *
+	 * @param target the target pitch class of the pitch to be returned
+	 * @param upperBound the highest allowable pitch to be returned
+	 * @return the highest lower or enharmonic pitch of {@code target} pitch class
+	 */
+	public static Pitch nearestBelowOrEnharmonic(PitchClass target, Pitch upperBound) {
+		if (upperBound.pitchClass.isEnharmonicWith(target)) {
+			return Pitch.ofAbsolutePitch(target, upperBound.pitch);
+		} else {
+			return nearestBelow(target, upperBound);
+		}
 	}
 	
 	/**
