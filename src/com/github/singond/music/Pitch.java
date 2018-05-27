@@ -245,7 +245,7 @@ public final class Pitch implements Comparable<Pitch> {
 	 *
 	 * @param obj {@inheritDoc}
 	 * @return {@code true} if {@code obj} is also a {@code Pitch} and if
-	 *         both {@code this} and {code @obj} have equal pitch class and
+	 *         both {@code this} and {@code obj} have equal pitch class and
 	 *         the same octave.
 	 *         Pitch classes are only considered equal if they have equal
 	 *         names; that is, enharmonic pitch classes are not necessarily
