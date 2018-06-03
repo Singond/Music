@@ -84,11 +84,41 @@ public enum SimpleInterval implements Interval {
 	
 	@Override
 	public boolean isEnharmonicWith(Interval other) {
+		if (other == null) {
+			return false;
+		}
 		return this.semitones == other.semitones();
 	}
 
 	@Override
 	public String toString() {
 		return symbol;
+	}
+	
+	/**
+	 * Returns the simple interval which is composed of the given number
+	 * of diatonic degrees and has the given width in semitones.
+	 * If none of the simple intervals matches the given criteria,
+	 * this method returns null.
+	 *
+	 * @param degrees number of diatonic degrees spanned by the interval
+	 * @param semitones absolute width of the interval in semitones
+	 * @return an instance of {@code SimpleInterval} matching the given
+	 *         number of degrees and semitones, or {@code null} if none
+	 *         of the existing instances match
+	 */
+	public static final SimpleInterval valueOf(int degrees, int semitones) {
+		// A short circuit for impossible numbers of diatonic degrees
+		if (degrees < 0 || degrees > 7) {
+			return null;
+		}
+		
+		// Search the available constants
+		for (SimpleInterval i : values()) {
+			if (i.degrees == degrees && i.semitones == semitones) {
+				return i;
+			}
+		}
+		return null;
 	}
 }
