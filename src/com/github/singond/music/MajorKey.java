@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Singon
  */
-public class MajorKey extends AbstractKey implements Key {
+public class MajorKey extends SimpleKey implements Key {
 
 	private static final List<Interval> INTERVALS = Arrays.asList(
 			SimpleInterval.MAJOR_SECOND,

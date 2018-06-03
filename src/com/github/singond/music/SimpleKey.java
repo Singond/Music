@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-abstract class AbstractKey implements Key {
+/**
+ * A skeletal implementation of a simple type of musical key,
+ * in which the pitches repeat with a period of one octave.
+ * This generalizes the concept of the most common keys like major key
+ * or minor keys into any key, in which the set of pitches belonging
+ * to that key are the same in each octave
+ * (for example, if a key contains the pitch C4, then <em>all</em>
+ * other C pitches like C0, C1... etc. also belong to that key).
+ *
+ * @author Singon
+ */
+abstract class SimpleKey implements Key {
 	
 	/**
 	 * The list of all pitch classes in this key.
@@ -16,7 +27,7 @@ abstract class AbstractKey implements Key {
 	 */
 	private final List<Interval> intervals;
 	
-	public AbstractKey(final PitchClass tonic, List<Interval> intervals) {
+	public SimpleKey(final PitchClass tonic, List<Interval> intervals) {
 		if (tonic == null) {
 			throw new NullPointerException("The tonic is null");
 		} else if (intervals == null) {
