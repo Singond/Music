@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Singon
  */
-abstract class SimpleKey implements Key {
+abstract class SimpleKey extends AbstractKey implements Key {
 	
 	/**
 	 * The list of all pitch classes in this key.
@@ -27,6 +27,19 @@ abstract class SimpleKey implements Key {
 	 */
 	private final List<Interval> intervals;
 	
+	/**
+	 * Constructs a new key with the given tonic and subsequent steps
+	 * created by adding the given intervals to the previously created note.
+	 *
+	 * @param tonic the pitch class to start at. This will become the tonic
+	 *        of the key.
+	 * @param intervals the intervals to be applied in that order in order
+	 *        to build the full scale of the key
+	 * @throws NullPointerException if either {@code tonic} or
+	 *         {@code intervals} is null
+	 * @throws IllegalArgumentException if the total width of given
+	 *         intervals is equal to or greater than one octave
+	 */
 	public SimpleKey(final PitchClass tonic, List<Interval> intervals) {
 		if (tonic == null) {
 			throw new NullPointerException("The tonic is null");
@@ -38,9 +51,14 @@ abstract class SimpleKey implements Key {
 		pitchClasses = new ArrayList<>(1 + intervals.size());
 		pitchClasses.add(tonic);
 		PitchClass degree = tonic;
+		int totalInterval = 0;
 		for (Interval interval : intervals) {
+			totalInterval += interval.semitones();
 			degree = degree.transposeUp(interval);
 			pitchClasses.add(degree);
+		}
+		if (totalInterval >=12) {
+			throw new IllegalArgumentException("The given intervals do not fit in one octave");
 		}
 		
 		this.intervals = new ArrayList<>(intervals);
