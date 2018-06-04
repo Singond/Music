@@ -2,7 +2,9 @@ package com.github.singond.music;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A skeletal implementation of a simple type of musical key,
@@ -71,10 +73,26 @@ abstract class SimpleKey extends AbstractKey implements Key {
 
 	/**
 	 * {@inheritDoc}
+	 * @return a new set on every invocation
+	 */
+	@Override
+	public Set<PitchClass> pitchClasses() {
+		Set<PitchClass> result = new HashSet<>();
+		result.addAll(pitchClasses);
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * The returned list is unmodifiable.
 	 */
 	@Override
-	public List<PitchClass> scale() {
+	public List<PitchClass> degrees() {
 		return Collections.unmodifiableList(pitchClasses);
+	}
+
+	@Override
+	public List<Pitch> scale(Pitch start, Pitch end) {
+		return Pitches.range(pitchClasses(), start, end);
 	}
 }
