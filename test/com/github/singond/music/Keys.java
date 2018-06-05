@@ -55,7 +55,21 @@ public class Keys {
 
 	private void printScale(Key key) {
 		System.out.println("This is the " + key + " scale:");
-		System.out.println(key.scale());
+		System.out.println(key.degrees());
+	}
+	
+	@Test
+	public void gMajorScale() {
+		System.out.println("G major scale between D3 and F5:");
+		System.out.println(MajorKey.G_MAJOR.scale(Pitch.of(D, 3), Pitch.of(F, 5)));
+		System.out.println();
+	}
+	
+	@Test
+	public void eFlatMajorScale() {
+		System.out.println("Eb major scale between G3 and Eb5:");
+		System.out.println(MajorKey.E_FLAT_MAJOR.scale(Pitch.of(G, 3), Pitch.of(E_FLAT, 5)));
+		System.out.println();
 	}
 
 }
