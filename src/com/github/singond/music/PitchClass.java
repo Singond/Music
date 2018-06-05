@@ -11,6 +11,11 @@ import java.util.Map;
 /**
  * A set of all pitches which are a perfect octave apart.
  * <p>
+ * This class has a natural ordering which orders the pitch classes first
+ * in ascending order from C, and then orders any enharmonic pitches
+ * in the order of their naturals. For example, D#4 is placed before Eb4.
+ * This ordering is consistent with {@code equals}.
+ * <p>
  * Instances of this class are immutable.
  *
  * @author Singon
@@ -215,9 +220,11 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 *
 	 * @param other the pitch class to be compared with this one
 	 * @return {@code true} if the difference of the semitones above
-	 *         reference of the two pitch classes is a multiple of 12
+	 *         reference of the two pitch classes is a multiple of 12.
+	 *         Returns {@code false} if the argument is {@code null}.
 	 */
 	public boolean isEnharmonicWith(PitchClass other) {
+		if (other == null) return false;
 		return (stepsAboveReference() - other.stepsAboveReference())
 				% SEMITONES == 0;
 	}
@@ -298,6 +305,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 *
 	 * @param o {@inheritDoc}
 	 * @return  {@inheritDoc}
+	 * @throws  NullPointerException {@inheritDoc}
 	 */
 	@Override
 	public int compareTo(PitchClass o) {
@@ -311,7 +319,8 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 * and then orders any enharmonic pitches in the order of their naturals.
 	 * <p>
 	 * The ordering imposed by this comparator is the same as the natural
-	 * ordering of {@code PitchClass}.
+	 * ordering of {@code PitchClass} and is consistent with {@code equals}.
+	 * It does not permit {@code null} arguments.
 	 *
 	 * @return a comparator taking into account both absolute height
 	 *         and base note
@@ -325,6 +334,10 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 * height above the reference pith class (C) only, treating enharmonic
 	 * pitch classes as equal.
 	 * For example, comparing C# and Db will return {@code 0}.
+	 * <p>
+	 * The ordering imposed by this comparator is inconsistent
+	 * with {@code equals}.
+	 * It does not permit {@code null} arguments.
 	 *
 	 * @return a comparator taking into account the absolute height only
 	 */
@@ -337,11 +350,20 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 * above the reference pitch class (C) and their naturals.
 	 * This class first orders the pitches in ascending order from C
 	 * and then orders any enharmonic pitches in the order of their naturals.
+	 * <p>
+	 * This comparator does not permit null arguments.
 	 */
 	private static class StrictComparator implements Comparator<PitchClass> {
 		
+		/**
+		 * @throws NullPointerException if one of the arguments is null
+		 */
 		@Override
 		public int compare(PitchClass p1, PitchClass p2) {
+			if (p1 == null || p2 == null) {
+				throw new NullPointerException
+						("One of the pitch classes being compared is null");
+			}
 			int comparison = Integer.compare(p1.stepsAboveReference(),
 			                                 p2.stepsAboveReference());
 			if (comparison != 0) {
@@ -356,11 +378,20 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 * above the reference pith class (C) only, treating enharmonic pitch
 	 * classes as equal.
 	 * For example, comparing C# and Db will return {@code 0}.
+	 * <p>
+	 * This comparator does not permit null arguments.
 	 */
 	private static class EnharmonicComparator implements Comparator<PitchClass> {
 		
+		/**
+		 * @throws NullPointerException if one of the arguments is null
+		 */
 		@Override
 		public int compare(PitchClass p1, PitchClass p2) {
+			if (p1 == null || p2 == null) {
+				throw new NullPointerException
+						("One of the pitch classes being compared is null");
+			}
 			return Integer.compare(p1.stepsAboveReference(),
 			                       p2.stepsAboveReference());
 		}
