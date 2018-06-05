@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static com.github.singond.music.PitchClass.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,12 +69,32 @@ public class PitchRangeGeneration {
 		      Pitch.of(D, 5)
 		);
 	}
+	
+	@Test
+	public void reverse() {
+		Set<PitchClass> pcs = new HashSet<>();
+		pcs.add(C); pcs.add(D); pcs.add(E); pcs.add(F);
+		pcs.add(G); pcs.add(A); pcs.add(B);
+		List<Pitch> gen = Pitches.range(pcs, Pitch.of(G, 5), Pitch.of(D, 4));
+		List<Pitch> exp = Arrays.asList(Pitch.of(G, 5), Pitch.of(F, 5),
+				Pitch.of(E, 5), Pitch.of(D, 5), Pitch.of(C, 5),
+				Pitch.of(B, 4), Pitch.of(A, 4), Pitch.of(G, 4),
+				Pitch.of(F, 4), Pitch.of(E, 4), Pitch.of(D, 4));
+		assertEquals("Wrong reverse scale", exp, gen);
+	}
 
 	private void check(Set<PitchClass> pcs, Pitch start, Pitch end, Pitch... expected) {
 		List<Pitch> generated = Pitches.range(pcs, start, end);
 		List<Pitch> exp = Arrays.asList(expected);
 		System.out.println("expected:  " + exp);
 		System.out.println("generated: " + generated);
+		assertEquals("Wrong pitch sequence", exp, generated);
+		
+		// Reverse
+		generated = Pitches.range(pcs, end, start);
+		Collections.reverse(exp);
+		System.out.println("expected reverse:  " + exp);
+		System.out.println("generated reverse: " + generated);
 		assertEquals("Wrong pitch sequence", exp, generated);
 		separator();
 	}
