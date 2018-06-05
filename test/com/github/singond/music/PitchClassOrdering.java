@@ -33,6 +33,11 @@ public class PitchClassOrdering {
 //		separator();
 	}
 	
+	@Test(expected = NullPointerException.class)
+	public void comparisonWithNull() {
+		C.compareTo(null);
+	}
+	
 	@Test
 	public void orderingWithoutEnharmonics() {
 		shuffleAndSort(C_DBL_FLAT, C_FLAT, C, C_SHARP, C_DBL_SHARP,

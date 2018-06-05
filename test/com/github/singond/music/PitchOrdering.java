@@ -25,6 +25,11 @@ public class PitchOrdering {
 //		separator();
 	}
 	
+	@Test(expected = NullPointerException.class)
+	public void comparisonWithNull() {
+		Pitch.of(C, 4).compareTo(null);
+	}
+	
 	@Test
 	public void orderingWithoutEnharmonics() {
 		shuffleAndSort(Pitch.of(A_DBL_FLAT, 3),
