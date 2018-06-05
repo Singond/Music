@@ -7,9 +7,7 @@ import java.util.Comparator;
  * <p>
  * This class has a natural ordering which represents the ascending order
  * from lower pitches to higher pitches.
- * This ordering is <em>inconsistent with</em> {@code equals}, because
- * it treats enharmonic pitches as being equal, unlike the {@code equals}
- * method.
+ * This ordering is consistent with {@code equals}.
  * <p>
  * Instances of this class are immutable.
  *
@@ -318,6 +316,7 @@ public final class Pitch implements Comparable<Pitch> {
 	 *
 	 * @param o {@inheritDoc}
 	 * @return  {@inheritDoc}
+	 * @throws  NullPointerException {@inheritDoc}
 	 */
 	@Override
 	public int compareTo(Pitch o) {
@@ -331,7 +330,9 @@ public final class Pitch implements Comparable<Pitch> {
 	 * pitch to highest pitch, and then further orders enharmonic pitches
 	 * so that for example D#4 is sorted before Eb4.
 	 * <p>
-	 * This ordering is equal to the natural ordering of {@code Pitch}.
+	 * This ordering is equal to the natural ordering of {@code Pitch}
+	 * and is consistent with {@code equals}.
+	 * It does not permit {@code null} arguments.
 	 *
 	 * @return a {@code Comparator} which considers both absolute pitch
 	 *         and pitch class
@@ -345,6 +346,9 @@ public final class Pitch implements Comparable<Pitch> {
 	 * pitch only, treating enharmonic pitches as equal
 	 * (that is, disregarding the pitch class completely).
 	 * For example, comparing C#4 and Db4 will give the result {@code 0}.
+	 * <p>
+	 * This ordering is inconsistent with {@code equals}.
+	 * It does not permit {@code null} arguments.
 	 *
 	 * @return a {@code Comparator} which considers the absolute pitch only
 	 */
@@ -358,12 +362,19 @@ public final class Pitch implements Comparable<Pitch> {
 	 * This class first orders the pitches in ascending order from lowest
 	 * pitch to highest pitch, and then further orders enharmonic pitches
 	 * so that for example D#4 is sorted before Eb4.
+	 * <p>
+	 * This comparator does not permit null arguments.
 	 */
 	private static class StrictComparator implements Comparator<Pitch> {
 		
 		@Override
 		public int compare(Pitch p1, Pitch p2) {
-			int comparison = p1.pitch - p2.pitch;
+			if (p1 == null || p2 == null) {
+				throw new NullPointerException
+						("One of the pitches being compared is null");
+			}
+			
+			int comparison = Integer.compare(p1.pitch, p2.pitch);
 			if (comparison != 0) {
 				return comparison;
 			}
@@ -384,12 +395,18 @@ public final class Pitch implements Comparable<Pitch> {
 	 * pitch only, treating enharmonic pitches as equal
 	 * (that is, disregarding the pitch class completely).
 	 * For example, comparing C#4 and Db4 will give the result {@code 0}.
+	 * <p>
+	 * This comparator does not permit null arguments.
 	 */
 	private static class EnharmonicComparator implements Comparator<Pitch> {
 
 		@Override
 		public int compare(Pitch p1, Pitch p2) {
-			return p1.pitch - p2.pitch;
+			if (p1 == null || p2 == null) {
+				throw new NullPointerException
+						("One of the pitches being compared is null");
+			}
+			return Integer.compare(p1.pitch, p2.pitch);
 		}
 	}
 }
