@@ -13,4 +13,9 @@ abstract class AbstractKey implements Key {
 	public List<Pitch> scale(Pitch start) {
 		return scale(start, start.transposeUp(SimpleInterval.PERFECT_OCTAVE));
 	}
+
+	@Override
+	public PitchClass degree(int degree) {
+		return degrees().get(degree - 1);
+	}
 }

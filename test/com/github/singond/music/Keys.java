@@ -15,7 +15,7 @@ public class Keys {
 	@Before
 	public void setUp() throws Exception {
 	}
-	
+
 	@Test
 	public void majorKeys() {
 		printScale(new MajorKey(C_FLAT));
@@ -35,7 +35,7 @@ public class Keys {
 		printScale(new MajorKey(C_SHARP));
 		System.out.println();
 	}
-	
+
 	@Test
 	public void minorKeys() {
 		printScale(new MinorKey(A_FLAT));
@@ -60,21 +60,21 @@ public class Keys {
 		System.out.println("This is the " + key + " scale:");
 		System.out.println(key.degrees());
 	}
-	
+
 	@Test
 	public void gMajorScale() {
 		System.out.println("G major scale between D3 and F5:");
 		System.out.println(MajorKey.G_MAJOR.scale(Pitch.of(D, 3), Pitch.of(F, 5)));
 		System.out.println();
 	}
-	
+
 	@Test
 	public void eFlatMajorScale() {
 		System.out.println("Eb major scale between G3 and Eb5:");
 		System.out.println(MajorKey.E_FLAT_MAJOR.scale(Pitch.of(G, 3), Pitch.of(E_FLAT, 5)));
 		System.out.println();
 	}
-	
+
 	@Test
 	public void eFlatMajorScaleDown() {
 		System.out.println("Eb major scale between Eb5 and G3:");
@@ -98,4 +98,22 @@ public class Keys {
 		System.out.println();
 	}
 
+	@Test
+	public void degrees() {
+		assertEquals(G, MajorKey.C_MAJOR.degree(5));
+		assertEquals(C_SHARP, MajorKey.F_SHARP_MAJOR.degree(5));
+		assertEquals(B_FLAT, MajorKey.C_FLAT_MAJOR.degree(7));
+		assertEquals(A, MinorKey.A_MINOR.degree(1));
+		assertEquals(E_SHARP, MinorKey.D_SHARP_MINOR.degree(2));
+	}
+
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void negativeDegree() {
+		MinorKey.B_MINOR.degree(0);
+	}
+
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void overDegree() {
+		MinorKey.B_MINOR.degree(8);
+	}
 }

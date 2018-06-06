@@ -11,7 +11,7 @@ public interface Key {
 	 * @return the tonic pitch class
 	 */
 	PitchClass tonic();
-	
+
 	/**
 	 * Returns the set of all unique <em>pitch classes</em>
 	 * comprising this key, without any particular order.
@@ -19,7 +19,7 @@ public interface Key {
 	 * @return the set of all pitch classes forming this key
 	 */
 	Set<PitchClass> pitchClasses();
-	
+
 	/**
 	 * Returns all degrees in this key sorted in ascending order starting
 	 * with the first degree.
@@ -29,7 +29,18 @@ public interface Key {
 	 *         starting with the tonic
 	 */
 	List<PitchClass> degrees();
-	
+
+	/**
+	 * Returns the given degree of this key, with degree 1 being the tonic.
+	 * This is equal to calling {@code degrees().get(degree - 1)}.
+	 *
+	 * @param degree the one-based index of the degree
+	 * @return the degree number {@code degree}
+	 * @throw IndexOutOfBoundsException if the number does not lie
+	 *        between 1 and the number of degrees in the key (inclusive)
+	 */
+	PitchClass degree(int degree);
+
 	/**
 	 * Generates a scale of this key between the given endpoints.
 	 * The endpoints are both inclusive, provided they are part of ths scale.
@@ -41,7 +52,7 @@ public interface Key {
 	 *         {@code end}
 	 */
 	List<Pitch> scale(Pitch start, Pitch end);
-	
+
 	/**
 	 * Generates a scale of this key in the length of one octave,
 	 * starting at the given pitch.
