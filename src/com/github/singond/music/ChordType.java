@@ -18,16 +18,9 @@ public interface ChordType {
 	 * This is the sequence of intervals between adjacent notes of this
 	 * chord, starting with the lowest pair of notes and moving up.
 	 *
-	 * @return
+	 * @return the intervals between adjacent notes
 	 */
 	List<Interval> structure();
-
-	/**
-	 * Returns the number of notes in this chord type.
-	 *
-	 * @return the number of notes
-	 */
-	int size();
 
 	/**
 	 * Returns the zero-based index of the root note in this chord.
@@ -46,11 +39,36 @@ public interface ChordType {
 	int rootIndex();
 
 	/**
+	 * Returns the number of notes in this chord type.
+	 *
+	 * @return the number of notes
+	 */
+	int size();
+
+	/**
+	 * Returns the interval between the lowest and the highest note of this
+	 * chord. This is equal to the sum of all structural chords.
+	 *
+	 * @return the interval between the lowest and the highest note
+	 */
+	Interval span();
+
+	/**
+	 * Returns the relative height of a note above the bass of this chord.
+	 * The note is given by its index in the ascending sequence of all
+	 * notes of this chord, where the index 0 designates the bass.
+	 *
+	 * @param note the zero-based index of the note in this chord
+	 * @return the interval between bass and {@code note}
+	 */
+	Interval heightAboveBass(int note);
+
+	/**
 	 * Returns the root position of this chord type.
 	 * The root position of a chord is the position in which the root
 	 * note is equal to the bass note, ie. where {@code rootIndex() == 0}.
 	 *
-	 * @return
+	 * @return the root position of this chord
 	 */
 	ChordType rootPosition();
 }
