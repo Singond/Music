@@ -25,8 +25,7 @@ class SmallChordType implements ChordType {
 	public static final ChordType
 			MAJOR_TRIAD, MAJOR_TRIAD_6, MAJOR_TRIAD_64,
 			MINOR_TRIAD, MINOR_TRIAD_6, MINOR_TRIAD_64,
-			DIMINISHED_TRIAD, DIMINISHED_TRIAD_6, DIMINISHED_TRIAD_64,
-			AUGMENTED_TRIAD, AUGMENTED_TRIAD_6, AUGMENTED_TRIAD_64;
+			DIMINISHED_TRIAD, DIMINISHED_TRIAD_6, DIMINISHED_TRIAD_64;
 
 	static {
 		List<PreInvertedChord> inversions;
@@ -44,11 +43,6 @@ class SmallChordType implements ChordType {
 		DIMINISHED_TRIAD    = inversions.get(0);
 		DIMINISHED_TRIAD_6  = inversions.get(1);
 		DIMINISHED_TRIAD_64 = inversions.get(2);
-
-		inversions = PreInvertedChord.inversionsOf(MAJOR_THIRD, MAJOR_THIRD);
-		AUGMENTED_TRIAD    = inversions.get(0);
-		AUGMENTED_TRIAD_6  = inversions.get(1);
-		AUGMENTED_TRIAD_64 = inversions.get(2);
 	}
 
 	private SmallChordType(List<Interval> structure, int root) {
@@ -101,6 +95,12 @@ class SmallChordType implements ChordType {
 	@Override
 	public Interval heightAboveBass(int note) {
 		return Intervals.sum(structure.subList(0, note));
+	}
+
+	@Override
+	public boolean invertible() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method has not been implemented yet");
 	}
 
 	@Override
@@ -195,6 +195,15 @@ class SmallChordType implements ChordType {
 		 */
 		static List<PreInvertedChord> inversionsOf(Interval... intervals) {
 			return inversionsOf(Arrays.asList(intervals));
+		}
+
+
+		/**
+		 * @return always {@code true}
+		 */
+		@Override
+		public boolean invertible() {
+			return true;
 		}
 
 		/**

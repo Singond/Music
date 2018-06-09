@@ -91,6 +91,14 @@ public class ChordTypes {
 		         SmallChordType.DIMINISHED_TRIAD_64.invert(2));
 	}
 
+	@Test
+	public void augmentedTriads() {
+		List<Interval> struct = Arrays.asList(MAJOR_THIRD, MAJOR_THIRD);
+		checkAll(0, struct, AUGMENTED_FIFTH, 3, 0,
+		         NonInvertibleChordType.AUGMENTED_TRIAD,
+		         NonInvertibleChordType.AUGMENTED_TRIAD.rootPosition());
+	}
+
 	/**
 	 * @param ch the chord under test
 	 * @param root expected value of the root index
