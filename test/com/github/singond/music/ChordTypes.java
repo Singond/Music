@@ -37,6 +37,60 @@ public class ChordTypes {
 		         SmallChordType.MAJOR_TRIAD_64.invert(2));
 	}
 
+	@Test
+	public void minorTriads() {
+		List<Interval> struct = Arrays.asList(MINOR_THIRD, MAJOR_THIRD);
+		checkAll(0, struct, PERFECT_FIFTH, 3, 0,
+		         SmallChordType.MINOR_TRIAD,
+		         SmallChordType.MINOR_TRIAD.invert(0),
+		         SmallChordType.MINOR_TRIAD_6.invert(0),
+		         SmallChordType.MINOR_TRIAD_64.invert(0),
+		         SmallChordType.MINOR_TRIAD.rootPosition(),
+		         SmallChordType.MINOR_TRIAD_6.rootPosition(),
+		         SmallChordType.MINOR_TRIAD_64.rootPosition());
+
+		struct = Arrays.asList(MAJOR_THIRD, PERFECT_FOURTH);
+		checkAll(2, struct, MAJOR_SIXTH, 3, 1,
+		         SmallChordType.MINOR_TRIAD_6,
+		         SmallChordType.MINOR_TRIAD.invert(1),
+		         SmallChordType.MINOR_TRIAD_6.invert(1),
+		         SmallChordType.MINOR_TRIAD_64.invert(1));
+
+		struct = Arrays.asList(PERFECT_FOURTH, MINOR_THIRD);
+		checkAll(1, struct, MINOR_SIXTH, 3, 2,
+		         SmallChordType.MINOR_TRIAD_64,
+		         SmallChordType.MINOR_TRIAD.invert(2),
+		         SmallChordType.MINOR_TRIAD_6.invert(2),
+		         SmallChordType.MINOR_TRIAD_64.invert(2));
+	}
+
+	@Test
+	public void diminishedTriads() {
+		List<Interval> struct = Arrays.asList(MINOR_THIRD, MINOR_THIRD);
+		checkAll(0, struct, DIMINISHED_FIFTH, 3, 0,
+		         SmallChordType.DIMINISHED_TRIAD,
+		         SmallChordType.DIMINISHED_TRIAD.invert(0),
+		         SmallChordType.DIMINISHED_TRIAD_6.invert(0),
+		         SmallChordType.DIMINISHED_TRIAD_64.invert(0),
+		         SmallChordType.DIMINISHED_TRIAD.rootPosition(),
+		         SmallChordType.DIMINISHED_TRIAD_6.rootPosition(),
+		         SmallChordType.DIMINISHED_TRIAD_64.rootPosition());
+
+		struct = Arrays.asList(MINOR_THIRD, AUGMENTED_FOURTH);
+		checkAll(2, struct, MAJOR_SIXTH, 3, 1,
+		         SmallChordType.DIMINISHED_TRIAD_6,
+		         SmallChordType.DIMINISHED_TRIAD.invert(1),
+		         SmallChordType.DIMINISHED_TRIAD_6.invert(1),
+		         SmallChordType.DIMINISHED_TRIAD_64.invert(1));
+
+		struct = Arrays.asList(AUGMENTED_FOURTH, MINOR_THIRD);
+		checkAll(1, struct, MAJOR_SIXTH, 3, 2,
+		         SmallChordType.DIMINISHED_TRIAD_64,
+		         SmallChordType.DIMINISHED_TRIAD.invert(2),
+		         SmallChordType.DIMINISHED_TRIAD_6.invert(2),
+		         SmallChordType.DIMINISHED_TRIAD_64.invert(2));
+	}
+
 	/**
 	 * @param ch the chord under test
 	 * @param root expected value of the root index
