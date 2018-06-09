@@ -60,13 +60,47 @@ public interface ChordType {
 	 *
 	 * @param note the zero-based index of the note in this chord
 	 * @return the interval between bass and {@code note}
+	 * @throws IndexOutOfBoundsException if the argument does not lie
+	 *         between 0 (inclusive) and {@code size()} (exclusive)
 	 */
 	Interval heightAboveBass(int note);
+
+	/**
+	 * Returns an <em>n</em>-th inversion of this chord, where <em>n</em>
+	 * is a number between 0 (inclusive) and the chord size (exclusive).
+	 * The <em>n</em>-th inversion of a chord is such a rearrangement of
+	 * its notes that the <em>n</em>-th note (counting from the root,
+	 * which is assigned the index 0) is in the bass.
+	 * <p>
+	 * Apart from this requirement for the bass note, the exact positions
+	 * of remaining notes are un-specified, and the implementations are
+	 * free to choose the exact form.
+	 *
+	 * @param n the inversion number <em>n</em> (see above)
+	 * @return an inversion of this chord with the {@code n}-th note
+	 *         in the bass
+	 */
+	ChordType invert(int n);
+
+	/**
+	 * Returns the number of inversion of this chord.
+	 * If the notes in the chord are indexed from 0 starting with the
+	 * <em>root</em> in ascending order and wrapping down to base upon
+	 * reaching the top note, the inversion number is the index
+	 * of the <em>bass</em> note.
+	 * <p>
+	 * Equivalently, this is the argument to {@link #invert(int)} needed
+	 * to produce this chord type.
+	 *
+	 * @return the index of the bass note
+	 */
+	int inversion();
 
 	/**
 	 * Returns the root position of this chord type.
 	 * The root position of a chord is the position in which the root
 	 * note is equal to the bass note, ie. where {@code rootIndex() == 0}.
+	 * This is equivalent to calling {@code invert(0)}.
 	 *
 	 * @return the root position of this chord
 	 */
