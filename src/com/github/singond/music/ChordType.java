@@ -66,7 +66,17 @@ public interface ChordType {
 	Interval heightAboveBass(int note);
 
 	/**
-	 * Returns an <em>n</em>-th inversion of this chord, where <em>n</em>
+	 * Checks whether this chord has any non-zero inversions,
+	 * ie. whether {{@link #invert} can be called without throwing
+	 * {@code UnsupportedOperationException}.
+	 *
+	 * @return {@code true}, if calling {@link #invert} will not result
+	 *         in {@code UnsupportedOperationException}
+	 */
+	boolean invertible();
+
+	/**
+	 * Returns the <em>n</em>-th inversion of this chord, where <em>n</em>
 	 * is a number between 0 (inclusive) and the chord size (exclusive).
 	 * The <em>n</em>-th inversion of a chord is such a rearrangement of
 	 * its notes that the <em>n</em>-th note (counting from the root,
@@ -74,11 +84,14 @@ public interface ChordType {
 	 * <p>
 	 * Apart from this requirement for the bass note, the exact positions
 	 * of remaining notes are un-specified, and the implementations are
-	 * free to choose the exact form.
+	 * free to choose the exact form of the inversion.
 	 *
 	 * @param n the inversion number <em>n</em> (see above)
 	 * @return an inversion of this chord with the {@code n}-th note
 	 *         in the bass
+	 * @throws IndexOutOfBoundsException if {@code n} is not between
+	 *         0 (inclusive) and {@code size()} (exclusive)
+	 * @throws UnsupportedOperationException if this chord has no inversions
 	 */
 	ChordType invert(int n);
 
