@@ -99,6 +99,28 @@ public class ChordTypes {
 		         NonInvertibleChordType.AUGMENTED_TRIAD.rootPosition());
 	}
 
+
+	@Test
+	public void dominantSevenths() {
+		List<Interval> struct = Arrays.asList(MAJOR_THIRD, MINOR_THIRD, MINOR_THIRD);
+		checkAll(0, struct, MINOR_SEVENTH, 4, 0,
+		         SmallChordType.DOMINANT_7,
+		         SmallChordType.DOMINANT_7.invert(0),
+		         SmallChordType.DOMINANT_7.rootPosition());
+
+		struct = Arrays.asList(MINOR_THIRD, MINOR_THIRD, MAJOR_SECOND);
+		checkAll(3, struct, MINOR_SIXTH, 4, 1,
+		         SmallChordType.DOMINANT_7.invert(1));
+
+		struct = Arrays.asList(MINOR_THIRD, MAJOR_SECOND, MAJOR_THIRD);
+		checkAll(2, struct, MAJOR_SIXTH, 4, 2,
+		         SmallChordType.DOMINANT_7.invert(2));
+
+		struct = Arrays.asList(MAJOR_SECOND, MAJOR_THIRD, MINOR_THIRD);
+		checkAll(1, struct, MAJOR_SIXTH, 4, 3,
+		         SmallChordType.DOMINANT_7.invert(3));
+	}
+
 	/**
 	 * @param ch the chord under test
 	 * @param root expected value of the root index

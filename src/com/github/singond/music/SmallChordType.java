@@ -25,7 +25,9 @@ class SmallChordType implements ChordType {
 	public static final ChordType
 			MAJOR_TRIAD, MAJOR_TRIAD_6, MAJOR_TRIAD_64,
 			MINOR_TRIAD, MINOR_TRIAD_6, MINOR_TRIAD_64,
-			DIMINISHED_TRIAD, DIMINISHED_TRIAD_6, DIMINISHED_TRIAD_64;
+			DIMINISHED_TRIAD, DIMINISHED_TRIAD_6, DIMINISHED_TRIAD_64,
+			MAJOR_7, MINOR_7, DOMINANT_7,
+			DIMINISHED_7, HALF_DIMINISHED_7, MINOR_MAJOR_7, AUGMENTED_MAJOR_7;
 
 	static {
 		List<PreInvertedChord> inversions;
@@ -43,6 +45,14 @@ class SmallChordType implements ChordType {
 		DIMINISHED_TRIAD    = inversions.get(0);
 		DIMINISHED_TRIAD_6  = inversions.get(1);
 		DIMINISHED_TRIAD_64 = inversions.get(2);
+
+		MAJOR_7    = PreInvertedChord.of(MAJOR_THIRD, MINOR_THIRD, MAJOR_THIRD);
+		DOMINANT_7 = PreInvertedChord.of(MAJOR_THIRD, MINOR_THIRD, MINOR_THIRD);
+		MINOR_7       = PreInvertedChord.of(MINOR_THIRD, MAJOR_THIRD, MINOR_THIRD);
+		MINOR_MAJOR_7 = PreInvertedChord.of(MINOR_THIRD, MAJOR_THIRD, MAJOR_THIRD);
+		HALF_DIMINISHED_7 = PreInvertedChord.of(MINOR_THIRD, MINOR_THIRD, MAJOR_THIRD);
+		DIMINISHED_7      = PreInvertedChord.of(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD);
+		AUGMENTED_MAJOR_7 = PreInvertedChord.of(MAJOR_THIRD, MAJOR_THIRD, MINOR_THIRD);
 	}
 
 	private SmallChordType(List<Interval> structure, int root) {
@@ -157,6 +167,30 @@ class SmallChordType implements ChordType {
 			super(intervals, root);
 			this.inversions = inversions;
 			this.inversionNumber = inversionNumber;
+		}
+
+		/**
+		 * Returns a chord formed from the given interval structure.
+		 * The position is taken as the chord's root position.
+		 * This is equivalent to {@code inversionsOf(intervals).get(0)}.
+		 *
+		 * @param intervals the interval structure of the chord
+		 * @return chord generated from {@code intervals}
+		 */
+		static PreInvertedChord of(List<Interval> intervals) {
+			return inversionsOf(intervals).get(0);
+		}
+
+		/**
+		 * Returns a chord formed from the given interval structure.
+		 * The position is taken as the chord's root position.
+		 * This is equivalent to {@code inversionsOf(intervals).get(0)}.
+		 *
+		 * @param intervals the interval structure of the chord
+		 * @return chord generated from {@code intervals}
+		 */
+		static PreInvertedChord of(Interval... intervals) {
+			return inversionsOf(intervals).get(0);
 		}
 
 		/**
