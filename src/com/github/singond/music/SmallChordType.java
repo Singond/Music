@@ -20,6 +20,8 @@ class SmallChordType implements ChordType {
 
 	private final int root;
 
+	private final String name;
+
 	private transient Interval span;
 
 	public static final ChordType
@@ -31,31 +33,49 @@ class SmallChordType implements ChordType {
 
 	static {
 		List<PreInvertedChord> inversions;
-		inversions = PreInvertedChord.inversionsOf(MAJOR_THIRD, MINOR_THIRD);
+		inversions = PreInvertedChord.inversionsOf(
+				Arrays.asList(MAJOR_THIRD, MINOR_THIRD), "major triad", "");
 		MAJOR_TRIAD    = inversions.get(0);
 		MAJOR_TRIAD_6  = inversions.get(1);
 		MAJOR_TRIAD_64 = inversions.get(2);
 
-		inversions = PreInvertedChord.inversionsOf(MINOR_THIRD, MAJOR_THIRD);
+		inversions = PreInvertedChord.inversionsOf(
+				Arrays.asList(MINOR_THIRD, MAJOR_THIRD), "minor triad", "m");
 		MINOR_TRIAD    = inversions.get(0);
 		MINOR_TRIAD_6  = inversions.get(1);
 		MINOR_TRIAD_64 = inversions.get(2);
 
-		inversions = PreInvertedChord.inversionsOf(MINOR_THIRD, MINOR_THIRD);
+		inversions = PreInvertedChord.inversionsOf(
+				Arrays.asList(MINOR_THIRD, MINOR_THIRD), "dimished triad", "m5-");
 		DIMINISHED_TRIAD    = inversions.get(0);
 		DIMINISHED_TRIAD_6  = inversions.get(1);
 		DIMINISHED_TRIAD_64 = inversions.get(2);
 
-		MAJOR_7    = PreInvertedChord.of(MAJOR_THIRD, MINOR_THIRD, MAJOR_THIRD);
-		DOMINANT_7 = PreInvertedChord.of(MAJOR_THIRD, MINOR_THIRD, MINOR_THIRD);
-		MINOR_7       = PreInvertedChord.of(MINOR_THIRD, MAJOR_THIRD, MINOR_THIRD);
-		MINOR_MAJOR_7 = PreInvertedChord.of(MINOR_THIRD, MAJOR_THIRD, MAJOR_THIRD);
-		HALF_DIMINISHED_7 = PreInvertedChord.of(MINOR_THIRD, MINOR_THIRD, MAJOR_THIRD);
-		DIMINISHED_7      = PreInvertedChord.of(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD);
-		AUGMENTED_MAJOR_7 = PreInvertedChord.of(MAJOR_THIRD, MAJOR_THIRD, MINOR_THIRD);
+		MAJOR_7 = PreInvertedChord.of(
+				Arrays.asList(MAJOR_THIRD, MINOR_THIRD, MAJOR_THIRD),
+				"major 7th", "maj7");
+		DOMINANT_7 = PreInvertedChord.of(
+				Arrays.asList(MAJOR_THIRD, MINOR_THIRD, MINOR_THIRD),
+				"dominant 7th", "7");
+		MINOR_7 = PreInvertedChord.of(
+				Arrays.asList(MINOR_THIRD, MAJOR_THIRD, MINOR_THIRD),
+				"minor 7th", "m7");
+		MINOR_MAJOR_7 = PreInvertedChord.of(
+				Arrays.asList(MINOR_THIRD, MAJOR_THIRD, MAJOR_THIRD),
+				"minor major 7th", "m maj7");
+		HALF_DIMINISHED_7 = PreInvertedChord.of(
+				Arrays.asList(MINOR_THIRD, MINOR_THIRD, MAJOR_THIRD),
+				"half-diminished 7th", "7/5-");
+		DIMINISHED_7 = PreInvertedChord.of(
+				Arrays.asList(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD),
+				"diminished 7th", "dim");
+		AUGMENTED_MAJOR_7 = PreInvertedChord.of(
+				Arrays.asList(MAJOR_THIRD, MAJOR_THIRD, MINOR_THIRD),
+				"augmented major 7th", "7/5+");
 	}
 
-	private SmallChordType(List<Interval> structure, int root) {
+	private SmallChordType(List<Interval> structure, int root,
+	                       String name, String symbol) {
 		if (structure == null) {
 			throw new NullPointerException("The interval structure is null");
 		} else if (structure.isEmpty()) {
@@ -75,6 +95,7 @@ class SmallChordType implements ChordType {
 
 		this.structure = new ArrayList<>(structure);
 		this.root = root;
+		this.name = name;
 		this.span = span;
 	}
 
@@ -137,8 +158,7 @@ class SmallChordType implements ChordType {
 		return SimpleInterval.valueOf(degrees, semitones);
 	}
 
-	@Override
-	public String toString() {
+	public final String printStructure() {
 		StringBuilder sb = new StringBuilder();
 		int index = 0;
 		for (Interval i : structure) {
@@ -148,6 +168,11 @@ class SmallChordType implements ChordType {
 		}
 		sb.append(index == rootIndex() ? "O" : "o");
 		return sb.toString();
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 
 	/**
@@ -162,9 +187,9 @@ class SmallChordType implements ChordType {
 		private final int inversionNumber;
 
 		private PreInvertedChord(int root, List<Interval> intervals,
-		                         List<PreInvertedChord> inversions,
-		                         int inversionNumber) {
-			super(intervals, root);
+				List<PreInvertedChord> inversions, int inversionNumber,
+				String name, String symbol) {
+			super(intervals, root, name, symbol);
 			this.inversions = inversions;
 			this.inversionNumber = inversionNumber;
 		}
@@ -177,8 +202,9 @@ class SmallChordType implements ChordType {
 		 * @param intervals the interval structure of the chord
 		 * @return chord generated from {@code intervals}
 		 */
-		static PreInvertedChord of(List<Interval> intervals) {
-			return inversionsOf(intervals).get(0);
+		static PreInvertedChord of(List<Interval> intervals,
+		                           String name, String symbol) {
+			return inversionsOf(intervals, name, symbol).get(0);
 		}
 
 		/**
@@ -189,19 +215,21 @@ class SmallChordType implements ChordType {
 		 * @param intervals the interval structure of the chord
 		 * @return chord generated from {@code intervals}
 		 */
-		static PreInvertedChord of(Interval... intervals) {
-			return inversionsOf(intervals).get(0);
-		}
+//		static PreInvertedChord of(Interval... intervals) {
+//			return inversionsOf(intervals).get(0);
+//		}
 
 		/**
 		 * Returns all inversions of the root chord formed from the given
 		 * interval structure.
 		 *
 		 * @param intervals the interval structure of the root chord
+		 * @params names simple names of all inversions
 		 * @return all inversions of the root chord generated from
 		 *         {@code intervals}
 		 */
-		static List<PreInvertedChord> inversionsOf(List<Interval> intervals) {
+		static List<PreInvertedChord> inversionsOf(List<Interval> intervals,
+				final String name, String symbol) {
 			// Complete the list of structural intervals to make one octave
 			List<Interval> intv = new ArrayList<>(intervals.size() + 1);
 			intv.addAll(intervals);
@@ -211,7 +239,12 @@ class SmallChordType implements ChordType {
 			List<PreInvertedChord> inversions = new ArrayList<>(intv.size());
 			for (int i = 0; i < intv.size(); i++) {
 				int root = Math.floorMod(-i, intv.size());
-				inversions.add(new PreInvertedChord(root, curInt, inversions, i));
+				String invName = name;
+				if (i != 0) {
+					invName = name + " (inv. " + i + ")";
+				}
+				inversions.add(new PreInvertedChord
+						(root, curInt, inversions, i, invName, symbol));
 				Collections.rotate(intv, -1);	// Shift list left
 			}
 			// To protect immutability of instances, do not expose
@@ -227,9 +260,9 @@ class SmallChordType implements ChordType {
 		 * @return all inversions of the root chord generated from
 		 *         {@code intervals}
 		 */
-		static List<PreInvertedChord> inversionsOf(Interval... intervals) {
-			return inversionsOf(Arrays.asList(intervals));
-		}
+//		static List<PreInvertedChord> inversionsOf(Interval... intervals) {
+//			return inversionsOf(Arrays.asList(intervals));
+//		}
 
 
 		/**
