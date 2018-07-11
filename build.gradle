@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src']
+		}
+	}
+	test {
+		java {
+			srcDirs = ['test']
+		}
+	}
+}
+
+dependencies {
+	testCompile 'junit:junit:4.12'
+}
+
+repositories {
+	mavenCentral()
+}
+
+task printVersion {
+	group 'Help'
+	description 'Displays the project version'
+	doLast {
+		println version
+	}
+}
