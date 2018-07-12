@@ -8,6 +8,18 @@ import org.junit.Test;
 public class IntervalsTest {
 
 	@Test
+	public void listSimple() {
+		for (SimpleInterval i : SimpleInterval.values()) {
+			printInterval(i);
+		}
+	}
+
+	private void printInterval(SimpleInterval i) {
+		System.out.format("%-20s %s %2d degrees, %2d semitones%n", i.longName(),
+				i.symbol(), i.degrees(), i.semitones());
+	}
+
+	@Test
 	public void simpleIntervalSearch() {
 		simpleIntervalSearch(0, -1, null);
 		simpleIntervalSearch(0, 0, SimpleInterval.UNISON);
