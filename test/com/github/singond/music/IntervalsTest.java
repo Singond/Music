@@ -9,13 +9,19 @@ public class IntervalsTest {
 
 	@Test
 	public void listSimple() {
+		System.out.println("Simple intervals:");
 		for (SimpleInterval i : SimpleInterval.values()) {
 			printInterval(i);
 		}
 	}
 
 	private void printInterval(SimpleInterval i) {
-		System.out.format("%-20s %s %2d degrees, %2d semitones%n", i.longName(),
+		System.out.format("%-20s %-3s  %2d degrees  %2d semitones%n", i.longName(),
+				i.symbol(), i.degrees(), i.semitones());
+	}
+
+	private void printInterval(CompoundInterval i) {
+		System.out.format("%-20s %-3s  %2d degrees  %2d semitones%n", i.longName(),
 				i.symbol(), i.degrees(), i.semitones());
 	}
 
@@ -80,7 +86,7 @@ public class IntervalsTest {
 
 	private void createCompound(SimpleInterval simple, int octaves,
 	                            int degrees, int semitones) {
-		Interval fromSimple = CompoundInterval.of(simple, octaves);
+		CompoundInterval fromSimple = CompoundInterval.of(simple, octaves);
 		assertEquals("Wrong number of degrees in compound interval ",
 				degrees, fromSimple.degrees());
 		assertEquals("Wrong number of semitones in compound interval ",
@@ -88,6 +94,6 @@ public class IntervalsTest {
 		Interval fromNumbers = CompoundInterval.of(degrees, semitones);
 		assertEquals("Wrong interval created by CompoundInterval.of(int, int)",
 				fromSimple, fromNumbers);
-		System.out.println(fromSimple);
+		printInterval(fromSimple);
 	}
 }
