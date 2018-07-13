@@ -77,4 +77,18 @@ public final class CompoundInterval extends AbstractInterval implements Interval
 	public int semitones() {
 		return simple.semitones() + octaves * OCTAVE_SEMITONES;
 	}
+
+	public String longName() {
+		return simple.quality().name() + " "
+				+ NamingUtil.ordinal(intervalNumber());
+	}
+
+	public String symbol() {
+		return simple.quality().symbol() + intervalNumber();
+	}
+
+	@Override
+	public String toString() {
+		return symbol();
+	}
 }
