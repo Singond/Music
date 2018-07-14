@@ -24,9 +24,9 @@ public final class PitchClass implements Comparable<PitchClass> {
 
 	private final BasePitchClass base;
 	private final Accidental accidental;
-	
+
 	private static final int SEMITONES = 12;
-	
+
 	public static final PitchClass
 			C_DBL_FLAT, C_FLAT, C, C_SHARP, C_DBL_SHARP,
 			D_DBL_FLAT, D_FLAT, D, D_SHARP, D_DBL_SHARP,
@@ -41,44 +41,44 @@ public final class PitchClass implements Comparable<PitchClass> {
 		C           = new PitchClass(BasePitchClass.C, NATURAL);
 		C_SHARP     = new PitchClass(BasePitchClass.C, SHARP);
 		C_DBL_SHARP = new PitchClass(BasePitchClass.C, DOUBLE_SHARP);
-		
+
 		D_DBL_FLAT  = new PitchClass(BasePitchClass.D, DOUBLE_FLAT);
 		D_FLAT      = new PitchClass(BasePitchClass.D, FLAT);
 		D           = new PitchClass(BasePitchClass.D, NATURAL);
 		D_SHARP     = new PitchClass(BasePitchClass.D, SHARP);
 		D_DBL_SHARP = new PitchClass(BasePitchClass.D, DOUBLE_SHARP);
-		
+
 		E_DBL_FLAT  = new PitchClass(BasePitchClass.E, DOUBLE_FLAT);
 		E_FLAT      = new PitchClass(BasePitchClass.E, FLAT);
 		E           = new PitchClass(BasePitchClass.E, NATURAL);
 		E_SHARP     = new PitchClass(BasePitchClass.E, SHARP);
 		E_DBL_SHARP = new PitchClass(BasePitchClass.E, DOUBLE_SHARP);
-		
+
 		F_DBL_FLAT  = new PitchClass(BasePitchClass.F, DOUBLE_FLAT);
 		F_FLAT      = new PitchClass(BasePitchClass.F, FLAT);
 		F           = new PitchClass(BasePitchClass.F, NATURAL);
 		F_SHARP     = new PitchClass(BasePitchClass.F, SHARP);
 		F_DBL_SHARP = new PitchClass(BasePitchClass.F, DOUBLE_SHARP);
-		
+
 		G_DBL_FLAT  = new PitchClass(BasePitchClass.G, DOUBLE_FLAT);
 		G_FLAT      = new PitchClass(BasePitchClass.G, FLAT);
 		G           = new PitchClass(BasePitchClass.G, NATURAL);
 		G_SHARP     = new PitchClass(BasePitchClass.G, SHARP);
 		G_DBL_SHARP = new PitchClass(BasePitchClass.G, DOUBLE_SHARP);
-		
+
 		A_DBL_FLAT  = new PitchClass(BasePitchClass.A, DOUBLE_FLAT);
 		A_FLAT      = new PitchClass(BasePitchClass.A, FLAT);
 		A           = new PitchClass(BasePitchClass.A, NATURAL);
 		A_SHARP     = new PitchClass(BasePitchClass.A, SHARP);
 		A_DBL_SHARP = new PitchClass(BasePitchClass.A, DOUBLE_SHARP);
-		
+
 		B_DBL_FLAT  = new PitchClass(BasePitchClass.B, DOUBLE_FLAT);
 		B_FLAT      = new PitchClass(BasePitchClass.B, FLAT);
 		B           = new PitchClass(BasePitchClass.B, NATURAL);
 		B_SHARP     = new PitchClass(BasePitchClass.B, SHARP);
 		B_DBL_SHARP = new PitchClass(BasePitchClass.B, DOUBLE_SHARP);
 	}
-	
+
 	/*
 	 * Maps used to cache the most frequent pitch classes.
 	 */
@@ -96,7 +96,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 		doubleFlats.put(BasePitchClass.G, G_DBL_FLAT);
 		doubleFlats.put(BasePitchClass.A, A_DBL_FLAT);
 		doubleFlats.put(BasePitchClass.B, B_DBL_FLAT);
-		
+
 		flats = new EnumMap<>(BasePitchClass.class);
 		flats.put(BasePitchClass.C, C_FLAT);
 		flats.put(BasePitchClass.D, D_FLAT);
@@ -105,7 +105,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 		flats.put(BasePitchClass.G, G_FLAT);
 		flats.put(BasePitchClass.A, A_FLAT);
 		flats.put(BasePitchClass.B, B_FLAT);
-		
+
 		naturals = new EnumMap<>(BasePitchClass.class);
 		naturals.put(BasePitchClass.C, C);
 		naturals.put(BasePitchClass.D, D);
@@ -114,7 +114,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 		naturals.put(BasePitchClass.G, G);
 		naturals.put(BasePitchClass.A, A);
 		naturals.put(BasePitchClass.B, B);
-		
+
 		sharps = new EnumMap<>(BasePitchClass.class);
 		sharps.put(BasePitchClass.C, C_SHARP);
 		sharps.put(BasePitchClass.D, D_SHARP);
@@ -123,7 +123,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 		sharps.put(BasePitchClass.G, G_SHARP);
 		sharps.put(BasePitchClass.A, A_SHARP);
 		sharps.put(BasePitchClass.B, B_SHARP);
-		
+
 		doubleSharps = new EnumMap<>(BasePitchClass.class);
 		doubleSharps.put(BasePitchClass.C, C_DBL_SHARP);
 		doubleSharps.put(BasePitchClass.D, D_DBL_SHARP);
@@ -133,10 +133,10 @@ public final class PitchClass implements Comparable<PitchClass> {
 		doubleSharps.put(BasePitchClass.A, A_DBL_SHARP);
 		doubleSharps.put(BasePitchClass.B, B_DBL_SHARP);
 	}
-	
+
 	private static final Comparator<PitchClass> STRICT_COMPARATOR
 			= new StrictComparator();
-	
+
 	private static final Comparator<PitchClass> ENHARMONIC_COMPARATOR
 			= new EnharmonicComparator();
 
@@ -172,12 +172,30 @@ public final class PitchClass implements Comparable<PitchClass> {
 	}
 
 	/**
-	 * Returns the natural form of this pitch class,
-	 * e.g. for "C#" returns "C".
-	 * @return the natural of this pitch class
+	 * Returns the base of this pitch class,
+	 * e.g. for pitch class "C#" returns the base pitch class "C".
+	 *
+	 * @return the base of this pitch class
 	 */
-	public BasePitchClass naturalPitchClass() {
+	public BasePitchClass basePitchClass() {
 		return base;
+	}
+
+	/**
+	 * Returns the natural corresponding to this pitch class,
+	 * e.g. for pitch class "C#" returns the pitch class "C".
+	 * <p>
+	 * If {@link #isNatural()} returns {@code true}, this method returns
+	 * this pitch class.
+	 *
+	 * @return the natural of this pitch class, or itself (if natural already)
+	 */
+	public PitchClass natural() {
+		if (isNatural()) {
+			return this;
+		} else {
+			return of(base, Accidental.NATURAL);
+		}
 	}
 
 	/**
@@ -190,6 +208,16 @@ public final class PitchClass implements Comparable<PitchClass> {
 	}
 
 	/**
+	 * Checks whether this pitch class has no accidental
+	 * (or equivalently, whether its accidental is natural).
+	 *
+	 * @return {@code true} if the accidental is natural
+	 */
+	public boolean isNatural() {
+		return accidental.equals(NATURAL);
+	}
+
+	/**
 	 * Returns the number of semitone steps of this pitch class above the
 	 * reference pitch class, which is C.
 	 *
@@ -198,7 +226,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 	public int stepsAboveReference() {
 		return base.stepsAboveReference() + accidental.stepsAboveNatural();
 	}
-	
+
 	/**
 	 * Returns the difference between the octave of this pitch class
 	 * and the octave of its natural.
@@ -228,15 +256,15 @@ public final class PitchClass implements Comparable<PitchClass> {
 		return (stepsAboveReference() - other.stepsAboveReference())
 				% SEMITONES == 0;
 	}
-	
+
 	public PitchClass transposeUp(Interval interval) {
 		return transposeUp(interval.degrees(), interval.semitones());
 	}
-	
+
 	public PitchClass transposeDown(Interval interval) {
 		return transposeUp(-interval.degrees(), -interval.semitones());
 	}
-	
+
 	private PitchClass transposeUp(int degrees, int semitones) {
 		BasePitchClass newBase = base.advance(degrees);
 		int steps = stepsAboveReference() + semitones;
@@ -295,7 +323,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Compares another pitch class to this one.
 	 * This method orders the pitch classes in ascending order from C,
@@ -311,7 +339,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 	public int compareTo(PitchClass o) {
 		return STRICT_COMPARATOR.compare(this, o);
 	}
-	
+
 	/**
 	 * Returns a comparator which compares pitch classes based on both
 	 * their height above the reference pitch class (C) and their naturals.
@@ -328,7 +356,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 	public static Comparator<PitchClass> strictComparator() {
 		return STRICT_COMPARATOR;
 	}
-	
+
 	/**
 	 * Returns a comparator which compares pitch classes based on their
 	 * height above the reference pith class (C) only, treating enharmonic
@@ -344,7 +372,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 	public static Comparator<PitchClass> enharmonicComparator() {
 		return ENHARMONIC_COMPARATOR;
 	}
-	
+
 	/**
 	 * A comparator which compares pitch classes based on both their height
 	 * above the reference pitch class (C) and their naturals.
@@ -354,7 +382,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 * This comparator does not permit null arguments.
 	 */
 	private static class StrictComparator implements Comparator<PitchClass> {
-		
+
 		/**
 		 * @throws NullPointerException if one of the arguments is null
 		 */
@@ -372,7 +400,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 			return p1.base.compareTo(p2.base);
 		}
 	}
-	
+
 	/**
 	 * A comparator which compares pitch classes based on their height
 	 * above the reference pith class (C) only, treating enharmonic pitch
@@ -382,7 +410,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 * This comparator does not permit null arguments.
 	 */
 	private static class EnharmonicComparator implements Comparator<PitchClass> {
-		
+
 		/**
 		 * @throws NullPointerException if one of the arguments is null
 		 */
