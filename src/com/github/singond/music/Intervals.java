@@ -7,7 +7,7 @@ public final class Intervals {
 	private Intervals() {
 		throw new UnsupportedOperationException("This class cannot be instantiated");
 	}
-	
+
 	/**
 	 * Sums the given intervals.
 	 * Returns an interval whose number of diatonic degrees is the sum
@@ -55,7 +55,7 @@ public final class Intervals {
 		}
 		return valueOf(degrees, semitones);
 	}
-	
+
 	/**
 	 * Sums the given intervals.
 	 * Returns an interval whose number of diatonic degrees is the sum
@@ -81,7 +81,7 @@ public final class Intervals {
 		}
 		return valueOf(degrees, semitones);
 	}
-	
+
 	private static Interval valueOf(int degrees, int semitones) {
 		SimpleInterval simple = SimpleInterval.valueOf(degrees, semitones);
 		if (simple != null) {
@@ -90,11 +90,12 @@ public final class Intervals {
 			return new UniversalInterval(degrees, semitones);
 		}
 	}
-	
-	private static class UniversalInterval implements Interval {
+
+	// TODO Use CompoundInterval?
+	private static class UniversalInterval extends AbstractInterval {
 		private final int degrees;
 		private final int semitones;
-		
+
 		UniversalInterval(int degrees, int semitones) {
 			this.degrees = degrees;
 			this.semitones = semitones;
@@ -111,19 +112,6 @@ public final class Intervals {
 		}
 
 		@Override
-		public int intervalNumber() {
-			return degrees + 1;
-		}
-
-		@Override
-		public boolean isEnharmonicWith(Interval other) {
-			if (other == null) {
-				return false;
-			}
-			return this.degrees == other.degrees()
-			       && this.semitones == other.semitones();
-		}
-		
 		public String toString() {
 			return degrees + " degrees, " + semitones + " semitones";
 		}
