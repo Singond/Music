@@ -18,17 +18,17 @@ import java.util.Set;
  * @author Singon
  */
 abstract class SimpleKey extends AbstractKey implements Key {
-	
+
 	/**
 	 * The list of all pitch classes in this key.
 	 */
 	private final List<PitchClass> pitchClasses;
-	
+
 	/**
 	 * The list of mutual distances of the notes in ascending scale.
 	 */
 	private final List<Interval> intervals;
-	
+
 	/**
 	 * Constructs a new key with the given tonic and subsequent steps
 	 * created by adding the given intervals to the previously created note.
@@ -48,7 +48,7 @@ abstract class SimpleKey extends AbstractKey implements Key {
 		} else if (intervals == null) {
 			throw new NullPointerException("The list of intervals is null");
 		}
-		
+
 		// Construct the scale
 		pitchClasses = new ArrayList<>(1 + intervals.size());
 		pitchClasses.add(tonic);
@@ -62,7 +62,7 @@ abstract class SimpleKey extends AbstractKey implements Key {
 		if (totalInterval >=12) {
 			throw new IllegalArgumentException("The given intervals do not fit in one octave");
 		}
-		
+
 		this.intervals = new ArrayList<>(intervals);
 	}
 
@@ -93,6 +93,6 @@ abstract class SimpleKey extends AbstractKey implements Key {
 
 	@Override
 	public List<Pitch> scale(Pitch start, Pitch end) {
-		return Pitches.range(pitchClasses(), start, end);
+		return Pitches.allBetween(start, end, pitchClasses());
 	}
 }

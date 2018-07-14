@@ -18,7 +18,7 @@ public final class Pitches {
 		throw new UnsupportedOperationException(
 				"This class cannot be instantiated");
 	}
-	
+
 	/**
 	 * Given a set of pitch classes, generates a sequence of all pitches
 	 * of those pitch classes, which lie between the specified endpoints.
@@ -29,16 +29,17 @@ public final class Pitches {
 	 * than the end pitch. If the start pitch is greater than end pitch,
 	 * this order is reversed.
 	 *
-	 * @param pitchClasses the set of allowed pitch classes
 	 * @param start the starting point (inclusive, if contained in
 	 *        {@code pitchClasses})
 	 * @param end the end point (inclusive, if contained in
 	 *        {@code pitchClasses})
+	 * @param pitchClasses the set of allowed pitch classes
 	 * @return a list of pitches of {@code pitchClasses} between
 	 *         {@code start} and {@code end}, sorted in natural order
 	 *         (or reverse thereof, if start pitch is above end)
 	 */
-	static List<Pitch> range(Set<PitchClass> pitchClasses, Pitch start, Pitch end) {
+	static List<Pitch> allBetween(Pitch start, Pitch end,
+			Set<PitchClass> pitchClasses) {
 		if (start.compareTo(end) < 0) {
 			return ascending(pitchClasses, start, end);
 		} else if (start.compareTo(end) > 0) {
@@ -47,7 +48,7 @@ public final class Pitches {
 			return Collections.singletonList(start);
 		}
 	}
-	
+
 	/**
 	 * Given a set of pitch classes, generates a sequence of all pitches
 	 * of those pitch classes, which lie between the specified endpoints.
@@ -69,7 +70,7 @@ public final class Pitches {
 		List<Pitch> result = new ArrayList<>();
 		// The pattern of pitch classes to apply
 		NavigableSet<PitchClass> pattern = new TreeSet<>(pitchClasses);
-		
+
 		PitchClass current = start.pitchClass();
 		Pitch currentPitch = start;
 		if (!pattern.contains(current)) current = pattern.higher(current);
@@ -84,10 +85,10 @@ public final class Pitches {
 				current = pattern.higher(current);
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Given a set of pitch classes, generates a sequence of all pitches
 	 * of those pitch classes, which lie between the specified endpoints.
@@ -109,7 +110,7 @@ public final class Pitches {
 		List<Pitch> result = new ArrayList<>();
 		// The pattern of pitch classes to apply
 		NavigableSet<PitchClass> pattern = new TreeSet<>(pitchClasses);
-		
+
 		PitchClass current = start.pitchClass();
 		Pitch currentPitch = start;
 		if (!pattern.contains(current)) current = pattern.lower(current);
@@ -124,7 +125,7 @@ public final class Pitches {
 				current = pattern.lower(current);
 			}
 		}
-		
+
 		return result;
 	}
 }
