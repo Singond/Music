@@ -43,8 +43,8 @@ public final class CompoundInterval extends AbstractInterval implements Interval
 	 * @return an instance of {@code CompoundInterval} matching the given
 	 *         number of degrees and semitones, or {@code null} if none
 	 *         of the existing instances match
-	 * @throw IllegalArgumentException if a suitable simple interval
-	 *        cannot be found
+	 * @throws IllegalArgumentException if a suitable simple interval
+	 *         cannot be found
 	 */
 	public static final CompoundInterval of(int degrees, int semitones) {
 		if (degrees < 1) {

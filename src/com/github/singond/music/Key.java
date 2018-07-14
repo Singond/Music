@@ -36,8 +36,8 @@ public interface Key {
 	 *
 	 * @param degree the one-based index of the degree
 	 * @return the degree number {@code degree}
-	 * @throw IndexOutOfBoundsException if the number does not lie
-	 *        between 1 and the number of degrees in the key (inclusive)
+	 * @throws IndexOutOfBoundsException if the number does not lie
+	 *         between 1 and the number of degrees in the key (inclusive)
 	 */
 	PitchClass degree(int degree);
 

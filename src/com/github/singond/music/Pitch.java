@@ -17,7 +17,7 @@ public final class Pitch implements Comparable<Pitch> {
 
 	/** The pitch class */
 	private final PitchClass pitchClass;
-	
+
 	/**
 	 * The octave number in scientific pitch notation.
 	 * In scientific pitch notation, the octaves are numbered in ascending
@@ -25,37 +25,37 @@ public final class Pitch implements Comparable<Pitch> {
 	 * In this notation, the octave starting at middle C has the number 4.
 	 */
 	private final int octave;
-	
+
 	/**
 	 * The absolute pitch number, here defined as the number of semitones
 	 * above C0 in scientific notation.
 	 */
 	private final transient int pitch;
-	
+
 	/** The number of semitones in an octave */
 	private static final int SEMITONES = 12;
-	
+
 	private static final Comparator<Pitch> STRICT_COMPARATOR
 	= new StrictComparator();
-	
+
 	private static final Comparator<Pitch> ENHARMONIC_COMPARATOR
 			= new EnharmonicComparator();
-	
+
 	private Pitch(PitchClass pitchClass, int octave) {
 		this.pitchClass = pitchClass;
 		this.octave = octave;
 		this.pitch = (octave * SEMITONES) + pitchClass.stepsAboveReference();
 	}
-	
+
 	public static Pitch of(PitchClass pitchClass, int octave) {
 		return new Pitch(pitchClass, octave);
 	}
-	
+
 	public static Pitch of(BasePitchClass base, Accidental accidental,
 	                       int octave) {
 		return new Pitch(PitchClass.of(base, accidental), octave);
 	}
-	
+
 	private static Pitch ofAbsolutePitch(PitchClass pitchClass,
 	                                     int pitchNumber) {
 		int difference = pitchNumber - pitchClass.stepsAboveReference();
@@ -66,7 +66,7 @@ public final class Pitch implements Comparable<Pitch> {
 		int octave = difference / SEMITONES;	// No remainder
 		return Pitch.of(pitchClass, octave);
 	}
-	
+
 	/**
 	 * Returns the lowest pitch of a given pitch class which is strictly
 	 * higher than a specified pitch.
@@ -83,7 +83,7 @@ public final class Pitch implements Comparable<Pitch> {
 		if (modDifference == 0) modDifference += SEMITONES;
 		return Pitch.ofAbsolutePitch(target, lowerBound.pitch + modDifference);
 	}
-	
+
 	/**
 	 * Returns the lowest pitch of a given pitch class which is higher
 	 * than or equal to a specified pitch.
@@ -99,7 +99,7 @@ public final class Pitch implements Comparable<Pitch> {
 			return nearestAbove(target, lowerBound);
 		}
 	}
-	
+
 	/**
 	 * Returns the lowest pitch of a given pitch class which is higher
 	 * than or enharmonic to a specified pitch.
@@ -115,7 +115,7 @@ public final class Pitch implements Comparable<Pitch> {
 			return nearestAbove(target, lowerBound);
 		}
 	}
-	
+
 	/**
 	 * Returns the highest pitch of a given pitch class which is strictly
 	 * lower than a specified pitch.
@@ -132,7 +132,7 @@ public final class Pitch implements Comparable<Pitch> {
 		if (modDifference == 0) modDifference += SEMITONES;
 		return Pitch.ofAbsolutePitch(target, upperBound.pitch - modDifference);
 	}
-	
+
 	/**
 	 * Returns the highest pitch of a given pitch class which is lower
 	 * than or equal to a specified pitch.
@@ -148,7 +148,7 @@ public final class Pitch implements Comparable<Pitch> {
 			return nearestBelow(target, upperBound);
 		}
 	}
-	
+
 	/**
 	 * Returns the highest pitch of a given pitch class which is lower
 	 * than or enharmonic to a specified pitch.
@@ -164,7 +164,7 @@ public final class Pitch implements Comparable<Pitch> {
 			return nearestBelow(target, upperBound);
 		}
 	}
-	
+
 	/**
 	 * Returns the pitch class of this pitch.
 	 *
@@ -173,7 +173,7 @@ public final class Pitch implements Comparable<Pitch> {
 	public PitchClass pitchClass() {
 		return pitchClass;
 	}
-	
+
 	/**
 	 * Returns the octave number of the natural of this pitch in scientific
 	 * pitch notation. Note that this may not be the actual sounding octave,
@@ -189,7 +189,7 @@ public final class Pitch implements Comparable<Pitch> {
 	public int octave() {
 		return octave;
 	}
-	
+
 	/**
 	 * Returns the number of the octave (in scientific pitch notation)
 	 * containing the absolute pitch of this pitch object.
@@ -248,7 +248,7 @@ public final class Pitch implements Comparable<Pitch> {
 	 *         Pitch classes are only considered equal if they have equal
 	 *         names; that is, enharmonic pitch classes are not necessarily
 	 *         equal. For more information see {@link PitchClass#equals}.
-	 * @see {@link PitchClass#equals}
+	 * @see PitchClass#equals
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -271,7 +271,7 @@ public final class Pitch implements Comparable<Pitch> {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Returns a pitch which is the specified amount above this pitch.
 	 * The original object remains unchanged.
@@ -286,7 +286,7 @@ public final class Pitch implements Comparable<Pitch> {
 		int targetPitch = pitch + interval.semitones();
 		return ofAbsolutePitch(newPitchClass, targetPitch);
 	}
-	
+
 	/**
 	 * Returns a pitch which is the specified amount below this pitch.
 	 * The original object remains unchanged.
@@ -301,12 +301,12 @@ public final class Pitch implements Comparable<Pitch> {
 		int targetPitch = pitch - interval.semitones();
 		return ofAbsolutePitch(newPitchClass, targetPitch);
 	}
-	
+
 	@Override
 	public String toString() {
 		return pitchClass.toString() + octave;
 	}
-	
+
 	/**
 	 * Compares another pitch to this one.
 	 * This method orders the pitches in ascending order (from lowest pitch
@@ -366,14 +366,14 @@ public final class Pitch implements Comparable<Pitch> {
 	 * This comparator does not permit null arguments.
 	 */
 	private static class StrictComparator implements Comparator<Pitch> {
-		
+
 		@Override
 		public int compare(Pitch p1, Pitch p2) {
 			if (p1 == null || p2 == null) {
 				throw new NullPointerException
 						("One of the pitches being compared is null");
 			}
-			
+
 			int comparison = Integer.compare(p1.pitch, p2.pitch);
 			if (comparison != 0) {
 				return comparison;
@@ -389,7 +389,7 @@ public final class Pitch implements Comparable<Pitch> {
 			return comparison;
 		}
 	}
-	
+
 	/**
 	 * A comparator which compares pitches based on their absolute
 	 * pitch only, treating enharmonic pitches as equal

@@ -107,7 +107,7 @@ public interface Interval extends Comparable<Interval> {
 	 * For example, augmented third is not equal to perfect fourth, despite
 	 * the fact that both of these intervals have the same width.
 	 *
-	 * @param obj {@inheritDoc}
+	 * @param object {@inheritDoc}
 	 * @return {@code true} if {@code obj} is also an {@code Interval} and if
 	 *         both {@code this} and {@code obj} have equal number of semitones
 	 *         and equal number of diatonic degrees
