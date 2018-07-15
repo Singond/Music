@@ -38,7 +38,7 @@ public final class Pitches {
 	 *         {@code start} and {@code end}, sorted in natural order
 	 *         (or reverse thereof, if start pitch is above end)
 	 */
-	static List<Pitch> allBetween(Pitch start, Pitch end,
+	public static List<Pitch> allBetween(Pitch start, Pitch end,
 			Set<PitchClass> pitchClasses) {
 		if (start.compareTo(end) < 0) {
 			return ascending(pitchClasses, start, end);
