@@ -12,14 +12,14 @@ import java.util.List;
  */
 public class MinorKey extends SimpleKey implements Key {
 
-	private static final List<Interval> INTERVALS = Arrays.asList(
+	private static final List<Interval> INTERVALS = Arrays.<Interval>asList(
 			SimpleInterval.MAJOR_SECOND,
 			SimpleInterval.MINOR_SECOND,
 			SimpleInterval.MAJOR_SECOND,
 			SimpleInterval.MAJOR_SECOND,
 			SimpleInterval.MINOR_SECOND,
 			SimpleInterval.MAJOR_SECOND);
-	
+
 	public static final MinorKey A_FLAT_MINOR = new MinorKey(A_FLAT);
 	public static final MinorKey E_FLAT_MINOR = new MinorKey(E_FLAT);
 	public static final MinorKey B_FLAT_MINOR = new MinorKey(B_FLAT);
@@ -35,7 +35,7 @@ public class MinorKey extends SimpleKey implements Key {
 	public static final MinorKey G_SHARP_MINOR = new MinorKey(G_SHARP);
 	public static final MinorKey D_SHARP_MINOR = new MinorKey(D_SHARP);
 	public static final MinorKey A_SHARP_MINOR = new MinorKey(A_SHARP);
-	
+
 	public MinorKey(PitchClass tonic) {
 		super(tonic, INTERVALS);
 	}
