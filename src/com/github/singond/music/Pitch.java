@@ -79,7 +79,7 @@ public final class Pitch implements Comparable<Pitch> {
 	public static Pitch nearestAbove(PitchClass target, Pitch lowerBound) {
 		int absDifference = target.stepsAboveReference()
 				- lowerBound.pitchClass.stepsAboveReference();
-		int modDifference = Math.floorMod(absDifference, SEMITONES);
+		int modDifference = Util.floorMod(absDifference, SEMITONES);
 		if (modDifference == 0) modDifference += SEMITONES;
 		return Pitch.ofAbsolutePitch(target, lowerBound.pitch + modDifference);
 	}
@@ -128,7 +128,7 @@ public final class Pitch implements Comparable<Pitch> {
 	public static Pitch nearestBelow(PitchClass target, Pitch upperBound) {
 		int absDifference = upperBound.pitchClass.stepsAboveReference()
 				- target.stepsAboveReference();
-		int modDifference = Math.floorMod(absDifference, SEMITONES);
+		int modDifference = Util.floorMod(absDifference, SEMITONES);
 		if (modDifference == 0) modDifference += SEMITONES;
 		return Pitch.ofAbsolutePitch(target, upperBound.pitch - modDifference);
 	}

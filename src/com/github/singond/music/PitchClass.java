@@ -238,7 +238,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 	 * @return the octave number relative to natural
 	 */
 	public int relativeOctave() {
-		return Math.floorDiv(stepsAboveReference(), SEMITONES);
+		return Util.floorDiv(stepsAboveReference(), SEMITONES);
 	}
 
 	/**
@@ -269,7 +269,7 @@ public final class PitchClass implements Comparable<PitchClass> {
 		BasePitchClass newBase = base.advance(degrees);
 		int steps = stepsAboveReference() + semitones;
 		int delta = steps - newBase.stepsAboveReference();
-		int newAccidental = Math.floorMod(delta, SEMITONES);
+		int newAccidental = Util.floorMod(delta, SEMITONES);
 		if (newAccidental > SEMITONES/2) {
 			newAccidental -= SEMITONES;
 		}
