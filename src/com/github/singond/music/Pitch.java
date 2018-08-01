@@ -1,6 +1,10 @@
 package com.github.singond.music;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An exact pitch; that is a pitch class and an octave.
@@ -40,6 +44,21 @@ public final class Pitch implements Comparable<Pitch> {
 
 	private static final Comparator<Pitch> ENHARMONIC_COMPARATOR
 			= new EnharmonicComparator();
+
+	/**
+	 * Pre-cached instances of most common pitches.
+	 */
+	private static final Map<PitchClass, List<Pitch>> commonPitches;
+	static {
+		commonPitches = new HashMap<>();
+		for (PitchClass pc : PitchClass.commonPitchClasses()) {
+			List<Pitch> list = new ArrayList<>(9);
+			for (int i=0; i < 9; i++) {
+				list.add(i, new Pitch(pc, i));
+			}
+			commonPitches.put(pc, list);
+		}
+	}
 
 	/** The <em>C-double-flat</em> pitch in the 0th octave. */
 	public static final Pitch CBB0 = Pitch.of(PitchClass.C_DBL_FLAT, 0);
@@ -734,30 +753,34 @@ public final class Pitch implements Comparable<Pitch> {
 	/** The <em>B-double-sharp</em> pitch in the 8th octave. */
 	public static final Pitch BX8 = Pitch.of(PitchClass.B_DBL_SHARP, 8);
 
-	/** The <em>C-double-flat</em> pitch in the 9th octave. */
-	public static final Pitch CBB9 = Pitch.of(PitchClass.C_DBL_FLAT, 9);
-	/** The <em>C-flat</em> pitch in the 9th octave. */
-	public static final Pitch CB9 = Pitch.of(PitchClass.C_FLAT, 9);
-	/** The <em>C</em> pitch in the 9th octave. */
-	public static final Pitch C9 = Pitch.of(PitchClass.C, 9);
-	/** The <em>C-sharp</em> pitch in the 9th octave. */
-	public static final Pitch CS9 = Pitch.of(PitchClass.C_SHARP, 9);
-	/** The <em>C-double-sharp</em> pitch in the 9th octave. */
-	public static final Pitch CX9 = Pitch.of(PitchClass.C_DBL_SHARP, 9);
-
 	private Pitch(PitchClass pitchClass, int octave) {
 		this.pitchClass = pitchClass;
 		this.octave = octave;
 		this.pitch = (octave * SEMITONES) + pitchClass.stepsAboveReference();
 	}
 
+	/**
+	 * Returns a pitch of the given pitch class and the given octave.
+	 * This method returns a pre-cached value for the common pitch classes
+	 * (C, D, E, F, G, A, B, and their single and double flats and sharps)
+	 * in octaves between 0 and 8 (inclusive).
+	 *
+	 * @param pitchClass the pitch class of the pitch
+	 * @param octave the octave of the pitch
+	 * @return a pitch of {@code pitchClass} in {@code octave}
+	 */
 	public static Pitch of(PitchClass pitchClass, int octave) {
-		return new Pitch(pitchClass, octave);
+		if (commonPitches.containsKey(pitchClass)
+		    && octave >= 0 && octave < 9) {
+			return commonPitches.get(pitchClass).get(octave);
+		} else {
+			return new Pitch(pitchClass, octave);
+		}
 	}
 
 	public static Pitch of(BasePitchClass base, Accidental accidental,
 	                       int octave) {
-		return new Pitch(PitchClass.of(base, accidental), octave);
+		return Pitch.of(PitchClass.of(base, accidental), octave);
 	}
 
 	private static Pitch ofAbsolutePitch(PitchClass pitchClass,
