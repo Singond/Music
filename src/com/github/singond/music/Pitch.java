@@ -48,21 +48,25 @@ public final class Pitch implements Comparable<Pitch> {
 	/**
 	 * Pre-cached instances of most common pitches.
 	 */
-	private static final Map<BasePitchClass, List<List<Pitch>>> commonPitches;
+	private static final Map<BasePitchClass, List<Pitch>> commonPitches;
 	static {
 		commonPitches = new EnumMap<>(BasePitchClass.class);
 		for (BasePitchClass bpc : BasePitchClass.values()) {
-			List<List<Pitch>> accidentals = new ArrayList<>(5);
-			// Store accidentals in list: [bb, b, natural, #, x]
+			// Store all pitches from the same base in a single list:
+			// e.g. [Cbb0, Cb0, C0, C#0, Cx0, Cbb1, Cb1, C1, C#1, Cx1...]
+			int length = 5 * 9;
+			List<Pitch> pitches = new ArrayList<>(length);
+			for (int i = 0; i < length; i++) {
+				pitches.add(null);
+			}
 			for (int acc = 0; acc < 5; acc++) {
 				PitchClass pc = PitchClass.of(bpc, Accidental.ofSteps(acc-2));
-				List<Pitch> list = new ArrayList<>(9);
 				for (int octave = 0; octave < 9; octave++) {
-					list.add(octave, new Pitch(pc, octave));
+					int index = octave * 5 + acc;
+					pitches.set(index, new Pitch(pc, octave));
 				}
-				accidentals.add(acc, list);
 			}
-			commonPitches.put(bpc, accidentals);
+			commonPitches.put(bpc, pitches);
 		}
 	}
 
@@ -779,7 +783,7 @@ public final class Pitch implements Comparable<Pitch> {
 		int acc = pitchClass.accidental().stepsAboveNatural();
 		if (acc >= -2 && acc <= 2 && octave >= 0 && octave < 9) {
 			return commonPitches.get(pitchClass.basePitchClass())
-					.get(acc + 2).get(octave);
+					.get(octave * 5 + acc + 2);
 		} else {
 			return new Pitch(pitchClass, octave);
 		}
@@ -800,7 +804,7 @@ public final class Pitch implements Comparable<Pitch> {
 	                       int octave) {
 		int acc = accidental.stepsAboveNatural();
 		if (acc >= -2 && acc <= 2 && octave >= 0 && octave < 9) {
-			return commonPitches.get(base).get(acc + 2).get(octave);
+			return commonPitches.get(base).get(octave * 5 + acc + 2);
 		} else {
 			return new Pitch(PitchClass.of(base, accidental), octave);
 		}
