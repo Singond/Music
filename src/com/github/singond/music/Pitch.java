@@ -2,7 +2,7 @@ package com.github.singond.music;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,15 +48,21 @@ public final class Pitch implements Comparable<Pitch> {
 	/**
 	 * Pre-cached instances of most common pitches.
 	 */
-	private static final Map<PitchClass, List<Pitch>> commonPitches;
+	private static final Map<BasePitchClass, List<List<Pitch>>> commonPitches;
 	static {
-		commonPitches = new HashMap<>();
-		for (PitchClass pc : PitchClass.commonPitchClasses()) {
-			List<Pitch> list = new ArrayList<>(9);
-			for (int i=0; i < 9; i++) {
-				list.add(i, new Pitch(pc, i));
+		commonPitches = new EnumMap<>(BasePitchClass.class);
+		for (BasePitchClass bpc : BasePitchClass.values()) {
+			List<List<Pitch>> accidentals = new ArrayList<>(5);
+			// Store accidentals in list: [bb, b, natural, #, x]
+			for (int acc = 0; acc < 5; acc++) {
+				PitchClass pc = PitchClass.of(bpc, Accidental.ofSteps(acc-2));
+				List<Pitch> list = new ArrayList<>(9);
+				for (int octave = 0; octave < 9; octave++) {
+					list.add(octave, new Pitch(pc, octave));
+				}
+				accidentals.add(acc, list);
 			}
-			commonPitches.put(pc, list);
+			commonPitches.put(bpc, accidentals);
 		}
 	}
 
@@ -770,17 +776,34 @@ public final class Pitch implements Comparable<Pitch> {
 	 * @return a pitch of {@code pitchClass} in {@code octave}
 	 */
 	public static Pitch of(PitchClass pitchClass, int octave) {
-		if (commonPitches.containsKey(pitchClass)
-		    && octave >= 0 && octave < 9) {
-			return commonPitches.get(pitchClass).get(octave);
+		int acc = pitchClass.accidental().stepsAboveNatural();
+		if (acc >= -2 && acc <= 2 && octave >= 0 && octave < 9) {
+			return commonPitches.get(pitchClass.basePitchClass())
+					.get(acc + 2).get(octave);
 		} else {
 			return new Pitch(pitchClass, octave);
 		}
 	}
 
+	/**
+	 * Returns a pitch of the given pitch class and the given octave.
+	 * This method returns a pre-cached value for the common pitch classes
+	 * (C, D, E, F, G, A, B, and their single and double flats and sharps)
+	 * in octaves between 0 and 8 (inclusive).
+	 *
+	 * @param base the base pitch class of the pitch
+	 * @param accidental the accidental of the pitch
+	 * @param octave the octave of the pitch
+	 * @return a pitch of {@code pitchClass} in {@code octave}
+	 */
 	public static Pitch of(BasePitchClass base, Accidental accidental,
 	                       int octave) {
-		return Pitch.of(PitchClass.of(base, accidental), octave);
+		int acc = accidental.stepsAboveNatural();
+		if (acc >= -2 && acc <= 2 && octave >= 0 && octave < 9) {
+			return commonPitches.get(base).get(acc + 2).get(octave);
+		} else {
+			return new Pitch(PitchClass.of(base, accidental), octave);
+		}
 	}
 
 	private static Pitch ofAbsolutePitch(PitchClass pitchClass,
