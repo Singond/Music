@@ -12,7 +12,7 @@ package com.github.singond.music;
  * This order sorts the intervals with lower width in semitones before
  * the the wider intervals. If two intervals happen to have the same width,
  * that with higher number of diatonic degrees is sorted last.
- * This natural ordering is consisten with {@code equals}.
+ * This natural ordering is consistent with {@code equals}.
  *
  * @author Singon
  */
