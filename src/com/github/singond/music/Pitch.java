@@ -1,6 +1,10 @@
 package com.github.singond.music;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An exact pitch; that is a pitch class and an octave.
@@ -41,19 +45,769 @@ public final class Pitch implements Comparable<Pitch> {
 	private static final Comparator<Pitch> ENHARMONIC_COMPARATOR
 			= new EnharmonicComparator();
 
+	/**
+	 * Pre-cached instances of most common pitches.
+	 */
+	private static final Map<BasePitchClass, List<Pitch>> commonPitches;
+	static {
+		commonPitches = new EnumMap<>(BasePitchClass.class);
+		for (BasePitchClass bpc : BasePitchClass.values()) {
+			// Store all pitches from the same base in a single list:
+			// e.g. [Cbb0, Cb0, C0, C#0, Cx0, Cbb1, Cb1, C1, C#1, Cx1...]
+			int length = 5 * 9;
+			List<Pitch> pitches = new ArrayList<>(length);
+			for (int i = 0; i < length; i++) {
+				pitches.add(null);
+			}
+			for (int acc = 0; acc < 5; acc++) {
+				PitchClass pc = PitchClass.of(bpc, Accidental.ofSteps(acc-2));
+				for (int octave = 0; octave < 9; octave++) {
+					int index = octave * 5 + acc;
+					pitches.set(index, new Pitch(pc, octave));
+				}
+			}
+			commonPitches.put(bpc, pitches);
+		}
+	}
+
+	/** The <em>C-double-flat</em> pitch in the 0th octave. */
+	public static final Pitch CBB0 = Pitch.of(PitchClass.C_DBL_FLAT, 0);
+	/** The <em>C-flat</em> pitch in the 0th octave. */
+	public static final Pitch CB0 = Pitch.of(PitchClass.C_FLAT, 0);
+	/** The <em>C</em> pitch in the 0th octave. */
+	public static final Pitch C0 = Pitch.of(PitchClass.C, 0);
+	/** The <em>C-sharp</em> pitch in the 0th octave. */
+	public static final Pitch CS0 = Pitch.of(PitchClass.C_SHARP, 0);
+	/** The <em>C-double-sharp</em> pitch in the 0th octave. */
+	public static final Pitch CX0 = Pitch.of(PitchClass.C_DBL_SHARP, 0);
+
+	/** The <em>D-double-flat</em> pitch in the 0th octave. */
+	public static final Pitch DBB0 = Pitch.of(PitchClass.D_DBL_FLAT, 0);
+	/** The <em>D-flat</em> pitch in the 0th octave. */
+	public static final Pitch DB0 = Pitch.of(PitchClass.D_FLAT, 0);
+	/** The <em>D</em> pitch in the 0th octave. */
+	public static final Pitch D0 = Pitch.of(PitchClass.D, 0);
+	/** The <em>D-sharp</em> pitch in the 0th octave. */
+	public static final Pitch DS0 = Pitch.of(PitchClass.D_SHARP, 0);
+	/** The <em>D-double-sharp</em> pitch in the 0th octave. */
+	public static final Pitch DX0 = Pitch.of(PitchClass.D_DBL_SHARP, 0);
+
+	/** The <em>E-double-flat</em> pitch in the 0th octave. */
+	public static final Pitch EBB0 = Pitch.of(PitchClass.E_DBL_FLAT, 0);
+	/** The <em>E-flat</em> pitch in the 0th octave. */
+	public static final Pitch EB0 = Pitch.of(PitchClass.E_FLAT, 0);
+	/** The <em>E</em> pitch in the 0th octave. */
+	public static final Pitch E0 = Pitch.of(PitchClass.E, 0);
+	/** The <em>E-sharp</em> pitch in the 0th octave. */
+	public static final Pitch ES0 = Pitch.of(PitchClass.E_SHARP, 0);
+	/** The <em>E-double-sharp</em> pitch in the 0th octave. */
+	public static final Pitch EX0 = Pitch.of(PitchClass.E_DBL_SHARP, 0);
+
+	/** The <em>F-double-flat</em> pitch in the 0th octave. */
+	public static final Pitch FBB0 = Pitch.of(PitchClass.F_DBL_FLAT, 0);
+	/** The <em>F-flat</em> pitch in the 0th octave. */
+	public static final Pitch FB0 = Pitch.of(PitchClass.F_FLAT, 0);
+	/** The <em>F</em> pitch in the 0th octave. */
+	public static final Pitch F0 = Pitch.of(PitchClass.F, 0);
+	/** The <em>F-sharp</em> pitch in the 0th octave. */
+	public static final Pitch FS0 = Pitch.of(PitchClass.F_SHARP, 0);
+	/** The <em>F-double-sharp</em> pitch in the 0th octave. */
+	public static final Pitch FX0 = Pitch.of(PitchClass.F_DBL_SHARP, 0);
+
+	/** The <em>G-double-flat</em> pitch in the 0th octave. */
+	public static final Pitch GBB0 = Pitch.of(PitchClass.G_DBL_FLAT, 0);
+	/** The <em>G-flat</em> pitch in the 0th octave. */
+	public static final Pitch GB0 = Pitch.of(PitchClass.G_FLAT, 0);
+	/** The <em>G</em> pitch in the 0th octave. */
+	public static final Pitch G0 = Pitch.of(PitchClass.G, 0);
+	/** The <em>G-sharp</em> pitch in the 0th octave. */
+	public static final Pitch GS0 = Pitch.of(PitchClass.G_SHARP, 0);
+	/** The <em>G-double-sharp</em> pitch in the 0th octave. */
+	public static final Pitch GX0 = Pitch.of(PitchClass.G_DBL_SHARP, 0);
+
+	/** The <em>A-double-flat</em> pitch in the 0th octave. */
+	public static final Pitch ABB0 = Pitch.of(PitchClass.A_DBL_FLAT, 0);
+	/** The <em>A-flat</em> pitch in the 0th octave. */
+	public static final Pitch AB0 = Pitch.of(PitchClass.A_FLAT, 0);
+	/** The <em>A</em> pitch in the 0th octave. */
+	public static final Pitch A0 = Pitch.of(PitchClass.A, 0);
+	/** The <em>A-sharp</em> pitch in the 0th octave. */
+	public static final Pitch AS0 = Pitch.of(PitchClass.A_SHARP, 0);
+	/** The <em>A-double-sharp</em> pitch in the 0th octave. */
+	public static final Pitch AX0 = Pitch.of(PitchClass.A_DBL_SHARP, 0);
+
+	/** The <em>B-double-flat</em> pitch in the 0th octave. */
+	public static final Pitch BBB0 = Pitch.of(PitchClass.B_DBL_FLAT, 0);
+	/** The <em>B-flat</em> pitch in the 0th octave. */
+	public static final Pitch BB0 = Pitch.of(PitchClass.B_FLAT, 0);
+	/** The <em>B</em> pitch in the 0th octave. */
+	public static final Pitch B0 = Pitch.of(PitchClass.B, 0);
+	/** The <em>B-sharp</em> pitch in the 0th octave. */
+	public static final Pitch BS0 = Pitch.of(PitchClass.B_SHARP, 0);
+	/** The <em>B-double-sharp</em> pitch in the 0th octave. */
+	public static final Pitch BX0 = Pitch.of(PitchClass.B_DBL_SHARP, 0);
+
+	/** The <em>C-double-flat</em> pitch in the 1st octave. */
+	public static final Pitch CBB1 = Pitch.of(PitchClass.C_DBL_FLAT, 1);
+	/** The <em>C-flat</em> pitch in the 1st octave. */
+	public static final Pitch CB1 = Pitch.of(PitchClass.C_FLAT, 1);
+	/** The <em>C</em> pitch in the 1st octave. */
+	public static final Pitch C1 = Pitch.of(PitchClass.C, 1);
+	/** The <em>C-sharp</em> pitch in the 1st octave. */
+	public static final Pitch CS1 = Pitch.of(PitchClass.C_SHARP, 1);
+	/** The <em>C-double-sharp</em> pitch in the 1st octave. */
+	public static final Pitch CX1 = Pitch.of(PitchClass.C_DBL_SHARP, 1);
+
+	/** The <em>D-double-flat</em> pitch in the 1st octave. */
+	public static final Pitch DBB1 = Pitch.of(PitchClass.D_DBL_FLAT, 1);
+	/** The <em>D-flat</em> pitch in the 1st octave. */
+	public static final Pitch DB1 = Pitch.of(PitchClass.D_FLAT, 1);
+	/** The <em>D</em> pitch in the 1st octave. */
+	public static final Pitch D1 = Pitch.of(PitchClass.D, 1);
+	/** The <em>D-sharp</em> pitch in the 1st octave. */
+	public static final Pitch DS1 = Pitch.of(PitchClass.D_SHARP, 1);
+	/** The <em>D-double-sharp</em> pitch in the 1st octave. */
+	public static final Pitch DX1 = Pitch.of(PitchClass.D_DBL_SHARP, 1);
+
+	/** The <em>E-double-flat</em> pitch in the 1st octave. */
+	public static final Pitch EBB1 = Pitch.of(PitchClass.E_DBL_FLAT, 1);
+	/** The <em>E-flat</em> pitch in the 1st octave. */
+	public static final Pitch EB1 = Pitch.of(PitchClass.E_FLAT, 1);
+	/** The <em>E</em> pitch in the 1st octave. */
+	public static final Pitch E1 = Pitch.of(PitchClass.E, 1);
+	/** The <em>E-sharp</em> pitch in the 1st octave. */
+	public static final Pitch ES1 = Pitch.of(PitchClass.E_SHARP, 1);
+	/** The <em>E-double-sharp</em> pitch in the 1st octave. */
+	public static final Pitch EX1 = Pitch.of(PitchClass.E_DBL_SHARP, 1);
+
+	/** The <em>F-double-flat</em> pitch in the 1st octave. */
+	public static final Pitch FBB1 = Pitch.of(PitchClass.F_DBL_FLAT, 1);
+	/** The <em>F-flat</em> pitch in the 1st octave. */
+	public static final Pitch FB1 = Pitch.of(PitchClass.F_FLAT, 1);
+	/** The <em>F</em> pitch in the 1st octave. */
+	public static final Pitch F1 = Pitch.of(PitchClass.F, 1);
+	/** The <em>F-sharp</em> pitch in the 1st octave. */
+	public static final Pitch FS1 = Pitch.of(PitchClass.F_SHARP, 1);
+	/** The <em>F-double-sharp</em> pitch in the 1st octave. */
+	public static final Pitch FX1 = Pitch.of(PitchClass.F_DBL_SHARP, 1);
+
+	/** The <em>G-double-flat</em> pitch in the 1st octave. */
+	public static final Pitch GBB1 = Pitch.of(PitchClass.G_DBL_FLAT, 1);
+	/** The <em>G-flat</em> pitch in the 1st octave. */
+	public static final Pitch GB1 = Pitch.of(PitchClass.G_FLAT, 1);
+	/** The <em>G</em> pitch in the 1st octave. */
+	public static final Pitch G1 = Pitch.of(PitchClass.G, 1);
+	/** The <em>G-sharp</em> pitch in the 1st octave. */
+	public static final Pitch GS1 = Pitch.of(PitchClass.G_SHARP, 1);
+	/** The <em>G-double-sharp</em> pitch in the 1st octave. */
+	public static final Pitch GX1 = Pitch.of(PitchClass.G_DBL_SHARP, 1);
+
+	/** The <em>A-double-flat</em> pitch in the 1st octave. */
+	public static final Pitch ABB1 = Pitch.of(PitchClass.A_DBL_FLAT, 1);
+	/** The <em>A-flat</em> pitch in the 1st octave. */
+	public static final Pitch AB1 = Pitch.of(PitchClass.A_FLAT, 1);
+	/** The <em>A</em> pitch in the 1st octave. */
+	public static final Pitch A1 = Pitch.of(PitchClass.A, 1);
+	/** The <em>A-sharp</em> pitch in the 1st octave. */
+	public static final Pitch AS1 = Pitch.of(PitchClass.A_SHARP, 1);
+	/** The <em>A-double-sharp</em> pitch in the 1st octave. */
+	public static final Pitch AX1 = Pitch.of(PitchClass.A_DBL_SHARP, 1);
+
+	/** The <em>B-double-flat</em> pitch in the 1st octave. */
+	public static final Pitch BBB1 = Pitch.of(PitchClass.B_DBL_FLAT, 1);
+	/** The <em>B-flat</em> pitch in the 1st octave. */
+	public static final Pitch BB1 = Pitch.of(PitchClass.B_FLAT, 1);
+	/** The <em>B</em> pitch in the 1st octave. */
+	public static final Pitch B1 = Pitch.of(PitchClass.B, 1);
+	/** The <em>B-sharp</em> pitch in the 1st octave. */
+	public static final Pitch BS1 = Pitch.of(PitchClass.B_SHARP, 1);
+	/** The <em>B-double-sharp</em> pitch in the 1st octave. */
+	public static final Pitch BX1 = Pitch.of(PitchClass.B_DBL_SHARP, 1);
+
+	/** The <em>C-double-flat</em> pitch in the 2nd octave. */
+	public static final Pitch CBB2 = Pitch.of(PitchClass.C_DBL_FLAT, 2);
+	/** The <em>C-flat</em> pitch in the 2nd octave. */
+	public static final Pitch CB2 = Pitch.of(PitchClass.C_FLAT, 2);
+	/** The <em>C</em> pitch in the 2nd octave. */
+	public static final Pitch C2 = Pitch.of(PitchClass.C, 2);
+	/** The <em>C-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch CS2 = Pitch.of(PitchClass.C_SHARP, 2);
+	/** The <em>C-double-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch CX2 = Pitch.of(PitchClass.C_DBL_SHARP, 2);
+
+	/** The <em>D-double-flat</em> pitch in the 2nd octave. */
+	public static final Pitch DBB2 = Pitch.of(PitchClass.D_DBL_FLAT, 2);
+	/** The <em>D-flat</em> pitch in the 2nd octave. */
+	public static final Pitch DB2 = Pitch.of(PitchClass.D_FLAT, 2);
+	/** The <em>D</em> pitch in the 2nd octave. */
+	public static final Pitch D2 = Pitch.of(PitchClass.D, 2);
+	/** The <em>D-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch DS2 = Pitch.of(PitchClass.D_SHARP, 2);
+	/** The <em>D-double-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch DX2 = Pitch.of(PitchClass.D_DBL_SHARP, 2);
+
+	/** The <em>E-double-flat</em> pitch in the 2nd octave. */
+	public static final Pitch EBB2 = Pitch.of(PitchClass.E_DBL_FLAT, 2);
+	/** The <em>E-flat</em> pitch in the 2nd octave. */
+	public static final Pitch EB2 = Pitch.of(PitchClass.E_FLAT, 2);
+	/** The <em>E</em> pitch in the 2nd octave. */
+	public static final Pitch E2 = Pitch.of(PitchClass.E, 2);
+	/** The <em>E-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch ES2 = Pitch.of(PitchClass.E_SHARP, 2);
+	/** The <em>E-double-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch EX2 = Pitch.of(PitchClass.E_DBL_SHARP, 2);
+
+	/** The <em>F-double-flat</em> pitch in the 2nd octave. */
+	public static final Pitch FBB2 = Pitch.of(PitchClass.F_DBL_FLAT, 2);
+	/** The <em>F-flat</em> pitch in the 2nd octave. */
+	public static final Pitch FB2 = Pitch.of(PitchClass.F_FLAT, 2);
+	/** The <em>F</em> pitch in the 2nd octave. */
+	public static final Pitch F2 = Pitch.of(PitchClass.F, 2);
+	/** The <em>F-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch FS2 = Pitch.of(PitchClass.F_SHARP, 2);
+	/** The <em>F-double-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch FX2 = Pitch.of(PitchClass.F_DBL_SHARP, 2);
+
+	/** The <em>G-double-flat</em> pitch in the 2nd octave. */
+	public static final Pitch GBB2 = Pitch.of(PitchClass.G_DBL_FLAT, 2);
+	/** The <em>G-flat</em> pitch in the 2nd octave. */
+	public static final Pitch GB2 = Pitch.of(PitchClass.G_FLAT, 2);
+	/** The <em>G</em> pitch in the 2nd octave. */
+	public static final Pitch G2 = Pitch.of(PitchClass.G, 2);
+	/** The <em>G-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch GS2 = Pitch.of(PitchClass.G_SHARP, 2);
+	/** The <em>G-double-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch GX2 = Pitch.of(PitchClass.G_DBL_SHARP, 2);
+
+	/** The <em>A-double-flat</em> pitch in the 2nd octave. */
+	public static final Pitch ABB2 = Pitch.of(PitchClass.A_DBL_FLAT, 2);
+	/** The <em>A-flat</em> pitch in the 2nd octave. */
+	public static final Pitch AB2 = Pitch.of(PitchClass.A_FLAT, 2);
+	/** The <em>A</em> pitch in the 2nd octave. */
+	public static final Pitch A2 = Pitch.of(PitchClass.A, 2);
+	/** The <em>A-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch AS2 = Pitch.of(PitchClass.A_SHARP, 2);
+	/** The <em>A-double-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch AX2 = Pitch.of(PitchClass.A_DBL_SHARP, 2);
+
+	/** The <em>B-double-flat</em> pitch in the 2nd octave. */
+	public static final Pitch BBB2 = Pitch.of(PitchClass.B_DBL_FLAT, 2);
+	/** The <em>B-flat</em> pitch in the 2nd octave. */
+	public static final Pitch BB2 = Pitch.of(PitchClass.B_FLAT, 2);
+	/** The <em>B</em> pitch in the 2nd octave. */
+	public static final Pitch B2 = Pitch.of(PitchClass.B, 2);
+	/** The <em>B-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch BS2 = Pitch.of(PitchClass.B_SHARP, 2);
+	/** The <em>B-double-sharp</em> pitch in the 2nd octave. */
+	public static final Pitch BX2 = Pitch.of(PitchClass.B_DBL_SHARP, 2);
+
+	/** The <em>C-double-flat</em> pitch in the 3rd octave. */
+	public static final Pitch CBB3 = Pitch.of(PitchClass.C_DBL_FLAT, 3);
+	/** The <em>C-flat</em> pitch in the 3rd octave. */
+	public static final Pitch CB3 = Pitch.of(PitchClass.C_FLAT, 3);
+	/** The <em>C</em> pitch in the 3rd octave. */
+	public static final Pitch C3 = Pitch.of(PitchClass.C, 3);
+	/** The <em>C-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch CS3 = Pitch.of(PitchClass.C_SHARP, 3);
+	/** The <em>C-double-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch CX3 = Pitch.of(PitchClass.C_DBL_SHARP, 3);
+
+	/** The <em>D-double-flat</em> pitch in the 3rd octave. */
+	public static final Pitch DBB3 = Pitch.of(PitchClass.D_DBL_FLAT, 3);
+	/** The <em>D-flat</em> pitch in the 3rd octave. */
+	public static final Pitch DB3 = Pitch.of(PitchClass.D_FLAT, 3);
+	/** The <em>D</em> pitch in the 3rd octave. */
+	public static final Pitch D3 = Pitch.of(PitchClass.D, 3);
+	/** The <em>D-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch DS3 = Pitch.of(PitchClass.D_SHARP, 3);
+	/** The <em>D-double-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch DX3 = Pitch.of(PitchClass.D_DBL_SHARP, 3);
+
+	/** The <em>E-double-flat</em> pitch in the 3rd octave. */
+	public static final Pitch EBB3 = Pitch.of(PitchClass.E_DBL_FLAT, 3);
+	/** The <em>E-flat</em> pitch in the 3rd octave. */
+	public static final Pitch EB3 = Pitch.of(PitchClass.E_FLAT, 3);
+	/** The <em>E</em> pitch in the 3rd octave. */
+	public static final Pitch E3 = Pitch.of(PitchClass.E, 3);
+	/** The <em>E-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch ES3 = Pitch.of(PitchClass.E_SHARP, 3);
+	/** The <em>E-double-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch EX3 = Pitch.of(PitchClass.E_DBL_SHARP, 3);
+
+	/** The <em>F-double-flat</em> pitch in the 3rd octave. */
+	public static final Pitch FBB3 = Pitch.of(PitchClass.F_DBL_FLAT, 3);
+	/** The <em>F-flat</em> pitch in the 3rd octave. */
+	public static final Pitch FB3 = Pitch.of(PitchClass.F_FLAT, 3);
+	/** The <em>F</em> pitch in the 3rd octave. */
+	public static final Pitch F3 = Pitch.of(PitchClass.F, 3);
+	/** The <em>F-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch FS3 = Pitch.of(PitchClass.F_SHARP, 3);
+	/** The <em>F-double-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch FX3 = Pitch.of(PitchClass.F_DBL_SHARP, 3);
+
+	/** The <em>G-double-flat</em> pitch in the 3rd octave. */
+	public static final Pitch GBB3 = Pitch.of(PitchClass.G_DBL_FLAT, 3);
+	/** The <em>G-flat</em> pitch in the 3rd octave. */
+	public static final Pitch GB3 = Pitch.of(PitchClass.G_FLAT, 3);
+	/** The <em>G</em> pitch in the 3rd octave. */
+	public static final Pitch G3 = Pitch.of(PitchClass.G, 3);
+	/** The <em>G-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch GS3 = Pitch.of(PitchClass.G_SHARP, 3);
+	/** The <em>G-double-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch GX3 = Pitch.of(PitchClass.G_DBL_SHARP, 3);
+
+	/** The <em>A-double-flat</em> pitch in the 3rd octave. */
+	public static final Pitch ABB3 = Pitch.of(PitchClass.A_DBL_FLAT, 3);
+	/** The <em>A-flat</em> pitch in the 3rd octave. */
+	public static final Pitch AB3 = Pitch.of(PitchClass.A_FLAT, 3);
+	/** The <em>A</em> pitch in the 3rd octave. */
+	public static final Pitch A3 = Pitch.of(PitchClass.A, 3);
+	/** The <em>A-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch AS3 = Pitch.of(PitchClass.A_SHARP, 3);
+	/** The <em>A-double-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch AX3 = Pitch.of(PitchClass.A_DBL_SHARP, 3);
+
+	/** The <em>B-double-flat</em> pitch in the 3rd octave. */
+	public static final Pitch BBB3 = Pitch.of(PitchClass.B_DBL_FLAT, 3);
+	/** The <em>B-flat</em> pitch in the 3rd octave. */
+	public static final Pitch BB3 = Pitch.of(PitchClass.B_FLAT, 3);
+	/** The <em>B</em> pitch in the 3rd octave. */
+	public static final Pitch B3 = Pitch.of(PitchClass.B, 3);
+	/** The <em>B-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch BS3 = Pitch.of(PitchClass.B_SHARP, 3);
+	/** The <em>B-double-sharp</em> pitch in the 3rd octave. */
+	public static final Pitch BX3 = Pitch.of(PitchClass.B_DBL_SHARP, 3);
+
+	/** The <em>C-double-flat</em> pitch in the 4th octave. */
+	public static final Pitch CBB4 = Pitch.of(PitchClass.C_DBL_FLAT, 4);
+	/** The <em>C-flat</em> pitch in the 4th octave. */
+	public static final Pitch CB4 = Pitch.of(PitchClass.C_FLAT, 4);
+	/** The <em>C</em> pitch in the 4th octave. */
+	public static final Pitch C4 = Pitch.of(PitchClass.C, 4);
+	/** The <em>C-sharp</em> pitch in the 4th octave. */
+	public static final Pitch CS4 = Pitch.of(PitchClass.C_SHARP, 4);
+	/** The <em>C-double-sharp</em> pitch in the 4th octave. */
+	public static final Pitch CX4 = Pitch.of(PitchClass.C_DBL_SHARP, 4);
+
+	/** The <em>D-double-flat</em> pitch in the 4th octave. */
+	public static final Pitch DBB4 = Pitch.of(PitchClass.D_DBL_FLAT, 4);
+	/** The <em>D-flat</em> pitch in the 4th octave. */
+	public static final Pitch DB4 = Pitch.of(PitchClass.D_FLAT, 4);
+	/** The <em>D</em> pitch in the 4th octave. */
+	public static final Pitch D4 = Pitch.of(PitchClass.D, 4);
+	/** The <em>D-sharp</em> pitch in the 4th octave. */
+	public static final Pitch DS4 = Pitch.of(PitchClass.D_SHARP, 4);
+	/** The <em>D-double-sharp</em> pitch in the 4th octave. */
+	public static final Pitch DX4 = Pitch.of(PitchClass.D_DBL_SHARP, 4);
+
+	/** The <em>E-double-flat</em> pitch in the 4th octave. */
+	public static final Pitch EBB4 = Pitch.of(PitchClass.E_DBL_FLAT, 4);
+	/** The <em>E-flat</em> pitch in the 4th octave. */
+	public static final Pitch EB4 = Pitch.of(PitchClass.E_FLAT, 4);
+	/** The <em>E</em> pitch in the 4th octave. */
+	public static final Pitch E4 = Pitch.of(PitchClass.E, 4);
+	/** The <em>E-sharp</em> pitch in the 4th octave. */
+	public static final Pitch ES4 = Pitch.of(PitchClass.E_SHARP, 4);
+	/** The <em>E-double-sharp</em> pitch in the 4th octave. */
+	public static final Pitch EX4 = Pitch.of(PitchClass.E_DBL_SHARP, 4);
+
+	/** The <em>F-double-flat</em> pitch in the 4th octave. */
+	public static final Pitch FBB4 = Pitch.of(PitchClass.F_DBL_FLAT, 4);
+	/** The <em>F-flat</em> pitch in the 4th octave. */
+	public static final Pitch FB4 = Pitch.of(PitchClass.F_FLAT, 4);
+	/** The <em>F</em> pitch in the 4th octave. */
+	public static final Pitch F4 = Pitch.of(PitchClass.F, 4);
+	/** The <em>F-sharp</em> pitch in the 4th octave. */
+	public static final Pitch FS4 = Pitch.of(PitchClass.F_SHARP, 4);
+	/** The <em>F-double-sharp</em> pitch in the 4th octave. */
+	public static final Pitch FX4 = Pitch.of(PitchClass.F_DBL_SHARP, 4);
+
+	/** The <em>G-double-flat</em> pitch in the 4th octave. */
+	public static final Pitch GBB4 = Pitch.of(PitchClass.G_DBL_FLAT, 4);
+	/** The <em>G-flat</em> pitch in the 4th octave. */
+	public static final Pitch GB4 = Pitch.of(PitchClass.G_FLAT, 4);
+	/** The <em>G</em> pitch in the 4th octave. */
+	public static final Pitch G4 = Pitch.of(PitchClass.G, 4);
+	/** The <em>G-sharp</em> pitch in the 4th octave. */
+	public static final Pitch GS4 = Pitch.of(PitchClass.G_SHARP, 4);
+	/** The <em>G-double-sharp</em> pitch in the 4th octave. */
+	public static final Pitch GX4 = Pitch.of(PitchClass.G_DBL_SHARP, 4);
+
+	/** The <em>A-double-flat</em> pitch in the 4th octave. */
+	public static final Pitch ABB4 = Pitch.of(PitchClass.A_DBL_FLAT, 4);
+	/** The <em>A-flat</em> pitch in the 4th octave. */
+	public static final Pitch AB4 = Pitch.of(PitchClass.A_FLAT, 4);
+	/** The <em>A</em> pitch in the 4th octave. */
+	public static final Pitch A4 = Pitch.of(PitchClass.A, 4);
+	/** The <em>A-sharp</em> pitch in the 4th octave. */
+	public static final Pitch AS4 = Pitch.of(PitchClass.A_SHARP, 4);
+	/** The <em>A-double-sharp</em> pitch in the 4th octave. */
+	public static final Pitch AX4 = Pitch.of(PitchClass.A_DBL_SHARP, 4);
+
+	/** The <em>B-double-flat</em> pitch in the 4th octave. */
+	public static final Pitch BBB4 = Pitch.of(PitchClass.B_DBL_FLAT, 4);
+	/** The <em>B-flat</em> pitch in the 4th octave. */
+	public static final Pitch BB4 = Pitch.of(PitchClass.B_FLAT, 4);
+	/** The <em>B</em> pitch in the 4th octave. */
+	public static final Pitch B4 = Pitch.of(PitchClass.B, 4);
+	/** The <em>B-sharp</em> pitch in the 4th octave. */
+	public static final Pitch BS4 = Pitch.of(PitchClass.B_SHARP, 4);
+	/** The <em>B-double-sharp</em> pitch in the 4th octave. */
+	public static final Pitch BX4 = Pitch.of(PitchClass.B_DBL_SHARP, 4);
+
+	/** The <em>C-double-flat</em> pitch in the 5th octave. */
+	public static final Pitch CBB5 = Pitch.of(PitchClass.C_DBL_FLAT, 5);
+	/** The <em>C-flat</em> pitch in the 5th octave. */
+	public static final Pitch CB5 = Pitch.of(PitchClass.C_FLAT, 5);
+	/** The <em>C</em> pitch in the 5th octave. */
+	public static final Pitch C5 = Pitch.of(PitchClass.C, 5);
+	/** The <em>C-sharp</em> pitch in the 5th octave. */
+	public static final Pitch CS5 = Pitch.of(PitchClass.C_SHARP, 5);
+	/** The <em>C-double-sharp</em> pitch in the 5th octave. */
+	public static final Pitch CX5 = Pitch.of(PitchClass.C_DBL_SHARP, 5);
+
+	/** The <em>D-double-flat</em> pitch in the 5th octave. */
+	public static final Pitch DBB5 = Pitch.of(PitchClass.D_DBL_FLAT, 5);
+	/** The <em>D-flat</em> pitch in the 5th octave. */
+	public static final Pitch DB5 = Pitch.of(PitchClass.D_FLAT, 5);
+	/** The <em>D</em> pitch in the 5th octave. */
+	public static final Pitch D5 = Pitch.of(PitchClass.D, 5);
+	/** The <em>D-sharp</em> pitch in the 5th octave. */
+	public static final Pitch DS5 = Pitch.of(PitchClass.D_SHARP, 5);
+	/** The <em>D-double-sharp</em> pitch in the 5th octave. */
+	public static final Pitch DX5 = Pitch.of(PitchClass.D_DBL_SHARP, 5);
+
+	/** The <em>E-double-flat</em> pitch in the 5th octave. */
+	public static final Pitch EBB5 = Pitch.of(PitchClass.E_DBL_FLAT, 5);
+	/** The <em>E-flat</em> pitch in the 5th octave. */
+	public static final Pitch EB5 = Pitch.of(PitchClass.E_FLAT, 5);
+	/** The <em>E</em> pitch in the 5th octave. */
+	public static final Pitch E5 = Pitch.of(PitchClass.E, 5);
+	/** The <em>E-sharp</em> pitch in the 5th octave. */
+	public static final Pitch ES5 = Pitch.of(PitchClass.E_SHARP, 5);
+	/** The <em>E-double-sharp</em> pitch in the 5th octave. */
+	public static final Pitch EX5 = Pitch.of(PitchClass.E_DBL_SHARP, 5);
+
+	/** The <em>F-double-flat</em> pitch in the 5th octave. */
+	public static final Pitch FBB5 = Pitch.of(PitchClass.F_DBL_FLAT, 5);
+	/** The <em>F-flat</em> pitch in the 5th octave. */
+	public static final Pitch FB5 = Pitch.of(PitchClass.F_FLAT, 5);
+	/** The <em>F</em> pitch in the 5th octave. */
+	public static final Pitch F5 = Pitch.of(PitchClass.F, 5);
+	/** The <em>F-sharp</em> pitch in the 5th octave. */
+	public static final Pitch FS5 = Pitch.of(PitchClass.F_SHARP, 5);
+	/** The <em>F-double-sharp</em> pitch in the 5th octave. */
+	public static final Pitch FX5 = Pitch.of(PitchClass.F_DBL_SHARP, 5);
+
+	/** The <em>G-double-flat</em> pitch in the 5th octave. */
+	public static final Pitch GBB5 = Pitch.of(PitchClass.G_DBL_FLAT, 5);
+	/** The <em>G-flat</em> pitch in the 5th octave. */
+	public static final Pitch GB5 = Pitch.of(PitchClass.G_FLAT, 5);
+	/** The <em>G</em> pitch in the 5th octave. */
+	public static final Pitch G5 = Pitch.of(PitchClass.G, 5);
+	/** The <em>G-sharp</em> pitch in the 5th octave. */
+	public static final Pitch GS5 = Pitch.of(PitchClass.G_SHARP, 5);
+	/** The <em>G-double-sharp</em> pitch in the 5th octave. */
+	public static final Pitch GX5 = Pitch.of(PitchClass.G_DBL_SHARP, 5);
+
+	/** The <em>A-double-flat</em> pitch in the 5th octave. */
+	public static final Pitch ABB5 = Pitch.of(PitchClass.A_DBL_FLAT, 5);
+	/** The <em>A-flat</em> pitch in the 5th octave. */
+	public static final Pitch AB5 = Pitch.of(PitchClass.A_FLAT, 5);
+	/** The <em>A</em> pitch in the 5th octave. */
+	public static final Pitch A5 = Pitch.of(PitchClass.A, 5);
+	/** The <em>A-sharp</em> pitch in the 5th octave. */
+	public static final Pitch AS5 = Pitch.of(PitchClass.A_SHARP, 5);
+	/** The <em>A-double-sharp</em> pitch in the 5th octave. */
+	public static final Pitch AX5 = Pitch.of(PitchClass.A_DBL_SHARP, 5);
+
+	/** The <em>B-double-flat</em> pitch in the 5th octave. */
+	public static final Pitch BBB5 = Pitch.of(PitchClass.B_DBL_FLAT, 5);
+	/** The <em>B-flat</em> pitch in the 5th octave. */
+	public static final Pitch BB5 = Pitch.of(PitchClass.B_FLAT, 5);
+	/** The <em>B</em> pitch in the 5th octave. */
+	public static final Pitch B5 = Pitch.of(PitchClass.B, 5);
+	/** The <em>B-sharp</em> pitch in the 5th octave. */
+	public static final Pitch BS5 = Pitch.of(PitchClass.B_SHARP, 5);
+	/** The <em>B-double-sharp</em> pitch in the 5th octave. */
+	public static final Pitch BX5 = Pitch.of(PitchClass.B_DBL_SHARP, 5);
+
+	/** The <em>C-double-flat</em> pitch in the 6th octave. */
+	public static final Pitch CBB6 = Pitch.of(PitchClass.C_DBL_FLAT, 6);
+	/** The <em>C-flat</em> pitch in the 6th octave. */
+	public static final Pitch CB6 = Pitch.of(PitchClass.C_FLAT, 6);
+	/** The <em>C</em> pitch in the 6th octave. */
+	public static final Pitch C6 = Pitch.of(PitchClass.C, 6);
+	/** The <em>C-sharp</em> pitch in the 6th octave. */
+	public static final Pitch CS6 = Pitch.of(PitchClass.C_SHARP, 6);
+	/** The <em>C-double-sharp</em> pitch in the 6th octave. */
+	public static final Pitch CX6 = Pitch.of(PitchClass.C_DBL_SHARP, 6);
+
+	/** The <em>D-double-flat</em> pitch in the 6th octave. */
+	public static final Pitch DBB6 = Pitch.of(PitchClass.D_DBL_FLAT, 6);
+	/** The <em>D-flat</em> pitch in the 6th octave. */
+	public static final Pitch DB6 = Pitch.of(PitchClass.D_FLAT, 6);
+	/** The <em>D</em> pitch in the 6th octave. */
+	public static final Pitch D6 = Pitch.of(PitchClass.D, 6);
+	/** The <em>D-sharp</em> pitch in the 6th octave. */
+	public static final Pitch DS6 = Pitch.of(PitchClass.D_SHARP, 6);
+	/** The <em>D-double-sharp</em> pitch in the 6th octave. */
+	public static final Pitch DX6 = Pitch.of(PitchClass.D_DBL_SHARP, 6);
+
+	/** The <em>E-double-flat</em> pitch in the 6th octave. */
+	public static final Pitch EBB6 = Pitch.of(PitchClass.E_DBL_FLAT, 6);
+	/** The <em>E-flat</em> pitch in the 6th octave. */
+	public static final Pitch EB6 = Pitch.of(PitchClass.E_FLAT, 6);
+	/** The <em>E</em> pitch in the 6th octave. */
+	public static final Pitch E6 = Pitch.of(PitchClass.E, 6);
+	/** The <em>E-sharp</em> pitch in the 6th octave. */
+	public static final Pitch ES6 = Pitch.of(PitchClass.E_SHARP, 6);
+	/** The <em>E-double-sharp</em> pitch in the 6th octave. */
+	public static final Pitch EX6 = Pitch.of(PitchClass.E_DBL_SHARP, 6);
+
+	/** The <em>F-double-flat</em> pitch in the 6th octave. */
+	public static final Pitch FBB6 = Pitch.of(PitchClass.F_DBL_FLAT, 6);
+	/** The <em>F-flat</em> pitch in the 6th octave. */
+	public static final Pitch FB6 = Pitch.of(PitchClass.F_FLAT, 6);
+	/** The <em>F</em> pitch in the 6th octave. */
+	public static final Pitch F6 = Pitch.of(PitchClass.F, 6);
+	/** The <em>F-sharp</em> pitch in the 6th octave. */
+	public static final Pitch FS6 = Pitch.of(PitchClass.F_SHARP, 6);
+	/** The <em>F-double-sharp</em> pitch in the 6th octave. */
+	public static final Pitch FX6 = Pitch.of(PitchClass.F_DBL_SHARP, 6);
+
+	/** The <em>G-double-flat</em> pitch in the 6th octave. */
+	public static final Pitch GBB6 = Pitch.of(PitchClass.G_DBL_FLAT, 6);
+	/** The <em>G-flat</em> pitch in the 6th octave. */
+	public static final Pitch GB6 = Pitch.of(PitchClass.G_FLAT, 6);
+	/** The <em>G</em> pitch in the 6th octave. */
+	public static final Pitch G6 = Pitch.of(PitchClass.G, 6);
+	/** The <em>G-sharp</em> pitch in the 6th octave. */
+	public static final Pitch GS6 = Pitch.of(PitchClass.G_SHARP, 6);
+	/** The <em>G-double-sharp</em> pitch in the 6th octave. */
+	public static final Pitch GX6 = Pitch.of(PitchClass.G_DBL_SHARP, 6);
+
+	/** The <em>A-double-flat</em> pitch in the 6th octave. */
+	public static final Pitch ABB6 = Pitch.of(PitchClass.A_DBL_FLAT, 6);
+	/** The <em>A-flat</em> pitch in the 6th octave. */
+	public static final Pitch AB6 = Pitch.of(PitchClass.A_FLAT, 6);
+	/** The <em>A</em> pitch in the 6th octave. */
+	public static final Pitch A6 = Pitch.of(PitchClass.A, 6);
+	/** The <em>A-sharp</em> pitch in the 6th octave. */
+	public static final Pitch AS6 = Pitch.of(PitchClass.A_SHARP, 6);
+	/** The <em>A-double-sharp</em> pitch in the 6th octave. */
+	public static final Pitch AX6 = Pitch.of(PitchClass.A_DBL_SHARP, 6);
+
+	/** The <em>B-double-flat</em> pitch in the 6th octave. */
+	public static final Pitch BBB6 = Pitch.of(PitchClass.B_DBL_FLAT, 6);
+	/** The <em>B-flat</em> pitch in the 6th octave. */
+	public static final Pitch BB6 = Pitch.of(PitchClass.B_FLAT, 6);
+	/** The <em>B</em> pitch in the 6th octave. */
+	public static final Pitch B6 = Pitch.of(PitchClass.B, 6);
+	/** The <em>B-sharp</em> pitch in the 6th octave. */
+	public static final Pitch BS6 = Pitch.of(PitchClass.B_SHARP, 6);
+	/** The <em>B-double-sharp</em> pitch in the 6th octave. */
+	public static final Pitch BX6 = Pitch.of(PitchClass.B_DBL_SHARP, 6);
+
+	/** The <em>C-double-flat</em> pitch in the 7th octave. */
+	public static final Pitch CBB7 = Pitch.of(PitchClass.C_DBL_FLAT, 7);
+	/** The <em>C-flat</em> pitch in the 7th octave. */
+	public static final Pitch CB7 = Pitch.of(PitchClass.C_FLAT, 7);
+	/** The <em>C</em> pitch in the 7th octave. */
+	public static final Pitch C7 = Pitch.of(PitchClass.C, 7);
+	/** The <em>C-sharp</em> pitch in the 7th octave. */
+	public static final Pitch CS7 = Pitch.of(PitchClass.C_SHARP, 7);
+	/** The <em>C-double-sharp</em> pitch in the 7th octave. */
+	public static final Pitch CX7 = Pitch.of(PitchClass.C_DBL_SHARP, 7);
+
+	/** The <em>D-double-flat</em> pitch in the 7th octave. */
+	public static final Pitch DBB7 = Pitch.of(PitchClass.D_DBL_FLAT, 7);
+	/** The <em>D-flat</em> pitch in the 7th octave. */
+	public static final Pitch DB7 = Pitch.of(PitchClass.D_FLAT, 7);
+	/** The <em>D</em> pitch in the 7th octave. */
+	public static final Pitch D7 = Pitch.of(PitchClass.D, 7);
+	/** The <em>D-sharp</em> pitch in the 7th octave. */
+	public static final Pitch DS7 = Pitch.of(PitchClass.D_SHARP, 7);
+	/** The <em>D-double-sharp</em> pitch in the 7th octave. */
+	public static final Pitch DX7 = Pitch.of(PitchClass.D_DBL_SHARP, 7);
+
+	/** The <em>E-double-flat</em> pitch in the 7th octave. */
+	public static final Pitch EBB7 = Pitch.of(PitchClass.E_DBL_FLAT, 7);
+	/** The <em>E-flat</em> pitch in the 7th octave. */
+	public static final Pitch EB7 = Pitch.of(PitchClass.E_FLAT, 7);
+	/** The <em>E</em> pitch in the 7th octave. */
+	public static final Pitch E7 = Pitch.of(PitchClass.E, 7);
+	/** The <em>E-sharp</em> pitch in the 7th octave. */
+	public static final Pitch ES7 = Pitch.of(PitchClass.E_SHARP, 7);
+	/** The <em>E-double-sharp</em> pitch in the 7th octave. */
+	public static final Pitch EX7 = Pitch.of(PitchClass.E_DBL_SHARP, 7);
+
+	/** The <em>F-double-flat</em> pitch in the 7th octave. */
+	public static final Pitch FBB7 = Pitch.of(PitchClass.F_DBL_FLAT, 7);
+	/** The <em>F-flat</em> pitch in the 7th octave. */
+	public static final Pitch FB7 = Pitch.of(PitchClass.F_FLAT, 7);
+	/** The <em>F</em> pitch in the 7th octave. */
+	public static final Pitch F7 = Pitch.of(PitchClass.F, 7);
+	/** The <em>F-sharp</em> pitch in the 7th octave. */
+	public static final Pitch FS7 = Pitch.of(PitchClass.F_SHARP, 7);
+	/** The <em>F-double-sharp</em> pitch in the 7th octave. */
+	public static final Pitch FX7 = Pitch.of(PitchClass.F_DBL_SHARP, 7);
+
+	/** The <em>G-double-flat</em> pitch in the 7th octave. */
+	public static final Pitch GBB7 = Pitch.of(PitchClass.G_DBL_FLAT, 7);
+	/** The <em>G-flat</em> pitch in the 7th octave. */
+	public static final Pitch GB7 = Pitch.of(PitchClass.G_FLAT, 7);
+	/** The <em>G</em> pitch in the 7th octave. */
+	public static final Pitch G7 = Pitch.of(PitchClass.G, 7);
+	/** The <em>G-sharp</em> pitch in the 7th octave. */
+	public static final Pitch GS7 = Pitch.of(PitchClass.G_SHARP, 7);
+	/** The <em>G-double-sharp</em> pitch in the 7th octave. */
+	public static final Pitch GX7 = Pitch.of(PitchClass.G_DBL_SHARP, 7);
+
+	/** The <em>A-double-flat</em> pitch in the 7th octave. */
+	public static final Pitch ABB7 = Pitch.of(PitchClass.A_DBL_FLAT, 7);
+	/** The <em>A-flat</em> pitch in the 7th octave. */
+	public static final Pitch AB7 = Pitch.of(PitchClass.A_FLAT, 7);
+	/** The <em>A</em> pitch in the 7th octave. */
+	public static final Pitch A7 = Pitch.of(PitchClass.A, 7);
+	/** The <em>A-sharp</em> pitch in the 7th octave. */
+	public static final Pitch AS7 = Pitch.of(PitchClass.A_SHARP, 7);
+	/** The <em>A-double-sharp</em> pitch in the 7th octave. */
+	public static final Pitch AX7 = Pitch.of(PitchClass.A_DBL_SHARP, 7);
+
+	/** The <em>B-double-flat</em> pitch in the 7th octave. */
+	public static final Pitch BBB7 = Pitch.of(PitchClass.B_DBL_FLAT, 7);
+	/** The <em>B-flat</em> pitch in the 7th octave. */
+	public static final Pitch BB7 = Pitch.of(PitchClass.B_FLAT, 7);
+	/** The <em>B</em> pitch in the 7th octave. */
+	public static final Pitch B7 = Pitch.of(PitchClass.B, 7);
+	/** The <em>B-sharp</em> pitch in the 7th octave. */
+	public static final Pitch BS7 = Pitch.of(PitchClass.B_SHARP, 7);
+	/** The <em>B-double-sharp</em> pitch in the 7th octave. */
+	public static final Pitch BX7 = Pitch.of(PitchClass.B_DBL_SHARP, 7);
+
+	/** The <em>C-double-flat</em> pitch in the 8th octave. */
+	public static final Pitch CBB8 = Pitch.of(PitchClass.C_DBL_FLAT, 8);
+	/** The <em>C-flat</em> pitch in the 8th octave. */
+	public static final Pitch CB8 = Pitch.of(PitchClass.C_FLAT, 8);
+	/** The <em>C</em> pitch in the 8th octave. */
+	public static final Pitch C8 = Pitch.of(PitchClass.C, 8);
+	/** The <em>C-sharp</em> pitch in the 8th octave. */
+	public static final Pitch CS8 = Pitch.of(PitchClass.C_SHARP, 8);
+	/** The <em>C-double-sharp</em> pitch in the 8th octave. */
+	public static final Pitch CX8 = Pitch.of(PitchClass.C_DBL_SHARP, 8);
+
+	/** The <em>D-double-flat</em> pitch in the 8th octave. */
+	public static final Pitch DBB8 = Pitch.of(PitchClass.D_DBL_FLAT, 8);
+	/** The <em>D-flat</em> pitch in the 8th octave. */
+	public static final Pitch DB8 = Pitch.of(PitchClass.D_FLAT, 8);
+	/** The <em>D</em> pitch in the 8th octave. */
+	public static final Pitch D8 = Pitch.of(PitchClass.D, 8);
+	/** The <em>D-sharp</em> pitch in the 8th octave. */
+	public static final Pitch DS8 = Pitch.of(PitchClass.D_SHARP, 8);
+	/** The <em>D-double-sharp</em> pitch in the 8th octave. */
+	public static final Pitch DX8 = Pitch.of(PitchClass.D_DBL_SHARP, 8);
+
+	/** The <em>E-double-flat</em> pitch in the 8th octave. */
+	public static final Pitch EBB8 = Pitch.of(PitchClass.E_DBL_FLAT, 8);
+	/** The <em>E-flat</em> pitch in the 8th octave. */
+	public static final Pitch EB8 = Pitch.of(PitchClass.E_FLAT, 8);
+	/** The <em>E</em> pitch in the 8th octave. */
+	public static final Pitch E8 = Pitch.of(PitchClass.E, 8);
+	/** The <em>E-sharp</em> pitch in the 8th octave. */
+	public static final Pitch ES8 = Pitch.of(PitchClass.E_SHARP, 8);
+	/** The <em>E-double-sharp</em> pitch in the 8th octave. */
+	public static final Pitch EX8 = Pitch.of(PitchClass.E_DBL_SHARP, 8);
+
+	/** The <em>F-double-flat</em> pitch in the 8th octave. */
+	public static final Pitch FBB8 = Pitch.of(PitchClass.F_DBL_FLAT, 8);
+	/** The <em>F-flat</em> pitch in the 8th octave. */
+	public static final Pitch FB8 = Pitch.of(PitchClass.F_FLAT, 8);
+	/** The <em>F</em> pitch in the 8th octave. */
+	public static final Pitch F8 = Pitch.of(PitchClass.F, 8);
+	/** The <em>F-sharp</em> pitch in the 8th octave. */
+	public static final Pitch FS8 = Pitch.of(PitchClass.F_SHARP, 8);
+	/** The <em>F-double-sharp</em> pitch in the 8th octave. */
+	public static final Pitch FX8 = Pitch.of(PitchClass.F_DBL_SHARP, 8);
+
+	/** The <em>G-double-flat</em> pitch in the 8th octave. */
+	public static final Pitch GBB8 = Pitch.of(PitchClass.G_DBL_FLAT, 8);
+	/** The <em>G-flat</em> pitch in the 8th octave. */
+	public static final Pitch GB8 = Pitch.of(PitchClass.G_FLAT, 8);
+	/** The <em>G</em> pitch in the 8th octave. */
+	public static final Pitch G8 = Pitch.of(PitchClass.G, 8);
+	/** The <em>G-sharp</em> pitch in the 8th octave. */
+	public static final Pitch GS8 = Pitch.of(PitchClass.G_SHARP, 8);
+	/** The <em>G-double-sharp</em> pitch in the 8th octave. */
+	public static final Pitch GX8 = Pitch.of(PitchClass.G_DBL_SHARP, 8);
+
+	/** The <em>A-double-flat</em> pitch in the 8th octave. */
+	public static final Pitch ABB8 = Pitch.of(PitchClass.A_DBL_FLAT, 8);
+	/** The <em>A-flat</em> pitch in the 8th octave. */
+	public static final Pitch AB8 = Pitch.of(PitchClass.A_FLAT, 8);
+	/** The <em>A</em> pitch in the 8th octave. */
+	public static final Pitch A8 = Pitch.of(PitchClass.A, 8);
+	/** The <em>A-sharp</em> pitch in the 8th octave. */
+	public static final Pitch AS8 = Pitch.of(PitchClass.A_SHARP, 8);
+	/** The <em>A-double-sharp</em> pitch in the 8th octave. */
+	public static final Pitch AX8 = Pitch.of(PitchClass.A_DBL_SHARP, 8);
+
+	/** The <em>B-double-flat</em> pitch in the 8th octave. */
+	public static final Pitch BBB8 = Pitch.of(PitchClass.B_DBL_FLAT, 8);
+	/** The <em>B-flat</em> pitch in the 8th octave. */
+	public static final Pitch BB8 = Pitch.of(PitchClass.B_FLAT, 8);
+	/** The <em>B</em> pitch in the 8th octave. */
+	public static final Pitch B8 = Pitch.of(PitchClass.B, 8);
+	/** The <em>B-sharp</em> pitch in the 8th octave. */
+	public static final Pitch BS8 = Pitch.of(PitchClass.B_SHARP, 8);
+	/** The <em>B-double-sharp</em> pitch in the 8th octave. */
+	public static final Pitch BX8 = Pitch.of(PitchClass.B_DBL_SHARP, 8);
+
 	private Pitch(PitchClass pitchClass, int octave) {
 		this.pitchClass = pitchClass;
 		this.octave = octave;
 		this.pitch = (octave * SEMITONES) + pitchClass.stepsAboveReference();
 	}
 
+	/**
+	 * Returns a pitch of the given pitch class and the given octave.
+	 * This method returns a pre-cached value for the common pitch classes
+	 * (C, D, E, F, G, A, B, and their single and double flats and sharps)
+	 * in octaves between 0 and 8 (inclusive).
+	 *
+	 * @param pitchClass the pitch class of the pitch
+	 * @param octave the octave of the pitch
+	 * @return a pitch of {@code pitchClass} in {@code octave}
+	 */
 	public static Pitch of(PitchClass pitchClass, int octave) {
-		return new Pitch(pitchClass, octave);
+		int acc = pitchClass.accidental().stepsAboveNatural();
+		if (acc >= -2 && acc <= 2 && octave >= 0 && octave < 9) {
+			return commonPitches.get(pitchClass.basePitchClass())
+					.get(octave * 5 + acc + 2);
+		} else {
+			return new Pitch(pitchClass, octave);
+		}
 	}
 
+	/**
+	 * Returns a pitch of the given pitch class and the given octave.
+	 * This method returns a pre-cached value for the common pitch classes
+	 * (C, D, E, F, G, A, B, and their single and double flats and sharps)
+	 * in octaves between 0 and 8 (inclusive).
+	 *
+	 * @param base the base pitch class of the pitch
+	 * @param accidental the accidental of the pitch
+	 * @param octave the octave of the pitch
+	 * @return a pitch of {@code pitchClass} in {@code octave}
+	 */
 	public static Pitch of(BasePitchClass base, Accidental accidental,
 	                       int octave) {
-		return new Pitch(PitchClass.of(base, accidental), octave);
+		int acc = accidental.stepsAboveNatural();
+		if (acc >= -2 && acc <= 2 && octave >= 0 && octave < 9) {
+			return commonPitches.get(base).get(octave * 5 + acc + 2);
+		} else {
+			return new Pitch(PitchClass.of(base, accidental), octave);
+		}
 	}
 
 	private static Pitch ofAbsolutePitch(PitchClass pitchClass,

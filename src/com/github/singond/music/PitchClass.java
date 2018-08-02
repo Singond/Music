@@ -426,14 +426,14 @@ public final class PitchClass implements Comparable<PitchClass> {
 	}
 
 	/**
-	 * Returns the list of the basic pitch classes, that is all pitch
-	 * classes composed of the natural C, D, E, F, G, A or B,
+	 * Returns the list of the most common pitch classes, that is all pitch
+	 * classes composed of the base pitch C, D, E, F, G, A or B;
 	 * where the accidental is one of double flat, flat, natural, sharp
 	 * or double sharp.
 	 *
-	 * @return a new list on every invocation
+	 * @return a list of all common pitches
 	 */
-	public static List<PitchClass> basicPitchClasses() {
+	public static List<PitchClass> commonPitchClasses() {
 		List<PitchClass> list = new ArrayList<>(35);
 		list.addAll(naturals.values());
 		list.addAll(flats.values());
