@@ -1,8 +1,7 @@
 package com.github.singond.music;
 
 import static com.github.singond.music.PitchClass.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
@@ -79,6 +78,29 @@ public class KeysTest {
 	public void eFlatMajorScaleDown() {
 		System.out.println("Eb major scale between Eb5 and G3:");
 		List<Pitch> generated = MajorKey.E_FLAT_MAJOR.scale(Pitch.of(E_FLAT, 5), Pitch.of(G, 3));
+		System.out.println(generated);
+		List<Pitch> expected = Arrays.asList(
+				Pitch.of(E_FLAT, 5),
+				Pitch.of(D, 5),
+				Pitch.of(C, 5),
+				Pitch.of(B_FLAT, 4),
+				Pitch.of(A_FLAT, 4),
+				Pitch.of(G, 4),
+				Pitch.of(F, 4),
+				Pitch.of(E_FLAT, 4),
+				Pitch.of(D, 4),
+				Pitch.of(C, 4),
+				Pitch.of(B_FLAT, 3),
+				Pitch.of(A_FLAT, 3),
+				Pitch.of(G, 3));
+		assertEquals(expected, generated);
+		System.out.println();
+	}
+
+	@Test
+	public void cFlatMinorScaleDown() {
+		System.out.println("C minor scale between Eb5 and G3:");
+		List<Pitch> generated = MinorKey.C_MINOR.scale(Pitch.of(E_FLAT, 5), Pitch.of(G, 3));
 		System.out.println(generated);
 		List<Pitch> expected = Arrays.asList(
 				Pitch.of(E_FLAT, 5),

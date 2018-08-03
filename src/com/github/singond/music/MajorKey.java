@@ -14,11 +14,11 @@ public class MajorKey extends SimpleKey implements Key {
 
 	private static final List<Interval> INTERVALS = Arrays.<Interval>asList(
 			SimpleInterval.MAJOR_SECOND,
-			SimpleInterval.MAJOR_SECOND,
-			SimpleInterval.MINOR_SECOND,
-			SimpleInterval.MAJOR_SECOND,
-			SimpleInterval.MAJOR_SECOND,
-			SimpleInterval.MAJOR_SECOND);
+			SimpleInterval.MAJOR_THIRD,
+			SimpleInterval.PERFECT_FOURTH,
+			SimpleInterval.PERFECT_FIFTH,
+			SimpleInterval.MAJOR_SIXTH,
+			SimpleInterval.MAJOR_SEVENTH);
 
 	public static final MajorKey C_FLAT_MAJOR = new MajorKey(C_FLAT);
 	public static final MajorKey G_FLAT_MAJOR = new MajorKey(G_FLAT);

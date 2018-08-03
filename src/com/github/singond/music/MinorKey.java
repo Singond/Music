@@ -14,11 +14,11 @@ public class MinorKey extends SimpleKey implements Key {
 
 	private static final List<Interval> INTERVALS = Arrays.<Interval>asList(
 			SimpleInterval.MAJOR_SECOND,
-			SimpleInterval.MINOR_SECOND,
-			SimpleInterval.MAJOR_SECOND,
-			SimpleInterval.MAJOR_SECOND,
-			SimpleInterval.MINOR_SECOND,
-			SimpleInterval.MAJOR_SECOND);
+			SimpleInterval.MINOR_THIRD,
+			SimpleInterval.PERFECT_FOURTH,
+			SimpleInterval.PERFECT_FIFTH,
+			SimpleInterval.MINOR_SIXTH,
+			SimpleInterval.MINOR_SEVENTH);
 
 	public static final MinorKey A_FLAT_MINOR = new MinorKey(A_FLAT);
 	public static final MinorKey E_FLAT_MINOR = new MinorKey(E_FLAT);
