@@ -24,19 +24,19 @@ class MajorKey extends SimpleKey implements Key {
 	/** The major key type. */
 	public static final MajorKeyType TYPE = new MajorKeyType();
 
-	public static final MajorKey C_FLAT = new MajorKey(PitchClass.C_FLAT);
-	public static final MajorKey G_FLAT = new MajorKey(PitchClass.G_FLAT);
-	public static final MajorKey D_FLAT = new MajorKey(PitchClass.D_FLAT);
-	public static final MajorKey A_FLAT = new MajorKey(PitchClass.A_FLAT);
-	public static final MajorKey E_FLAT = new MajorKey(PitchClass.E_FLAT);
-	public static final MajorKey B_FLAT = new MajorKey(PitchClass.B_FLAT);
-	public static final MajorKey F = new MajorKey(PitchClass.F);
-	public static final MajorKey C = new MajorKey(PitchClass.C);
-	public static final MajorKey G = new MajorKey(PitchClass.G);
-	public static final MajorKey D = new MajorKey(PitchClass.D);
-	public static final MajorKey A = new MajorKey(PitchClass.A);
-	public static final MajorKey E = new MajorKey(PitchClass.E);
-	public static final MajorKey B = new MajorKey(PitchClass.B);
+	public static final MajorKey C_FLAT  = new MajorKey(PitchClass.C_FLAT);
+	public static final MajorKey G_FLAT  = new MajorKey(PitchClass.G_FLAT);
+	public static final MajorKey D_FLAT  = new MajorKey(PitchClass.D_FLAT);
+	public static final MajorKey A_FLAT  = new MajorKey(PitchClass.A_FLAT);
+	public static final MajorKey E_FLAT  = new MajorKey(PitchClass.E_FLAT);
+	public static final MajorKey B_FLAT  = new MajorKey(PitchClass.B_FLAT);
+	public static final MajorKey F       = new MajorKey(PitchClass.F);
+	public static final MajorKey C       = new MajorKey(PitchClass.C);
+	public static final MajorKey G       = new MajorKey(PitchClass.G);
+	public static final MajorKey D       = new MajorKey(PitchClass.D);
+	public static final MajorKey A       = new MajorKey(PitchClass.A);
+	public static final MajorKey E       = new MajorKey(PitchClass.E);
+	public static final MajorKey B       = new MajorKey(PitchClass.B);
 	public static final MajorKey F_SHARP = new MajorKey(PitchClass.F_SHARP);
 	public static final MajorKey C_SHARP = new MajorKey(PitchClass.C_SHARP);
 
@@ -65,6 +65,9 @@ class MajorKey extends SimpleKey implements Key {
 		return tonic() + " major";
 	}
 
+	/**
+	 * Major key type.
+	 */
 	private static class MajorKeyType extends SimpleKeyType {
 
 		MajorKeyType() {
