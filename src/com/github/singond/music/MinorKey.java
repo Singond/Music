@@ -76,7 +76,7 @@ class MinorKey extends SimpleKey implements Key {
 
 		@Override
 		public Key in(PitchClass tonic) {
-			return MajorKey.in(tonic);
+			return MinorKey.in(tonic);
 		}
 
 	}

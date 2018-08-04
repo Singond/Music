@@ -1,9 +1,12 @@
 package com.github.singond.music;
 
+import static com.github.singond.music.Pitch.*;
 import static com.github.singond.music.PitchClass.*;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -75,10 +78,14 @@ public class KeysTest {
 	}
 
 	@Test
-	public void eFlatMajorScaleDown() {
+	public void eFlatMajorScaleDownAndUp() {
 		System.out.println("Eb major scale between Eb5 and G3:");
-		List<Pitch> generated = Keys.E_FLAT_MAJOR.scale(Pitch.of(E_FLAT, 5), Pitch.of(G, 3));
-		System.out.println(generated);
+		Pitch from = Pitch.EB5;
+		Pitch to = Pitch.G3;
+		// Forward
+		List<Pitch> forward = Keys.E_FLAT_MAJOR.scale(from, to);
+		List<Pitch> forward2 = Keys.MAJOR.in(E_FLAT).scale(from, to);
+		System.out.println(forward);
 		List<Pitch> expected = Arrays.asList(
 				Pitch.of(E_FLAT, 5),
 				Pitch.of(D, 5),
@@ -93,7 +100,40 @@ public class KeysTest {
 				Pitch.of(B_FLAT, 3),
 				Pitch.of(A_FLAT, 3),
 				Pitch.of(G, 3));
-		assertEquals(expected, generated);
+		assertEquals(expected, forward);
+		assertEquals(expected, forward2);
+		// Backward
+		List<Pitch> backward = Keys.E_FLAT_MAJOR.scale(to, from);
+		List<Pitch> backward2 = Keys.MAJOR.in(E_FLAT).scale(to, from);
+		Collections.reverse(expected);
+		assertEquals(expected, backward);
+		assertEquals(expected, backward2);
+		System.out.println();
+	}
+
+	@Test
+	public void twoSharpScale() {
+		List<Pitch> exp = Arrays.asList(
+				FS3, G3, A3, B3, CS4, D4, E4, FS4, G4, A4, B4);
+		scale(Keys.D_MAJOR, FS3, B4, exp);
+		scale(Keys.B_MINOR, FS3, B4, exp);
+	}
+
+	private void scale(Key key, Pitch from, Pitch to, List<Pitch> expected) {
+		System.out.format("%s scale between %s and %s:%n", key, from, to);
+		expected = new ArrayList<>(expected);
+		// Forward
+		List<Pitch> forward = key.scale(from, to);
+		List<Pitch> forward2 = key.type().in(key.tonic()).scale(from, to);
+		System.out.println(forward);
+		assertEquals(expected, forward);
+		assertEquals(expected, forward2);
+		// Backward
+		List<Pitch> backward = key.scale(to, from);
+		List<Pitch> backward2 = key.type().in(key.tonic()).scale(to, from);
+		Collections.reverse(expected);
+		assertEquals(expected, backward);
+		assertEquals(expected, backward2);
 		System.out.println();
 	}
 
