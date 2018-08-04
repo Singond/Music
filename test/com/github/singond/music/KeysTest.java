@@ -64,20 +64,6 @@ public class KeysTest {
 	}
 
 	@Test
-	public void gMajorScale() {
-		System.out.println("G major scale between D3 and F5:");
-		System.out.println(Keys.G_MAJOR.scale(Pitch.of(D, 3), Pitch.of(F, 5)));
-		System.out.println();
-	}
-
-	@Test
-	public void eFlatMajorScale() {
-		System.out.println("Eb major scale between G3 and Eb5:");
-		System.out.println(Keys.E_FLAT_MAJOR.scale(Pitch.of(G, 3), Pitch.of(E_FLAT, 5)));
-		System.out.println();
-	}
-
-	@Test
 	public void eFlatMajorScaleDownAndUp() {
 		System.out.println("Eb major scale between Eb5 and G3:");
 		Pitch from = Pitch.EB5;
@@ -112,11 +98,19 @@ public class KeysTest {
 	}
 
 	@Test
-	public void twoSharpScale() {
+	public void twoSharpScales() {
 		List<Pitch> exp = Arrays.asList(
 				FS3, G3, A3, B3, CS4, D4, E4, FS4, G4, A4, B4);
 		scale(Keys.D_MAJOR, FS3, B4, exp);
 		scale(Keys.B_MINOR, FS3, B4, exp);
+	}
+
+	@Test
+	public void fourFlatScales() {
+		List<Pitch> exp = Arrays.asList(
+				EB5, F5, G5, AB5, BB5, C6, DB6, EB6, F6, G6);
+		scale(Keys.A_FLAT_MAJOR, EB5, G6, exp);
+		scale(Keys.F_MINOR, EB5, G6, exp);
 	}
 
 	private void scale(Key key, Pitch from, Pitch to, List<Pitch> expected) {
@@ -177,5 +171,15 @@ public class KeysTest {
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void overDegree() {
 		Keys.B_MINOR.degree(8);
+	}
+
+	@Test
+	public void strictIdentity() {
+		// This compares instances!
+		// For the common keys, this identity is expected to hold.
+		assertEquals(Keys.G_MAJOR, MajorKey.G);
+		assertEquals(Keys.G_MAJOR, Keys.MAJOR.in(G));
+		assertEquals(Keys.F_SHARP_MINOR, MinorKey.F_SHARP);
+		assertEquals(Keys.F_SHARP_MINOR, Keys.MINOR.in(F_SHARP));
 	}
 }

@@ -1,7 +1,9 @@
 package com.github.singond.music;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The common minor key; that is a key with semitones between the 2nd and 3rd
@@ -40,6 +42,26 @@ class MinorKey extends SimpleKey implements Key {
 	public static final MinorKey D_SHARP = new MinorKey(PitchClass.D_SHARP);
 	public static final MinorKey A_SHARP = new MinorKey(PitchClass.A_SHARP);
 
+	private static final Map<PitchClass, MinorKey> commonKeys;
+	static {
+		commonKeys = new HashMap<>();
+		commonKeys.put(PitchClass.A_FLAT,  MinorKey.A_FLAT);
+		commonKeys.put(PitchClass.E_FLAT,  MinorKey.E_FLAT);
+		commonKeys.put(PitchClass.B_FLAT,  MinorKey.B_FLAT);
+		commonKeys.put(PitchClass.F,       MinorKey.F);
+		commonKeys.put(PitchClass.C,       MinorKey.C);
+		commonKeys.put(PitchClass.G,       MinorKey.G);
+		commonKeys.put(PitchClass.D,       MinorKey.D);
+		commonKeys.put(PitchClass.A,       MinorKey.A);
+		commonKeys.put(PitchClass.E,       MinorKey.E);
+		commonKeys.put(PitchClass.B,       MinorKey.B);
+		commonKeys.put(PitchClass.F_SHARP, MinorKey.F_SHARP);
+		commonKeys.put(PitchClass.C_SHARP, MinorKey.C_SHARP);
+		commonKeys.put(PitchClass.G_SHARP, MinorKey.G_SHARP);
+		commonKeys.put(PitchClass.D_SHARP, MinorKey.D_SHARP);
+		commonKeys.put(PitchClass.A_SHARP, MinorKey.A_SHARP);
+	}
+
 	private MinorKey(PitchClass tonic) {
 		super(tonic, INTERVALS);
 	}
@@ -51,8 +73,9 @@ class MinorKey extends SimpleKey implements Key {
 	 * @return the minor key in {@code tonic}
 	 */
 	public static MinorKey in(PitchClass tonic) {
-		// Cache frequently-used instances
-		return new MinorKey(tonic);
+		if (commonKeys.containsKey(tonic))
+			return commonKeys.get(tonic);
+		else return new MinorKey(tonic);
 	}
 
 	@Override
