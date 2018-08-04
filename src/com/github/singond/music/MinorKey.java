@@ -1,17 +1,18 @@
 package com.github.singond.music;
 
-import static com.github.singond.music.PitchClass.*;
-
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * The minor key (the Aeolian mode in modern Western mode system).
+ * The common minor key; that is a key with semitones between the 2nd and 3rd
+ * and the 5th and 6th degree.
+ * This corresponds to the Aeolian mode in modern Western mode system.
  *
  * @author Singon
  */
-public class MinorKey extends SimpleKey implements Key {
+class MinorKey extends SimpleKey implements Key {
 
+	/** The interval structure of this key (non-cumulative). */
 	private static final List<Interval> INTERVALS = Arrays.<Interval>asList(
 			SimpleInterval.MAJOR_SECOND,
 			SimpleInterval.MINOR_THIRD,
@@ -20,28 +21,63 @@ public class MinorKey extends SimpleKey implements Key {
 			SimpleInterval.MINOR_SIXTH,
 			SimpleInterval.MINOR_SEVENTH);
 
-	public static final MinorKey A_FLAT_MINOR = new MinorKey(A_FLAT);
-	public static final MinorKey E_FLAT_MINOR = new MinorKey(E_FLAT);
-	public static final MinorKey B_FLAT_MINOR = new MinorKey(B_FLAT);
-	public static final MinorKey F_MINOR = new MinorKey(F);
-	public static final MinorKey C_MINOR = new MinorKey(C);
-	public static final MinorKey G_MINOR = new MinorKey(G);
-	public static final MinorKey D_MINOR = new MinorKey(D);
-	public static final MinorKey A_MINOR = new MinorKey(A);
-	public static final MinorKey E_MINOR = new MinorKey(E);
-	public static final MinorKey B_MINOR = new MinorKey(B);
-	public static final MinorKey F_SHARP_MINOR = new MinorKey(F_SHARP);
-	public static final MinorKey C_SHARP_MINOR = new MinorKey(C_SHARP);
-	public static final MinorKey G_SHARP_MINOR = new MinorKey(G_SHARP);
-	public static final MinorKey D_SHARP_MINOR = new MinorKey(D_SHARP);
-	public static final MinorKey A_SHARP_MINOR = new MinorKey(A_SHARP);
+	/** The minor key type. */
+	public static final MinorKeyType TYPE = new MinorKeyType();
 
-	public MinorKey(PitchClass tonic) {
+	public static final MinorKey A_FLAT  = new MinorKey(PitchClass.A_FLAT);
+	public static final MinorKey E_FLAT  = new MinorKey(PitchClass.E_FLAT);
+	public static final MinorKey B_FLAT  = new MinorKey(PitchClass.B_FLAT);
+	public static final MinorKey F       = new MinorKey(PitchClass.F);
+	public static final MinorKey C       = new MinorKey(PitchClass.C);
+	public static final MinorKey G       = new MinorKey(PitchClass.G);
+	public static final MinorKey D       = new MinorKey(PitchClass.D);
+	public static final MinorKey A       = new MinorKey(PitchClass.A);
+	public static final MinorKey E       = new MinorKey(PitchClass.E);
+	public static final MinorKey B       = new MinorKey(PitchClass.B);
+	public static final MinorKey F_SHARP = new MinorKey(PitchClass.F_SHARP);
+	public static final MinorKey C_SHARP = new MinorKey(PitchClass.C_SHARP);
+	public static final MinorKey G_SHARP = new MinorKey(PitchClass.G_SHARP);
+	public static final MinorKey D_SHARP = new MinorKey(PitchClass.D_SHARP);
+	public static final MinorKey A_SHARP = new MinorKey(PitchClass.A_SHARP);
+
+	private MinorKey(PitchClass tonic) {
 		super(tonic, INTERVALS);
+	}
+
+	/**
+	 * Returns a minor key with the given tonic.
+	 *
+	 * @param tonic the tonic of the key
+	 * @return the minor key in {@code tonic}
+	 */
+	public static MinorKey in(PitchClass tonic) {
+		// Cache frequently-used instances
+		return new MinorKey(tonic);
+	}
+
+	@Override
+	public KeyType type() {
+		return TYPE;
 	}
 
 	@Override
 	public String toString() {
 		return tonic() + " minor";
+	}
+
+	/**
+	 * Minor key type.
+	 */
+	private static class MinorKeyType extends SimpleKeyType {
+
+		MinorKeyType() {
+			super(INTERVALS);
+		}
+
+		@Override
+		public Key in(PitchClass tonic) {
+			return MajorKey.in(tonic);
+		}
+
 	}
 }
