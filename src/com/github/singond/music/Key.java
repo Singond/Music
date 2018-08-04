@@ -42,6 +42,18 @@ public interface Key {
 	PitchClass degree(int degree);
 
 	/**
+	 * Returns the given degree of this key.
+	 * Unlike {@link #degree(int)}, this method supports raised and lowered
+	 * degrees.
+	 *
+	 * @param degree the degree
+	 * @return the degree number {@code degree}
+	 * @throws IndexOutOfBoundsException if the number does not lie
+	 *         between 1 and the number of degrees in the key (inclusive)
+	 */
+	PitchClass degree(Degree degree);
+
+	/**
 	 * Generates a scale of this key between the given endpoints.
 	 * The endpoints are both inclusive, provided they are part of ths scale.
 	 *
