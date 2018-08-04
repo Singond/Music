@@ -32,4 +32,12 @@ public interface KeyType {
 	 *         between 1 and the number of degrees in the key (inclusive)
 	 */
 	Interval degree(int degree);
+
+	/**
+	 * Returns a musical key of this key type and with the given tonic.
+	 *
+	 * @param tonic the tonic of the key
+	 * @return this type of key in {@code tonic}
+	 */
+	Key in(PitchClass tonic);
 }

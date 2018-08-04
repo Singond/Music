@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Singon
  */
-class SimpleKeyType implements KeyType {
+abstract class SimpleKeyType implements KeyType {
 
 	/**
 	 * Key degrees as the intervals above the tonic.
@@ -33,5 +33,4 @@ class SimpleKeyType implements KeyType {
 	public Interval degree(int degree) {
 		return degrees.get(degree - 1);
 	}
-
 }

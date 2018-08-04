@@ -63,4 +63,12 @@ public interface Key {
 	 *         {@code start + octave}
 	 */
 	List<Pitch> scale(Pitch start);
+
+	/**
+	 * Returns the type of this key (e.g. for G major returns an object
+	 * representing any major key).
+	 *
+	 * @return the type of this key
+	 */
+	KeyType type();
 }
