@@ -33,44 +33,44 @@ class SmallChordType implements ChordType {
 
 	static {
 		List<PreInvertedChord> inversions;
-		inversions = PreInvertedChord.inversionsOf(
-				Arrays.asList(MAJOR_THIRD, MINOR_THIRD), "major triad", "");
+		inversions = PreInvertedChord.inversionsOf(Arrays.<Interval>asList(
+				MAJOR_THIRD, MINOR_THIRD), "major triad", "");
 		MAJOR_TRIAD    = inversions.get(0);
 		MAJOR_TRIAD_6  = inversions.get(1);
 		MAJOR_TRIAD_64 = inversions.get(2);
 
-		inversions = PreInvertedChord.inversionsOf(
-				Arrays.asList(MINOR_THIRD, MAJOR_THIRD), "minor triad", "m");
+		inversions = PreInvertedChord.inversionsOf(Arrays.<Interval>asList(
+				MINOR_THIRD, MAJOR_THIRD), "minor triad", "m");
 		MINOR_TRIAD    = inversions.get(0);
 		MINOR_TRIAD_6  = inversions.get(1);
 		MINOR_TRIAD_64 = inversions.get(2);
 
-		inversions = PreInvertedChord.inversionsOf(
-				Arrays.asList(MINOR_THIRD, MINOR_THIRD), "dimished triad", "m5-");
+		inversions = PreInvertedChord.inversionsOf(Arrays.<Interval>asList(
+				MINOR_THIRD, MINOR_THIRD), "dimished triad", "m5-");
 		DIMINISHED_TRIAD    = inversions.get(0);
 		DIMINISHED_TRIAD_6  = inversions.get(1);
 		DIMINISHED_TRIAD_64 = inversions.get(2);
 
 		MAJOR_7 = PreInvertedChord.of(
-				Arrays.asList(MAJOR_THIRD, MINOR_THIRD, MAJOR_THIRD),
+				Arrays.<Interval>asList(MAJOR_THIRD, MINOR_THIRD, MAJOR_THIRD),
 				"major 7th", "maj7");
 		DOMINANT_7 = PreInvertedChord.of(
-				Arrays.asList(MAJOR_THIRD, MINOR_THIRD, MINOR_THIRD),
+				Arrays.<Interval>asList(MAJOR_THIRD, MINOR_THIRD, MINOR_THIRD),
 				"dominant 7th", "7");
 		MINOR_7 = PreInvertedChord.of(
-				Arrays.asList(MINOR_THIRD, MAJOR_THIRD, MINOR_THIRD),
+				Arrays.<Interval>asList(MINOR_THIRD, MAJOR_THIRD, MINOR_THIRD),
 				"minor 7th", "m7");
 		MINOR_MAJOR_7 = PreInvertedChord.of(
-				Arrays.asList(MINOR_THIRD, MAJOR_THIRD, MAJOR_THIRD),
+				Arrays.<Interval>asList(MINOR_THIRD, MAJOR_THIRD, MAJOR_THIRD),
 				"minor major 7th", "m maj7");
 		HALF_DIMINISHED_7 = PreInvertedChord.of(
-				Arrays.asList(MINOR_THIRD, MINOR_THIRD, MAJOR_THIRD),
+				Arrays.<Interval>asList(MINOR_THIRD, MINOR_THIRD, MAJOR_THIRD),
 				"half-diminished 7th", "7/5-");
 		DIMINISHED_7 = PreInvertedChord.of(
-				Arrays.asList(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD),
+				Arrays.<Interval>asList(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD),
 				"diminished 7th", "dim");
 		AUGMENTED_MAJOR_7 = PreInvertedChord.of(
-				Arrays.asList(MAJOR_THIRD, MAJOR_THIRD, MINOR_THIRD),
+				Arrays.<Interval>asList(MAJOR_THIRD, MAJOR_THIRD, MINOR_THIRD),
 				"augmented major 7th", "7/5+");
 	}
 
@@ -238,7 +238,7 @@ class SmallChordType implements ChordType {
 
 			List<PreInvertedChord> inversions = new ArrayList<>(intv.size());
 			for (int i = 0; i < intv.size(); i++) {
-				int root = Math.floorMod(-i, intv.size());
+				int root = Util.floorMod(-i, intv.size());
 				String invName = name;
 				if (i != 0) {
 					invName = name + " (inv. " + i + ")";

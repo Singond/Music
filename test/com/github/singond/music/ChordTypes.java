@@ -12,7 +12,8 @@ public class ChordTypes {
 
 	@Test
 	public void majorTriads() {
-		List<Interval> struct = Arrays.asList(MAJOR_THIRD, MINOR_THIRD);
+		List<Interval> struct = Arrays.<Interval>asList
+				(MAJOR_THIRD, MINOR_THIRD);
 		checkAll(0, struct, PERFECT_FIFTH, 3, 0,
 		         SmallChordType.MAJOR_TRIAD,
 		         SmallChordType.MAJOR_TRIAD.invert(0),
@@ -22,14 +23,14 @@ public class ChordTypes {
 		         SmallChordType.MAJOR_TRIAD_6.rootPosition(),
 		         SmallChordType.MAJOR_TRIAD_64.rootPosition());
 
-		struct = Arrays.asList(MINOR_THIRD, PERFECT_FOURTH);
+		struct = Arrays.<Interval>asList(MINOR_THIRD, PERFECT_FOURTH);
 		checkAll(2, struct, MINOR_SIXTH, 3, 1,
 		         SmallChordType.MAJOR_TRIAD_6,
 		         SmallChordType.MAJOR_TRIAD.invert(1),
 		         SmallChordType.MAJOR_TRIAD_6.invert(1),
 		         SmallChordType.MAJOR_TRIAD_64.invert(1));
 
-		struct = Arrays.asList(PERFECT_FOURTH, MAJOR_THIRD);
+		struct = Arrays.<Interval>asList(PERFECT_FOURTH, MAJOR_THIRD);
 		checkAll(1, struct, MAJOR_SIXTH, 3, 2,
 		         SmallChordType.MAJOR_TRIAD_64,
 		         SmallChordType.MAJOR_TRIAD.invert(2),
@@ -39,7 +40,8 @@ public class ChordTypes {
 
 	@Test
 	public void minorTriads() {
-		List<Interval> struct = Arrays.asList(MINOR_THIRD, MAJOR_THIRD);
+		List<Interval> struct = Arrays.<Interval>asList
+				(MINOR_THIRD, MAJOR_THIRD);
 		checkAll(0, struct, PERFECT_FIFTH, 3, 0,
 		         SmallChordType.MINOR_TRIAD,
 		         SmallChordType.MINOR_TRIAD.invert(0),
@@ -49,14 +51,14 @@ public class ChordTypes {
 		         SmallChordType.MINOR_TRIAD_6.rootPosition(),
 		         SmallChordType.MINOR_TRIAD_64.rootPosition());
 
-		struct = Arrays.asList(MAJOR_THIRD, PERFECT_FOURTH);
+		struct = Arrays.<Interval>asList(MAJOR_THIRD, PERFECT_FOURTH);
 		checkAll(2, struct, MAJOR_SIXTH, 3, 1,
 		         SmallChordType.MINOR_TRIAD_6,
 		         SmallChordType.MINOR_TRIAD.invert(1),
 		         SmallChordType.MINOR_TRIAD_6.invert(1),
 		         SmallChordType.MINOR_TRIAD_64.invert(1));
 
-		struct = Arrays.asList(PERFECT_FOURTH, MINOR_THIRD);
+		struct = Arrays.<Interval>asList(PERFECT_FOURTH, MINOR_THIRD);
 		checkAll(1, struct, MINOR_SIXTH, 3, 2,
 		         SmallChordType.MINOR_TRIAD_64,
 		         SmallChordType.MINOR_TRIAD.invert(2),
@@ -66,7 +68,8 @@ public class ChordTypes {
 
 	@Test
 	public void diminishedTriads() {
-		List<Interval> struct = Arrays.asList(MINOR_THIRD, MINOR_THIRD);
+		List<Interval> struct = Arrays.<Interval>asList
+				(MINOR_THIRD, MINOR_THIRD);
 		checkAll(0, struct, DIMINISHED_FIFTH, 3, 0,
 		         SmallChordType.DIMINISHED_TRIAD,
 		         SmallChordType.DIMINISHED_TRIAD.invert(0),
@@ -76,14 +79,14 @@ public class ChordTypes {
 		         SmallChordType.DIMINISHED_TRIAD_6.rootPosition(),
 		         SmallChordType.DIMINISHED_TRIAD_64.rootPosition());
 
-		struct = Arrays.asList(MINOR_THIRD, AUGMENTED_FOURTH);
+		struct = Arrays.<Interval>asList(MINOR_THIRD, AUGMENTED_FOURTH);
 		checkAll(2, struct, MAJOR_SIXTH, 3, 1,
 		         SmallChordType.DIMINISHED_TRIAD_6,
 		         SmallChordType.DIMINISHED_TRIAD.invert(1),
 		         SmallChordType.DIMINISHED_TRIAD_6.invert(1),
 		         SmallChordType.DIMINISHED_TRIAD_64.invert(1));
 
-		struct = Arrays.asList(AUGMENTED_FOURTH, MINOR_THIRD);
+		struct = Arrays.<Interval>asList(AUGMENTED_FOURTH, MINOR_THIRD);
 		checkAll(1, struct, MAJOR_SIXTH, 3, 2,
 		         SmallChordType.DIMINISHED_TRIAD_64,
 		         SmallChordType.DIMINISHED_TRIAD.invert(2),
@@ -93,7 +96,8 @@ public class ChordTypes {
 
 	@Test
 	public void augmentedTriads() {
-		List<Interval> struct = Arrays.asList(MAJOR_THIRD, MAJOR_THIRD);
+		List<Interval> struct = Arrays.<Interval>asList
+				(MAJOR_THIRD, MAJOR_THIRD);
 		checkAll(0, struct, AUGMENTED_FIFTH, 3, 0,
 		         NonInvertibleChordType.AUGMENTED_TRIAD,
 		         NonInvertibleChordType.AUGMENTED_TRIAD.rootPosition());
@@ -102,21 +106,25 @@ public class ChordTypes {
 
 	@Test
 	public void dominantSevenths() {
-		List<Interval> struct = Arrays.asList(MAJOR_THIRD, MINOR_THIRD, MINOR_THIRD);
+		List<Interval> struct = Arrays.<Interval>asList
+				(MAJOR_THIRD, MINOR_THIRD, MINOR_THIRD);
 		checkAll(0, struct, MINOR_SEVENTH, 4, 0,
 		         SmallChordType.DOMINANT_7,
 		         SmallChordType.DOMINANT_7.invert(0),
 		         SmallChordType.DOMINANT_7.rootPosition());
 
-		struct = Arrays.asList(MINOR_THIRD, MINOR_THIRD, MAJOR_SECOND);
+		struct = Arrays.<Interval>asList
+				(MINOR_THIRD, MINOR_THIRD, MAJOR_SECOND);
 		checkAll(3, struct, MINOR_SIXTH, 4, 1,
 		         SmallChordType.DOMINANT_7.invert(1));
 
-		struct = Arrays.asList(MINOR_THIRD, MAJOR_SECOND, MAJOR_THIRD);
+		struct = Arrays.<Interval>asList
+				(MINOR_THIRD, MAJOR_SECOND, MAJOR_THIRD);
 		checkAll(2, struct, MAJOR_SIXTH, 4, 2,
 		         SmallChordType.DOMINANT_7.invert(2));
 
-		struct = Arrays.asList(MAJOR_SECOND, MAJOR_THIRD, MINOR_THIRD);
+		struct = Arrays.<Interval>asList
+				(MAJOR_SECOND, MAJOR_THIRD, MINOR_THIRD);
 		checkAll(1, struct, MAJOR_SIXTH, 4, 3,
 		         SmallChordType.DOMINANT_7.invert(3));
 	}

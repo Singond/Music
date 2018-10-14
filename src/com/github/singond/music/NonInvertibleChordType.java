@@ -19,8 +19,8 @@ class NonInvertibleChordType implements ChordType {
 
 	private transient Interval span;
 
-	public static final ChordType AUGMENTED_TRIAD
-			= new NonInvertibleChordType(Arrays.asList(MAJOR_THIRD, MAJOR_THIRD));
+	public static final ChordType AUGMENTED_TRIAD = new NonInvertibleChordType
+			(Arrays.<Interval>asList(MAJOR_THIRD, MAJOR_THIRD));
 
 	private NonInvertibleChordType(List<Interval> structure) {
 		if (structure == null) {
