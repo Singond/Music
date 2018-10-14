@@ -1,6 +1,6 @@
 package com.github.singond.music;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 /**
  * A modifier which changes the pitch of a note relative to its basic
@@ -97,15 +97,17 @@ public class Accidental implements Comparable<Accidental> {
 		} else if (steps == 2) {
 			return "x";
 		} else {
-			String symb;
+			char symb;
 			if (steps < 0) {
 				steps = -steps;
-				symb = "b";
+				symb = 'b';
 			} else {
-				symb = "#";
+				symb = '#';
 			}
 			assert steps > 0 : steps;
-			return String.join("", Collections.nCopies(steps, symb));
+			char[] value = new char[steps];
+			Arrays.fill(value, symb);
+			return new String(value).intern();
 		}
 	}
 

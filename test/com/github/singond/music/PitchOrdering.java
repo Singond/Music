@@ -15,7 +15,7 @@ import org.junit.Test;
 public class PitchOrdering {
 	
 	private static final List<PitchClass> pitchClasses
-			= Collections.unmodifiableList(PitchClass.basicPitchClasses());
+			= Collections.unmodifiableList(PitchClass.commonPitchClasses());
 
 	private Random random = new Random();
 	

@@ -18,20 +18,49 @@ import java.util.Set;
  * @author Singon
  */
 abstract class SimpleKey extends AbstractKey implements Key {
-	
+
 	/**
-	 * The list of all pitch classes in this key.
+	 * All pitch classes in this key, sorted in order they appear in the
+	 * scale of this key.
 	 */
 	private final List<PitchClass> pitchClasses;
-	
+
 	/**
-	 * The list of mutual distances of the notes in ascending scale.
+	 * Creates a new key from the given pitch classes.
+	 * The pitch classes must be sorted into the order they appear
+	 * in the scale of this key.
+	 *
+	 * @param pitchClasses pitch classes from the key's scale
 	 */
-	private final List<Interval> intervals;
-	
+	private SimpleKey(List<PitchClass> pitchClasses) {
+		this.pitchClasses = new ArrayList<>(pitchClasses);
+	}
+
 	/**
-	 * Constructs a new key with the given tonic and subsequent steps
-	 * created by adding the given intervals to the previously created note.
+	 * Constructs a new key with the given tonic and with subsequent notes
+	 * created by sorting the given intervals from smallest to largest
+	 * and adding them one by one to the tonic.
+	 *
+	 * @param tonic the pitch class to start at. This will become the tonic
+	 *        of the key.
+	 * @param intervals the intervals of the notes in this key above the tonic.
+	 *        The tonic should not be represented in this list
+	 *        (ie. there should be no unison in this list)
+	 * @return list of pitch classes created by adding each of
+	 *         sorted {@code intervals} to {@code tonic}
+	 * @throws NullPointerException if either {@code tonic} or
+	 *         {@code intervals} is null
+	 * @throws IllegalArgumentException if one of the given
+	 *         intervals is equal to or greater than one octave
+	 */
+	protected SimpleKey(PitchClass tonic, List<Interval> intervals) {
+		this(byAbsoluteIntervals(tonic, intervals));
+	}
+
+	/**
+	 * Returns a list of pitch classes with the given start pitch and with
+	 * subsequent steps created by adding the given intervals one by one
+	 * to the previously created note.
 	 *
 	 * @param tonic the pitch class to start at. This will become the tonic
 	 *        of the key.
@@ -42,14 +71,17 @@ abstract class SimpleKey extends AbstractKey implements Key {
 	 * @throws IllegalArgumentException if the total width of given
 	 *         intervals is equal to or greater than one octave
 	 */
-	public SimpleKey(final PitchClass tonic, List<Interval> intervals) {
+	@SuppressWarnings("unused")
+	private static final List<PitchClass> byCumulativeIntervals
+			(final PitchClass tonic, List<Interval> intervals) {
 		if (tonic == null) {
 			throw new NullPointerException("The tonic is null");
 		} else if (intervals == null) {
 			throw new NullPointerException("The list of intervals is null");
 		}
-		
+
 		// Construct the scale
+		List<PitchClass> pitchClasses;
 		pitchClasses = new ArrayList<>(1 + intervals.size());
 		pitchClasses.add(tonic);
 		PitchClass degree = tonic;
@@ -62,8 +94,49 @@ abstract class SimpleKey extends AbstractKey implements Key {
 		if (totalInterval >=12) {
 			throw new IllegalArgumentException("The given intervals do not fit in one octave");
 		}
-		
-		this.intervals = new ArrayList<>(intervals);
+
+		return pitchClasses;
+	}
+
+	/**
+	 * Returns a list of pitch classes with the given start pitch and with
+	 * subsequent steps created by sorting the given intervals from smallest
+	 * to largest and adding them one by one to the start pitch.
+	 *
+	 * @param tonic the pitch class to start at. This will become the first
+	 *        element in the returned list.
+	 * @param intervals the intervals of the notes in this key above the tonic.
+	 *        The tonic should not be represented in this list
+	 *        (ie. there should be no unison)
+	 * @return list of pitch classes created by adding each of
+	 *         sorted {@code intervals} to {@code tonic}
+	 * @throws NullPointerException if either {@code tonic} or
+	 *         {@code intervals} is null
+	 * @throws IllegalArgumentException if one of the given
+	 *         intervals is equal to or greater than one octave
+	 */
+	private static final List<PitchClass> byAbsoluteIntervals
+			(final PitchClass tonic, List<Interval> intervals) {
+		if (tonic == null) {
+			throw new NullPointerException("The tonic is null");
+		} else if (intervals == null) {
+			throw new NullPointerException("The list of intervals is null");
+		}
+
+		// Construct the scale
+		Collections.sort(intervals);
+		List<PitchClass> pitchClasses;
+		pitchClasses = new ArrayList<>(1 + intervals.size());
+		pitchClasses.add(tonic);
+		for (Interval interval : intervals) {
+			if (interval.compareTo(SimpleInterval.PERFECT_OCTAVE) >= 0) {
+				throw new IllegalArgumentException(
+						"The given intervals is larger than a perfect octave: " + interval);
+			}
+			pitchClasses.add(tonic.transposeUp(interval));
+		}
+
+		return pitchClasses;
 	}
 
 	@Override
@@ -93,6 +166,6 @@ abstract class SimpleKey extends AbstractKey implements Key {
 
 	@Override
 	public List<Pitch> scale(Pitch start, Pitch end) {
-		return Pitches.range(pitchClasses(), start, end);
+		return Pitches.allBetween(start, end, pitchClasses());
 	}
 }

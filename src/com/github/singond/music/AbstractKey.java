@@ -18,4 +18,17 @@ abstract class AbstractKey implements Key {
 	public PitchClass degree(int degree) {
 		return degrees().get(degree - 1);
 	}
+
+	@Override
+	public PitchClass degree(Degree degree) {
+		PitchClass pc = degree(degree.base());
+		int shift = degree.shift();
+		if (shift > 0) {
+			return pc.transposeUp(SimpleInterval.valueOf(0, shift));
+		} else if (shift < 0) {
+			return pc.transposeDown(SimpleInterval.valueOf(0, -shift));
+		} else {
+			return pc;
+		}
+	}
 }

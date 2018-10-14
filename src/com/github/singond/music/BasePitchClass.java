@@ -20,19 +20,19 @@ public enum BasePitchClass {
 	G (7),
 	A (9),
 	B (11);
-	
+
 	/**
 	 * The number of semitone steps above the reference tone
 	 */
 	private final int steps;
-	
+
 	/**
 	 * @param steps the number of semitone steps above the reference tone
 	 */
 	private BasePitchClass(int steps) {
 		this.steps = steps;
 	}
-	
+
 	/**
 	 * Returns the number of diatonic degrees above the reference pitch class
 	 * (which is C).
@@ -50,7 +50,7 @@ public enum BasePitchClass {
 	int stepsAboveReference() {
 		return steps;
 	}
-	
+
 	/**
 	 * Returns the base pitch class which is the given number of degrees
 	 * ahead of this pitch class, wrapping around if necessary.
@@ -62,17 +62,18 @@ public enum BasePitchClass {
 	 * For example, the element directly ahead of {@code B} is {@code C}.
 	 *
 	 * @param shift the number of degrees to go forward
-	 * @return
+	 * @return the pitch class {@code shift} degrees ahead of this
 	 */
 	public BasePitchClass advance(int shift) {
 		int thisIndex = ordinal();
 		int nextIndex = (((thisIndex + shift) % 7) + 7) % 7;
 		return values()[nextIndex];
 	}
-	
+
 	/**
 	 * Returns the name of the pitch class in upper case, e.g. "C".
 	 */
+	@Override
 	public String toString() {
 		return name();
 	}
