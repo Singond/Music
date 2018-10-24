@@ -3,36 +3,23 @@ package com.github.singond.music;
 import java.util.List;
 
 /**
- * A group of pitch classes with specified relative distances,
- * and with a basic note, which is called the <em>root</em>.
+ * A {@code Chord} rendered into a group of pitches.
  * <p>
- * Throughout this class, the pitch classes comprising this chord
+ * Throughout this class, the pitches and pitch classes comprising this chord
  * are also referred to as "notes".
- * The lowest of the notes is called the <em>bass</em>.
+ * The lowest of the pitches is called the <em>bass</em>.
  * In the general case, the bass does not coincide with the root.
  *
  * @author Singon
  */
-public interface Chord {
-
-	/**
-	 * Returns the interval structure of this chord.
-	 * This is the sequence of intervals between adjacent notes of this
-	 * chord, starting with the lowest pair of notes and moving up.
-	 *
-	 * @return the intervals between adjacent notes
-	 */
-	List<Interval> structure();
+public interface ChordVoicing {
 
 	/**
 	 * Returns the notes of this chord sorted from the lowest to highest.
-	 * Note that, in the general case, the pitch classes themselves may not
-	 * be sufficient to correctly identify this chord, because there is no
-	 * information about the octave spacing of the pitch classes.
 	 *
-	 * @return the pitch classes forming this chord
+	 * @return the pitches forming this chord
 	 */
-	List<PitchClass> notes();
+	List<Pitch> pitches();
 
 	/**
 	 * Returns the root note of this chord.
@@ -43,11 +30,11 @@ public interface Chord {
 
 	/**
 	 * Returns the bass note of this chord.
-	 * This is equivalent to calling {@code notes().get(0)}.
+	 * This is equivalent to calling {@code pitches().get(0)}.
 	 *
 	 * @return the bass note
 	 */
-	PitchClass bass();
+	Pitch bass();
 
 	/**
 	 * Returns the number of notes in this chord.
@@ -55,14 +42,6 @@ public interface Chord {
 	 * @return the number of notes
 	 */
 	int size();
-
-	/**
-	 * Returns the interval between the lowest and the highest note of this
-	 * chord. This is equal to the sum of all structural chords.
-	 *
-	 * @return the interval between the lowest and the highest note
-	 */
-	Interval span();
 
 	/**
 	 * Checks whether this chord has any non-zero inversions,
@@ -92,7 +71,7 @@ public interface Chord {
 	 *         0 (inclusive) and {@code size()} (exclusive)
 	 * @throws UnsupportedOperationException if this chord has no inversions
 	 */
-	Chord invert(int n);
+	ChordVoicing invert(int n);
 
 	/**
 	 * Returns the number of inversion of this chord.
@@ -109,14 +88,14 @@ public interface Chord {
 	int inversion();
 
 	/**
-	 * Returns the root position of this chord type.
+	 * Returns the root position of this chord.
 	 * The root position of a chord is the position in which the root
 	 * note is equal to the bass note.
 	 * This is equivalent to calling {@code invert(0)}.
 	 *
 	 * @return the root position of this chord
 	 */
-	Chord rootPosition();
+	ChordVoicing rootPosition();
 
 	/**
 	 * Returns the chord type of this chord.
