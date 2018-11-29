@@ -6,6 +6,9 @@ Changelog
 ### Added
 - Added this changelog. Logged preceding versions based on information
   in repository.
+### Changed
+- Changed published artifact name from `com.github.singond.music` to simply
+  `music`. The group name remains `com.github.singond`.
 
 [0.4.0] - 2018-08-04
 --------------------
