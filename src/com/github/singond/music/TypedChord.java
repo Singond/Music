@@ -28,9 +28,9 @@ class TypedChord implements Chord {
 
 	public static TypedChord ofBass(PitchClass bass, ChordType type) {
 		if (bass == null) {
-			throw new NullPointerException("The chord root is null");
+			throw new NullPointerException("The chord bass is null");
 		} else if (type == null) {
-			throw new NullPointerException("The chord note is null");
+			throw new NullPointerException("The chord type is null");
 		}
 		// TODO Return preset constant if available
 		List<PitchClass> notes = fromBass(bass, type);
