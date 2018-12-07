@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'eclipse'
 
 sourceSets {
 	main {
@@ -20,6 +21,10 @@ dependencies {
 
 repositories {
 	mavenCentral()
+}
+
+eclipse {
+	project.name = 'Music'
 }
 
 task printVersion {
