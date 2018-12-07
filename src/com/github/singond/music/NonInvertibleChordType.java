@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * An implementation of the {@code Chord} interface applicable to chords
- * whose span does not exceed one octave.
+ * An implementation of the {@code ChordType} interface applicable to chords
+ * with no inversions (apart from root position) defined.
  *
  * @author Singon
  */
