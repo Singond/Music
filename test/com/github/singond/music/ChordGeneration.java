@@ -35,6 +35,7 @@ public class ChordGeneration {
 
 	/**
 	 * @param ch the chord under test
+	 * @param notes the expected notes in the chord, from bass to top
 	 * @param root expected value of the root index
 	 * @param structure expected interval structure of the chord
 	 */
