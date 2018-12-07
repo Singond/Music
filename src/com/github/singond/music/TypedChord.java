@@ -38,9 +38,32 @@ class TypedChord implements Chord {
 		return new TypedChord(root, notes, type);
 	}
 
+	public static TypedChord ofRoot(PitchClass root, ChordType type) {
+		if (root == null) {
+			throw new NullPointerException("The chord root is null");
+		} else if (type == null) {
+			throw new NullPointerException("The chord type is null");
+		}
+		// TODO Return preset constant if available
+		List<PitchClass> notes = fromRoot(root, type);
+		return new TypedChord(root, notes, type);
+	}
+
 	private static List<PitchClass> fromBass(PitchClass bass, ChordType type) {
 		List<PitchClass> result = new ArrayList<>(type.size());
 		PitchClass note = bass;
+		result.add(note);
+		for (Interval i : type.structure()) {
+			note = note.transposeUp(i);
+			result.add(note);
+		}
+		return result;
+	}
+
+	private static List<PitchClass> fromRoot(PitchClass root, ChordType type) {
+		List<PitchClass> result = new ArrayList<>(type.size());
+		Interval rootInt = type.heightAboveBass(type.rootIndex());
+		PitchClass note = root.transposeDown(rootInt);
 		result.add(note);
 		for (Interval i : type.structure()) {
 			note = note.transposeUp(i);
@@ -86,8 +109,12 @@ class TypedChord implements Chord {
 
 	@Override
 	public Chord invert(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		if (type.inversion() == n) {
+			return this;
+		} else {
+			// TODO Implement
+			return null;
+		}
 	}
 
 	@Override
@@ -97,8 +124,12 @@ class TypedChord implements Chord {
 
 	@Override
 	public Chord rootPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		if (type.inversion() == 0) {
+			return this;
+		} else {
+			// TODO Implement
+			return null;
+		}
 	}
 
 	@Override
