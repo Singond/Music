@@ -17,11 +17,9 @@ import java.util.List;
 class SmallChordType implements ChordType {
 
 	private final List<Interval> structure;
-
 	private final int root;
-
 	private final String name;
-
+	private final String symbol;
 	private transient Interval span;
 
 	public static final ChordType
@@ -95,7 +93,8 @@ class SmallChordType implements ChordType {
 
 		this.structure = new ArrayList<>(structure);
 		this.root = root;
-		this.name = name;
+		this.name = name != null ? name : "";
+		this.symbol = symbol != null ? symbol : "";
 		this.span = span;
 	}
 
