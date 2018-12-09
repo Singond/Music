@@ -11,6 +11,7 @@ import java.util.List;
  *
  * @author Singon
  */
+// TODO Define equals()
 public interface ChordType {
 
 	/**
