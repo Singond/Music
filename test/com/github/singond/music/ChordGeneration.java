@@ -61,6 +61,45 @@ public class ChordGeneration {
 				Arrays.asList(F, A, C, E_FLAT), F, 0);
 	}
 
+	@Test
+	public void inversions() {
+		Chord chord = TypedChord.ofRoot(C, SmallChordType.MAJOR_TRIAD);
+		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
+		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
+		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
+		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
+
+		chord = TypedChord.ofRoot(C, SmallChordType.MAJOR_TRIAD_64);
+		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
+		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
+		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
+		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
+
+		chord = TypedChord.ofBass(C, SmallChordType.MAJOR_TRIAD);
+		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
+		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
+		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
+		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
+
+		chord = TypedChord.ofBass(E, SmallChordType.MAJOR_TRIAD_6);
+		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
+		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
+		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
+		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
+
+		chord = TypedChord.ofBass(A, SmallChordType.MAJOR_TRIAD);
+		check(chord.rootPosition(), Arrays.asList(A, C_SHARP, E), A, 0);
+		check(chord.invert(0), Arrays.asList(A, C_SHARP, E), A, 0);
+		check(chord.invert(1), Arrays.asList(C_SHARP, E, A), A, 1);
+		check(chord.invert(2), Arrays.asList(E, A, C_SHARP), A, 2);
+
+		chord = TypedChord.ofRoot(E, SmallChordType.MAJOR_7);
+		check(chord.rootPosition(), Arrays.asList(E, G_SHARP, B, D_SHARP), E, 0);
+		check(chord.invert(0), Arrays.asList(E, G_SHARP, B, D_SHARP), E, 0);
+		check(chord.invert(1), Arrays.asList(G_SHARP, B, D_SHARP, E), E, 1);
+		check(chord.invert(2), Arrays.asList(B, D_SHARP, E, G_SHARP), E, 2);
+	}
+
 	/**
 	 * @param ch the chord under test
 	 * @param notes the expected notes in the chord, from bass to top

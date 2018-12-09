@@ -26,7 +26,7 @@ class TypedChord implements Chord {
 		this.type = type;
 	}
 
-	public static TypedChord ofBass(PitchClass bass, ChordType type) {
+	public static final TypedChord ofBass(PitchClass bass, ChordType type) {
 		if (bass == null) {
 			throw new NullPointerException("The chord bass is null");
 		} else if (type == null) {
@@ -38,7 +38,7 @@ class TypedChord implements Chord {
 		return new TypedChord(root, notes, type);
 	}
 
-	public static TypedChord ofRoot(PitchClass root, ChordType type) {
+	public static final TypedChord ofRoot(PitchClass root, ChordType type) {
 		if (root == null) {
 			throw new NullPointerException("The chord root is null");
 		} else if (type == null) {
@@ -112,8 +112,7 @@ class TypedChord implements Chord {
 		if (type.inversion() == n) {
 			return this;
 		} else {
-			// TODO Implement
-			return null;
+			return ofRoot(root, type.invert(n));
 		}
 	}
 
@@ -127,8 +126,7 @@ class TypedChord implements Chord {
 		if (type.inversion() == 0) {
 			return this;
 		} else {
-			// TODO Implement
-			return null;
+			return ofRoot(root, type.rootPosition());
 		}
 	}
 
