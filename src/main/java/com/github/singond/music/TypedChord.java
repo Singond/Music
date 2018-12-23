@@ -151,5 +151,8 @@ class TypedChord implements Chord {
 		return type;
 	}
 
-
+	@Override
+	public String toString() {
+		return notes.toString();
+	}
 }
