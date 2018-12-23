@@ -7,6 +7,7 @@ Changelog
 - Added this changelog. Logged preceding versions based on information
   in repository.
 - Added support for chords.
+- Added a `README` file.
 
 ### Changed
 - Changed published artifact name from `com.github.singond.music` to simply
