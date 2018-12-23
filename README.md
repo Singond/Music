@@ -107,4 +107,28 @@ List<Pitch> range = Pitches.allBetween(Pitch.A3, Pitch.D5, pcs);
 >> [A3, B3, C#4, D#4, E4, F#4, G#4, A4, B4, C#5]
 ```
 
+Get the major triad with Eb as root:
 
+```
+Chord c = Chords.chordAtRoot(PitchClass.E_FLAT, Chords.MAJOR_TRIAD);
+>> [Eb, G, Bb]
+```
+
+Get the first inversion of a major triad with Eb as root:
+
+```
+// Root position:
+PitchClass root = PitchClass.E_FLAT;
+ChordType type = Chords.MAJOR_TRIAD;
+Chord chord = Chords.chordAtRoot(root, type);
+>> [Eb, G, Bb]
+
+// First inversion:
+chord = chord.invert(1);
+>> [G, Bb, Eb]
+
+// Alternatively, invert the chord type:
+type = type.invert(1);
+chord = Chords.chordAtRoot(root, type);
+>> [G, Bb, Eb]
+```
