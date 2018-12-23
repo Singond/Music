@@ -12,6 +12,7 @@ public class ChordGeneration {
 
 	@Test
 	public void byBass() {
+		System.out.println("Creating chords by bass note:");
 		check(TypedChord.ofBass(C, SmallChordType.MAJOR_TRIAD),
 				Arrays.asList(C, E, G), C, 0);
 		check(TypedChord.ofBass(E, SmallChordType.MAJOR_TRIAD.invert(1)),
@@ -29,12 +30,20 @@ public class ChordGeneration {
 
 		check(TypedChord.ofBass(D, SmallChordType.DOMINANT_7),
 				Arrays.asList(D, F_SHARP, A, C), D, 0);
+		check(TypedChord.ofBass(D, SmallChordType.MAJOR_7),
+				Arrays.asList(D, F_SHARP, A, C_SHARP), D, 0);
+		check(TypedChord.ofBass(D, SmallChordType.MINOR_7),
+				Arrays.asList(D, F, A, C), D, 0);
+		check(TypedChord.ofBass(D, SmallChordType.DIMINISHED_7),
+				Arrays.asList(D, F, A_FLAT, C_FLAT), D, 0);
 		check(TypedChord.ofBass(F, SmallChordType.DOMINANT_7),
 				Arrays.asList(F, A, C, E_FLAT), F, 0);
+		System.out.println();
 	}
 
 	@Test
 	public void byRoot() {
+		System.out.println("Creating chords by root note:");
 		check(TypedChord.ofRoot(C, SmallChordType.MAJOR_TRIAD),
 				Arrays.asList(C, E, G), C, 0);
 		check(TypedChord.ofRoot(C, SmallChordType.MAJOR_TRIAD.invert(1)),
@@ -59,10 +68,12 @@ public class ChordGeneration {
 				Arrays.asList(D, F_SHARP, A, C), D, 0);
 		check(TypedChord.ofRoot(F, SmallChordType.DOMINANT_7),
 				Arrays.asList(F, A, C, E_FLAT), F, 0);
+		System.out.println();
 	}
 
 	@Test
 	public void inversions() {
+		System.out.println("Checking inversions:");
 		Chord chord = TypedChord.ofRoot(C, SmallChordType.MAJOR_TRIAD);
 		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
@@ -98,6 +109,7 @@ public class ChordGeneration {
 		check(chord.invert(0), Arrays.asList(E, G_SHARP, B, D_SHARP), E, 0);
 		check(chord.invert(1), Arrays.asList(G_SHARP, B, D_SHARP, E), E, 1);
 		check(chord.invert(2), Arrays.asList(B, D_SHARP, E, G_SHARP), E, 2);
+		System.out.println();
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package com.github.singond.music;
 
 import static com.github.singond.music.SimpleInterval.MAJOR_THIRD;
+import static com.github.singond.music.SimpleInterval.MINOR_THIRD;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +22,9 @@ class NonInvertibleChordType implements ChordType {
 
 	public static final ChordType AUGMENTED_TRIAD = new NonInvertibleChordType
 			(Arrays.<Interval>asList(MAJOR_THIRD, MAJOR_THIRD));
+
+	public static final ChordType DIMINISHED_7 = new NonInvertibleChordType
+			(Arrays.<Interval>asList(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD));
 
 	private NonInvertibleChordType(List<Interval> structure) {
 		if (structure == null) {
