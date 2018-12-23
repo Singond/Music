@@ -1,17 +1,27 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+	}
+}
 
-dependencies {
-	testCompile 'junit:junit:4.12'
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'eclipse'
+apply plugin: 'com.jfrog.bintray'
+
+eclipse {
+	project.name = 'Music'
 }
 
 repositories {
 	mavenCentral()
 }
 
-eclipse {
-	project.name = 'Music'
+dependencies {
+	testCompile 'junit:junit:4.12'
 }
 
 task printVersion {
@@ -27,6 +37,56 @@ task javadocJar(type: Jar) {
 	from javadoc
 }
 
+task sourcesJar(type: Jar) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
 artifacts {
+	archives sourcesJar
 	archives javadocJar
+}
+
+publishing {
+	publications {
+		pluginPublication(MavenPublication) {
+			from components.java
+			artifact sourcesJar
+			artifact javadocJar
+
+			groupId project.group
+			artifactId project.name
+			version project.version
+		}
+	}
+}
+
+/*
+ * The "bintrayUser" and "bintrayKey" properites must be set.
+ * This can be done either in the user's $GRADLE_USER_HOME/gradle.properties
+ * file or directly when invoking gradle (e.g. -PbintrayUser=someuser).
+ */
+bintray {
+	user = bintrayUser
+	key = bintrayKey
+	pkg {
+		repo = 'maven'
+		name = project.name
+		desc = project.description
+		licenses = ['Apache-2.0']
+		vcsUrl = 'https://github.com/Singond/Gradle-Pandoc.git'
+		issueTrackerUrl = 'https://github.com/Singond/Gradle-Pandoc/issues'
+		labels = ['gradle-plugin', 'pandoc']
+		githubRepo = 'Singond/Gradle-Pandoc'
+//		githubReadme = 'README.md'  // Not supported
+//		githubReleaseNotesFile = ''
+		version {
+			name = project.version
+			desc = "Version ${project.version}"
+			released = new Date()   // today
+			vcsTag = "v${project.version}"
+		}
+	}
+	publications = ['pluginPublication']
+	publish = true                  // Publish automatically upon upload
 }
