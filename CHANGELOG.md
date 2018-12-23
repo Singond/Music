@@ -11,6 +11,7 @@ Changelog
 ### Changed
 - Changed published artifact name from `com.github.singond.music` to simply
   `music`. The group name remains `com.github.singond`.
+- Changed project layout to Maven standard.
 
 [0.4.0] - 2018-08-04
 --------------------
