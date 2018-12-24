@@ -35,7 +35,6 @@ public class Chords {
 	public static final ChordType HALF_DIMINISHED_7 = SmallChordType.HALF_DIMINISHED_7;
 	/** A diminished seventh chord, for example [C, Eb, Gb, Bbb]. */
 	public static final ChordType DIMINISHED_7 = NonInvertibleChordType.DIMINISHED_7;
-	//	public static final ChordType DIMINISHED_7 = SmallChordType.DIMINISHED_7;
 	/** An augmented major seventh chord, for example [C, E, G#, B]. */
 	public static final ChordType AUGMENTED_MAJOR_7 = SmallChordType.AUGMENTED_MAJOR_7;
 

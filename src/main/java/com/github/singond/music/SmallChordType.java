@@ -54,7 +54,7 @@ class SmallChordType implements ChordType {
 			MINOR_TRIAD, MINOR_TRIAD_6, MINOR_TRIAD_64,
 			DIMINISHED_TRIAD, DIMINISHED_TRIAD_6, DIMINISHED_TRIAD_64,
 			MAJOR_7, MINOR_7, DOMINANT_7,
-			DIMINISHED_7, HALF_DIMINISHED_7, MINOR_MAJOR_7, AUGMENTED_MAJOR_7;
+			HALF_DIMINISHED_7, MINOR_MAJOR_7, AUGMENTED_MAJOR_7;
 
 	static {
 		List<SmallChordType> inversions;
@@ -91,9 +91,6 @@ class SmallChordType implements ChordType {
 		HALF_DIMINISHED_7 = SmallChordType.inversionsOf(
 				Arrays.<Interval>asList(MINOR_THIRD, MINOR_THIRD, MAJOR_THIRD),
 				"half-diminished 7th", "7/5-").get(0);
-		DIMINISHED_7 = SmallChordType.inversionsOf(
-				Arrays.<Interval>asList(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD),
-				"diminished 7th", "dim").get(0);
 		AUGMENTED_MAJOR_7 = SmallChordType.inversionsOf(
 				Arrays.<Interval>asList(MAJOR_THIRD, MAJOR_THIRD, MINOR_THIRD),
 				"augmented major 7th", "7/5+").get(0);
