@@ -19,12 +19,13 @@ package com.github.singond.music;
 import static com.github.singond.music.PitchClass.*;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 
-public class ChordGeneration {
+public class ChordsTest {
 
 	@Test
 	public void byBass() {
@@ -130,17 +131,23 @@ public class ChordGeneration {
 
 	/**
 	 * @param ch the chord under test
-	 * @param notes the expected notes in the chord, from bass to top
+	 * @param expected the expected notes in the chord, from bass to top
 	 * @param root expected value of the root note
 	 * @param inversion expected inversion number of the chord
 	 */
-	private void check(Chord ch, List<PitchClass> notes, PitchClass root,
+	private void check(Chord ch, List<PitchClass> expected, PitchClass root,
 	                   int inversion) {
 		System.out.format("%3s %-20s: %s%n", ch.root(), ch.type(), ch.notes());
-		assertEquals("Unexpected note structure: ", notes, ch.notes());
+
+		assertEquals("Unexpected note structure: ", expected, ch.notes());
 		assertEquals("Unexpected root: ", root, ch.root());
-		assertEquals("Unexpected bass: ", notes.get(0), ch.bass());
-		assertEquals("Unexpected size: ", notes.size(), ch.size());
+		assertEquals("Unexpected bass: ", expected.get(0), ch.bass());
+		assertEquals("Unexpected size: ", expected.size(), ch.size());
 		assertEquals("Unexpected inversion: ", inversion, ch.inversion());
+
+		// Check iterator
+		List<PitchClass> iterated = new ArrayList<>();
+		for (PitchClass pc : ch) iterated.add(pc);
+		assertEquals("Bad iterator: ", iterated, expected);
 	}
 }

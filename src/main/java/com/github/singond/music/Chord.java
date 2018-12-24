@@ -16,6 +16,7 @@
 
 package com.github.singond.music;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ import java.util.List;
  *
  * @author Singon
  */
-public interface Chord {
+public interface Chord extends Iterable<PitchClass> {
 
 	/**
 	 * Returns the interval structure of this chord.
@@ -140,4 +141,16 @@ public interface Chord {
 	 * @return the chord type
 	 */
 	ChordType type();
+
+	/**
+	 * Returns an iterator over the pitch classes in this chord in ascending
+	 * order starting from the bass note.
+	 * The returned iterator does not allow modifications to this chord.
+	 * Attempts to modify it will result in an
+	 * {@code UnsupportedOperationException}.
+	 *
+	 * @return {@inheritDoc}
+	 */
+	@Override
+	Iterator<PitchClass> iterator();
 }

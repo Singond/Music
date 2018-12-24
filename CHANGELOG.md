@@ -28,6 +28,8 @@ Licensed under Apache 2.0 License and made available on JCenter.
   in repository.
 - Added support for chords.
 - Added a `README` file.
+- `Chord` now extends `Iterable<PitchClass>` and `ChordVoicing` extends
+  `Iterable<Pitch>`.
 
 ### Changed
 - Changed published artifact name from `com.github.singond.music` to simply

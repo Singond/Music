@@ -16,6 +16,7 @@
 
 package com.github.singond.music;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ import java.util.List;
  *
  * @author Singon
  */
-public interface ChordVoicing {
+public interface ChordVoicing extends Iterable<Pitch> {
 
 	/**
 	 * Returns the notes of this chord sorted from the lowest to highest.
@@ -119,4 +120,16 @@ public interface ChordVoicing {
 	 * @return the chord type
 	 */
 	ChordType type();
+
+	/**
+	 * Returns an iterator over the pitches in this voicing in ascending order
+	 * starting from the bass note.
+	 * The returned iterator does not allow modifications to this voicing.
+	 * Attempts to modify it will result in an
+	 * {@code UnsupportedOperationException}.
+	 *
+	 * @return {@inheritDoc}
+	 */
+	@Override
+	Iterator<Pitch> iterator();
 }

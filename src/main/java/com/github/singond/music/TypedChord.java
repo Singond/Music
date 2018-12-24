@@ -18,6 +18,7 @@ package com.github.singond.music;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 class TypedChord implements Chord {
@@ -149,6 +150,11 @@ class TypedChord implements Chord {
 	@Override
 	public ChordType type() {
 		return type;
+	}
+
+	@Override
+	public Iterator<PitchClass> iterator() {
+		return notes().iterator();
 	}
 
 	@Override
