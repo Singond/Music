@@ -21,6 +21,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * An implementation of the {@code Chord} interface which corresponds directly
+ * to a {@code ChordType} built on top of a given {@code PitchClass}.
+ *
+ * @author Singon
+ */
 class TypedChord implements Chord {
 
 	private final PitchClass root;
@@ -43,6 +49,14 @@ class TypedChord implements Chord {
 		this.type = type;
 	}
 
+	/**
+	 * Creates a chord of the given type with the given pitch class as its
+	 * bass note.
+	 *
+	 * @param bass the bass note of the chord (as a {@code PitchClass})
+	 * @param type the type of chord to be created
+	 * @return a chord with the given {@code bass} and {@code type}
+	 */
 	public static final TypedChord ofBass(PitchClass bass, ChordType type) {
 		if (bass == null) {
 			throw new NullPointerException("The chord bass is null");
@@ -55,6 +69,14 @@ class TypedChord implements Chord {
 		return new TypedChord(root, notes, type);
 	}
 
+	/**
+	 * Creates a chord of the given type with the given pitch class as its
+	 * root note.
+	 *
+	 * @param root the root note of the chord (as a {@code PitchClass})
+	 * @param type the type of chord to be created
+	 * @return a chord with the given {@code root} and {@code type}
+	 */
 	public static final TypedChord ofRoot(PitchClass root, ChordType type) {
 		if (root == null) {
 			throw new NullPointerException("The chord root is null");
