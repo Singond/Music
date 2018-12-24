@@ -132,3 +132,12 @@ type = type.invert(1);
 chord = Chords.chordAtRoot(root, type);
 >> [G, Bb, Eb]
 ```
+
+Get the second inversion of a major triad which has Bb in bass:
+
+```
+PitchClass bass = PitchClass.B_FLAT;
+ChordType type = Chords.MAJOR_TRIAD.invert(2);
+Chord chord = Chords.chordAtBass(bass, type);
+>> [Bb, Eb, G]
+```

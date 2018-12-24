@@ -30,7 +30,8 @@ public class Snippets {
 //		key();
 //		range();
 //		chord();
-		chord2();
+//		chordRoot();
+		chordBass();
 	}
 
 	private static void key() {
@@ -58,7 +59,7 @@ public class Snippets {
 		System.out.println(c);
 	}
 
-	private static void chord2() {
+	private static void chordRoot() {
 		// Root position:
 		PitchClass root = PitchClass.E_FLAT;
 		ChordType type = Chords.MAJOR_TRIAD;
@@ -72,6 +73,13 @@ public class Snippets {
 		// Alternatively, invert the chord type:
 		type = type.invert(1);
 		chord = Chords.chordAtRoot(root, type);
+		System.out.println(chord);
+	}
+
+	private static void chordBass() {
+		PitchClass bass = PitchClass.B_FLAT;
+		ChordType type = Chords.MAJOR_TRIAD.invert(2);
+		Chord chord = Chords.chordAtBass(bass, type);
 		System.out.println(chord);
 	}
 }
