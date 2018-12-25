@@ -118,15 +118,15 @@ public interface Chord extends Iterable<PitchClass> {
 	 * reaching the top note, the inversion number is the index
 	 * of the <em>bass</em> note.
 	 * <p>
-	 * Equivalently, this is the argument to {@link #invert(int)} needed
-	 * to produce this chord type.
+	 * Equivalently, if this chord was produced by calling {@code invert(n)},
+	 * this method returns the argument {@code n}.
 	 *
 	 * @return the index of the bass note
 	 */
 	int inversion();
 
 	/**
-	 * Returns the root position of this chord type.
+	 * Returns the root position of this chord.
 	 * The root position of a chord is the position in which the root
 	 * note is equal to the bass note.
 	 * This is equivalent to calling {@code invert(0)}.

@@ -119,8 +119,8 @@ public interface ChordType {
 	 * reaching the top note, the inversion number is the index
 	 * of the <em>bass</em> note.
 	 * <p>
-	 * Equivalently, this is the argument to {@link #invert(int)} needed
-	 * to produce this chord type.
+	 * Equivalently, if this chord type was produced by calling
+	 * {@code invert(n)}, this method returns the argument {@code n}.
 	 *
 	 * @return the index of the bass note
 	 */
