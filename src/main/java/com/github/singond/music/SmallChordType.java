@@ -227,6 +227,11 @@ class SmallChordType implements ChordType {
 		return invert(0);
 	}
 
+	@Override
+	public int rootOctave() {
+		return inversionNumber == 0 ? 0 : 1;
+	}
+
 	/**
 	 * Returns a simple name of this chord type.
 	 *

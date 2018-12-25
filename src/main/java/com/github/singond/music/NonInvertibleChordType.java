@@ -102,6 +102,17 @@ class NonInvertibleChordType implements ChordType {
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * This implementation always returns the value of zero.
+	 *
+	 * @return always the value of zero
+	 */
+	@Override
+	public int rootOctave() {
+		return 0;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

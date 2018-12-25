@@ -124,7 +124,10 @@ class TypedChordVoicing implements ChordVoicing {
 		if (type.inversion() == n) {
 			return this;
 		} else {
-			return ofRoot(root, type.invert(n));
+			ChordType invType = type.invert(n);
+			int shift = invType.rootOctave() - type.rootOctave();
+			Pitch invRoot = Pitch.of(root.pitchClass(), root.octave() + shift);
+			return ofRoot(invRoot, invType);
 		}
 	}
 
@@ -138,7 +141,7 @@ class TypedChordVoicing implements ChordVoicing {
 		if (type.inversion() == 0) {
 			return this;
 		} else {
-			return ofRoot(root, type.rootPosition());
+			return invert(0);
 		}
 	}
 

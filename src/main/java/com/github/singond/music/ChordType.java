@@ -135,4 +135,12 @@ public interface ChordType {
 	 * @return the root position of this chord
 	 */
 	ChordType rootPosition();
+
+	/**
+	 * Returns the number of octaves between the root note of this chord and
+	 * the root note of the root position of this chord.
+	 *
+	 * @return the number of octaves the root has moved from root position
+	 */
+	int rootOctave();
 }
