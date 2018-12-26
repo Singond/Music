@@ -1,30 +1,18 @@
-/*
- * Copyright 2019 Jan Slany
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.github.singond.music;
 
 import java.util.List;
 
 /**
- * An implementation of the {@code Chord} interface which corresponds directly
- * to a {@code ChordType} built on top of a given {@code PitchClass}.
+ * An implementation of the {@code InvertibleChord} interface which corresponds
+ * directly to a {@code ChordType} built on top of a given {@code PitchClass}.
  *
  * @author Singon
  */
-class TypedChord extends AbstractTypedChord implements Chord {
+class TypedInvertibleChord extends AbstractTypedChord
+                           implements InvertibleChord {
+
+	private final PitchClass root;
+	private final InvertibleChordType type;
 
 	/**
 	 * Creates a new {@code TypedChord} with the given attributes.
@@ -35,9 +23,11 @@ class TypedChord extends AbstractTypedChord implements Chord {
 	 * @param notes the pitch classes of the chord in ascending order
 	 * @param type the chord type
 	 */
-	private TypedChord(PitchClass root, List<PitchClass> notes,
-	                   ChordType type) {
+	private TypedInvertibleChord(PitchClass root, List<PitchClass> notes,
+	                             InvertibleChordType type) {
 		super(root, notes, type);
+		this.root = root;
+		this.type = type;
 	}
 
 	/**
@@ -48,7 +38,8 @@ class TypedChord extends AbstractTypedChord implements Chord {
 	 * @param type the type of chord to be created
 	 * @return a chord with the given {@code bass} and {@code type}
 	 */
-	public static final TypedChord ofBass(PitchClass bass, ChordType type) {
+	public static final TypedInvertibleChord ofBass(
+			PitchClass bass, InvertibleChordType type) {
 		if (bass == null) {
 			throw new NullPointerException("The chord bass is null");
 		} else if (type == null) {
@@ -57,7 +48,7 @@ class TypedChord extends AbstractTypedChord implements Chord {
 		// TODO Return preset constant if available
 		List<PitchClass> notes = fromBass(bass, type);
 		PitchClass root = notes.get(type.rootIndex());
-		return new TypedChord(root, notes, type);
+		return new TypedInvertibleChord(root, notes, type);
 	}
 
 	/**
@@ -68,7 +59,8 @@ class TypedChord extends AbstractTypedChord implements Chord {
 	 * @param type the type of chord to be created
 	 * @return a chord with the given {@code root} and {@code type}
 	 */
-	public static final TypedChord ofRoot(PitchClass root, ChordType type) {
+	public static final TypedInvertibleChord ofRoot(
+			PitchClass root, InvertibleChordType type) {
 		if (root == null) {
 			throw new NullPointerException("The chord root is null");
 		} else if (type == null) {
@@ -76,6 +68,26 @@ class TypedChord extends AbstractTypedChord implements Chord {
 		}
 		// TODO Return preset constant if available
 		List<PitchClass> notes = fromRoot(root, type);
-		return new TypedChord(root, notes, type);
+		return new TypedInvertibleChord(root, notes, type);
+	}
+
+	@Override
+	public InvertibleChord invert(int n) {
+		if (type.inversion() == n) {
+			return this;
+		} else {
+			InvertibleChordType type = this.type.invert(n);
+			return new TypedInvertibleChord(root, fromRoot(root, type), type);
+		}
+	}
+
+	@Override
+	public InvertibleChord rootPosition() {
+		if (type.inversion() == 0) {
+			return this;
+		} else {
+			InvertibleChordType type = this.type.rootPosition();
+			return new TypedInvertibleChord(root, fromRoot(root, type), type);
+		}
 	}
 }
