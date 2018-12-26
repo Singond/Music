@@ -82,36 +82,6 @@ public interface Chord extends Iterable<PitchClass> {
 	Interval span();
 
 	/**
-	 * Checks whether this chord has any non-zero inversions,
-	 * ie. whether {{@link #invert} can be called without throwing
-	 * {@code UnsupportedOperationException}.
-	 *
-	 * @return {@code true}, if calling {@link #invert} will not result
-	 *         in {@code UnsupportedOperationException}
-	 */
-	boolean invertible();
-
-	/**
-	 * Returns the <em>n</em>-th inversion of this chord, where <em>n</em>
-	 * is a number between 0 (inclusive) and the chord size (exclusive).
-	 * The <em>n</em>-th inversion of a chord is such a rearrangement of
-	 * its notes that the <em>n</em>-th note (counting from the root,
-	 * which is assigned the index 0) is in the bass.
-	 * <p>
-	 * Apart from this requirement for the bass note, the exact positions
-	 * of remaining notes are un-specified, and the implementations are
-	 * free to choose the exact form of the inversion.
-	 *
-	 * @param n the inversion number <em>n</em> (see above)
-	 * @return an inversion of this chord with the {@code n}-th note
-	 *         in the bass
-	 * @throws IndexOutOfBoundsException if {@code n} is not between
-	 *         0 (inclusive) and {@code size()} (exclusive)
-	 * @throws UnsupportedOperationException if this chord has no inversions
-	 */
-	Chord invert(int n);
-
-	/**
 	 * Returns the number of inversion of this chord.
 	 * If the notes in the chord are indexed from 0 starting with the
 	 * <em>root</em> in ascending order and wrapping down to base upon
@@ -124,16 +94,6 @@ public interface Chord extends Iterable<PitchClass> {
 	 * @return the index of the bass note
 	 */
 	int inversion();
-
-	/**
-	 * Returns the root position of this chord.
-	 * The root position of a chord is the position in which the root
-	 * note is equal to the bass note.
-	 * This is equivalent to calling {@code invert(0)}.
-	 *
-	 * @return the root position of this chord
-	 */
-	Chord rootPosition();
 
 	/**
 	 * Returns the chord type of this chord.

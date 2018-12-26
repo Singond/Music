@@ -1,13 +1,13 @@
 package com.github.singond.music;
 
 /**
- * An extension of {@code ChordType} which is aware of its inversions.
+ * An extension of {@code Chord} which is aware of its inversions.
  * Chords implementing this interface expose their pre-defined inversions
  * directly through their interface.
  *
  * @author Singon
  */
-public interface InvertibleChordType extends ChordType {
+public interface InvertibleChord extends Chord {
 
 	/**
 	 * Returns the <em>n</em>-th inversion of this chord, where <em>n</em>
@@ -27,25 +27,15 @@ public interface InvertibleChordType extends ChordType {
 	 *         0 (inclusive) and {@code size()} (exclusive)
 	 * @throws UnsupportedOperationException if this chord has no inversions
 	 */
-	InvertibleChordType invert(int n);
+	InvertibleChord invert(int n);
 
 	/**
-	 * Returns the root position of this chord type.
+	 * Returns the root position of this chord.
 	 * The root position of a chord is the position in which the root
-	 * note is equal to the bass note, ie. where {@code rootIndex() == 0}.
+	 * note is equal to the bass note.
 	 * This is equivalent to calling {@code invert(0)}.
 	 *
 	 * @return the root position of this chord
 	 */
-	InvertibleChordType rootPosition();
-
-	/**
-	 * Returns the number of octaves between the root note of this chord and
-	 * the root note of the root position of this chord, assuming that the bass
-	 * note of the {@code (n+1)}th inversion is always than the bass note of
-	 * the {@code n}th inversion for all {@code n}.
-	 *
-	 * @return the number of octaves the root has moved from root position
-	 */
-	int rootOctave();
+	InvertibleChord rootPosition();
 }
