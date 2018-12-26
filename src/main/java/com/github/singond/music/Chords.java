@@ -42,11 +42,23 @@ public class Chords {
 		throw new UnsupportedOperationException("Non-instantiable class");
 	}
 
-	public static final Chord chordAtBass(PitchClass bass, ChordType type) {
+	public static final Chord chordAtBass(
+			PitchClass bass, ChordType type) {
 		return TypedChord.ofBass(bass, type);
 	}
 
-	public static final TypedChord chordAtRoot(PitchClass root, ChordType type) {
+	public static final InvertibleChord chordAtBass(
+			PitchClass bass, InvertibleChordType type) {
+		return TypedInvertibleChord.ofBass(bass, type);
+	}
+
+	public static final TypedChord chordAtRoot(
+			PitchClass root, ChordType type) {
 		return TypedChord.ofRoot(root, type);
+	}
+
+	public static final TypedInvertibleChord chordAtRoot(
+			PitchClass root, InvertibleChordType type) {
+		return TypedInvertibleChord.ofRoot(root, type);
 	}
 }
