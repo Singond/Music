@@ -83,33 +83,7 @@ class NonInvertibleChordType implements ChordType {
 	}
 
 	@Override
-	public boolean invertible() {
-		return false;
-	}
-
-	@Override
-	public ChordType invert(int n) {
-		throw new UnsupportedOperationException("This chord type has no inversions");
-	}
-
-	@Override
 	public int inversion() {
-		return 0;
-	}
-
-	@Override
-	public ChordType rootPosition() {
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * This implementation always returns the value of zero.
-	 *
-	 * @return always the value of zero
-	 */
-	@Override
-	public int rootOctave() {
 		return 0;
 	}
 

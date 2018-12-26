@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author Singon
  */
-class SmallChordType implements ChordType {
+class SmallChordType implements InvertibleChordType {
 
 	/** Interval structure of this chord type. */
 	private final List<Interval> structure;
@@ -49,7 +49,7 @@ class SmallChordType implements ChordType {
 	/** The index of this instance in {@code inversions}. */
 	private final int inversionNumber;
 
-	public static final ChordType
+	public static final InvertibleChordType
 			MAJOR_TRIAD, MAJOR_TRIAD_6, MAJOR_TRIAD_64,
 			MINOR_TRIAD, MINOR_TRIAD_6, MINOR_TRIAD_64,
 			DIMINISHED_TRIAD, DIMINISHED_TRIAD_6, DIMINISHED_TRIAD_64,
@@ -200,20 +200,12 @@ class SmallChordType implements ChordType {
 	}
 
 	/**
-	 * @return always {@code true}
-	 */
-	@Override
-	public boolean invertible() {
-		return true;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 * <p>
 	 * This implementation always returns a precomputed result.
 	 */
 	@Override
-	public ChordType invert(int n) {
+	public InvertibleChordType invert(int n) {
 		return inversions.get(n);
 	}
 
@@ -223,7 +215,7 @@ class SmallChordType implements ChordType {
 	}
 
 	@Override
-	public ChordType rootPosition() {
+	public InvertibleChordType rootPosition() {
 		return invert(0);
 	}
 
