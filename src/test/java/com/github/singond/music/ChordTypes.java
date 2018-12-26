@@ -115,8 +115,8 @@ public class ChordTypes {
 		List<Interval> struct = Arrays.<Interval>asList
 				(MAJOR_THIRD, MAJOR_THIRD);
 		checkAll(0, struct, AUGMENTED_FIFTH, 3, 0,
-		         NonInvertibleChordType.AUGMENTED_TRIAD,
-		         NonInvertibleChordType.AUGMENTED_TRIAD.rootPosition());
+		         DefaultChordType.AUGMENTED_TRIAD,
+		         DefaultChordType.AUGMENTED_TRIAD.rootPosition());
 	}
 
 

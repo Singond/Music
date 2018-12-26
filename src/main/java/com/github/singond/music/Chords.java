@@ -21,7 +21,7 @@ public class Chords {
 	/** Second inversion of a diminished triad, for example [Gb, C, Eb]. */
 	public static final InvertibleChordType DIMINISHED_TRIAD_64 = SmallChordType.DIMINISHED_TRIAD_64;
 	/** An augmented triad, for example [C, E, G#]. */
-	public static final ChordType AUGMENTED_TRIAD = NonInvertibleChordType.AUGMENTED_TRIAD;
+	public static final ChordType AUGMENTED_TRIAD = DefaultChordType.AUGMENTED_TRIAD;
 
 	/** A dominant seventh chord, for example [C, E, G, Bb]. */
 	public static final InvertibleChordType DOMINANT_7 = SmallChordType.DOMINANT_7;
@@ -34,7 +34,7 @@ public class Chords {
 	/** A half-diminished seventh chord, for example [C, Eb, Gb, Bb]. */
 	public static final InvertibleChordType HALF_DIMINISHED_7 = SmallChordType.HALF_DIMINISHED_7;
 	/** A diminished seventh chord, for example [C, Eb, Gb, Bbb]. */
-	public static final ChordType DIMINISHED_7 = NonInvertibleChordType.DIMINISHED_7;
+	public static final ChordType DIMINISHED_7 = DefaultChordType.DIMINISHED_7;
 	/** An augmented major seventh chord, for example [C, E, G#, B]. */
 	public static final InvertibleChordType AUGMENTED_MAJOR_7 = SmallChordType.AUGMENTED_MAJOR_7;
 

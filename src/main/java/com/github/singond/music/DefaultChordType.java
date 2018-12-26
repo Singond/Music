@@ -30,19 +30,19 @@ import java.util.List;
  *
  * @author Singon
  */
-class NonInvertibleChordType implements ChordType {
+class DefaultChordType implements ChordType {
 
 	private final List<Interval> structure;
 
 	private transient Interval span;
 
-	public static final ChordType AUGMENTED_TRIAD = new NonInvertibleChordType
+	public static final ChordType AUGMENTED_TRIAD = new DefaultChordType
 			(Arrays.<Interval>asList(MAJOR_THIRD, MAJOR_THIRD));
 
-	public static final ChordType DIMINISHED_7 = new NonInvertibleChordType
+	public static final ChordType DIMINISHED_7 = new DefaultChordType
 			(Arrays.<Interval>asList(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD));
 
-	private NonInvertibleChordType(List<Interval> structure) {
+	private DefaultChordType(List<Interval> structure) {
 		if (structure == null) {
 			throw new NullPointerException("The interval structure is null");
 		} else if (structure.isEmpty()) {

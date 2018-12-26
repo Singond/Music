@@ -51,7 +51,7 @@ public class ChordsTest {
 				Arrays.asList(D, F_SHARP, A, C_SHARP), D, 0);
 		check(TypedChord.ofBass(D, SmallChordType.MINOR_7),
 				Arrays.asList(D, F, A, C), D, 0);
-		check(TypedChord.ofBass(D, NonInvertibleChordType.DIMINISHED_7),
+		check(TypedChord.ofBass(D, DefaultChordType.DIMINISHED_7),
 				Arrays.asList(D, F, A_FLAT, C_FLAT), D, 0);
 		check(TypedChord.ofBass(F, SmallChordType.DOMINANT_7),
 				Arrays.asList(F, A, C, E_FLAT), F, 0);
