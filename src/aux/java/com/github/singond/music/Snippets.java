@@ -62,8 +62,8 @@ public class Snippets {
 	private static void chordRoot() {
 		// Root position:
 		PitchClass root = PitchClass.E_FLAT;
-		ChordType type = Chords.MAJOR_TRIAD;
-		Chord chord = Chords.chordAtRoot(root, type);
+		InvertibleChordType type = Chords.MAJOR_TRIAD;
+		InvertibleChord chord = Chords.chordAtRoot(root, type);
 		System.out.println(chord);
 
 		// First inversion:
