@@ -33,7 +33,7 @@ abstract class AbstractTypedChord implements Chord {
 		this.type = type;
 	}
 
-	protected static List<PitchClass> fromBass(
+	protected static final List<PitchClass> fromBass(
 			PitchClass bass, ChordType type) {
 		List<PitchClass> result = new ArrayList<>(type.size());
 		PitchClass note = bass;
@@ -45,7 +45,7 @@ abstract class AbstractTypedChord implements Chord {
 		return result;
 	}
 
-	protected static List<PitchClass> fromRoot(
+	protected static final List<PitchClass> fromRoot(
 			PitchClass root, ChordType type) {
 		List<PitchClass> result = new ArrayList<>(type.size());
 		Interval rootInt = type.heightAboveBass(type.rootIndex());
