@@ -8,8 +8,11 @@ import java.util.List;
  *
  * @author Singon
  */
-class TypedChordVoicing extends AbstractTypedChordVoicing
-                        implements ChordVoicing {
+class TypedInvertibleChordVoicing extends AbstractTypedChordVoicing
+                                  implements InvertibleChordVoicing {
+
+	private final Pitch root;
+	private final InvertibleChordType type;
 
 	/**
 	 * Creates a new {@code TypedChordVoicing} with the given attributes.
@@ -20,8 +23,11 @@ class TypedChordVoicing extends AbstractTypedChordVoicing
 	 * @param notes the pitches of the chord in ascending order
 	 * @param type the chord type
 	 */
-	private TypedChordVoicing(Pitch root, List<Pitch> notes, ChordType type) {
+	private TypedInvertibleChordVoicing(
+			Pitch root, List<Pitch> notes, InvertibleChordType type) {
 		super(root, notes, type);
+		this.root = root;
+		this.type = type;
 	}
 
 	/**
@@ -32,7 +38,8 @@ class TypedChordVoicing extends AbstractTypedChordVoicing
 	 * @param type the type of chord to be created
 	 * @return a chord with the given {@code bass} and {@code type}
 	 */
-	public static final TypedChordVoicing ofBass(Pitch bass, ChordType type) {
+	public static final TypedInvertibleChordVoicing ofBass(
+			Pitch bass, InvertibleChordType type) {
 		if (bass == null) {
 			throw new NullPointerException("The chord bass is null");
 		} else if (type == null) {
@@ -41,7 +48,7 @@ class TypedChordVoicing extends AbstractTypedChordVoicing
 		// TODO Return preset constant if available
 		List<Pitch> notes = fromBass(bass, type);
 		Pitch root = notes.get(type.rootIndex());
-		return new TypedChordVoicing(root, notes, type);
+		return new TypedInvertibleChordVoicing(root, notes, type);
 	}
 
 	/**
@@ -52,7 +59,8 @@ class TypedChordVoicing extends AbstractTypedChordVoicing
 	 * @param type the type of chord to be created
 	 * @return a chord with the given {@code root} and {@code type}
 	 */
-	public static final TypedChordVoicing ofRoot(Pitch root, ChordType type) {
+	public static final TypedInvertibleChordVoicing ofRoot(
+			Pitch root, InvertibleChordType type) {
 		if (root == null) {
 			throw new NullPointerException("The chord root is null");
 		} else if (type == null) {
@@ -60,6 +68,27 @@ class TypedChordVoicing extends AbstractTypedChordVoicing
 		}
 		// TODO Return preset constant if available
 		List<Pitch> notes = fromRoot(root, type);
-		return new TypedChordVoicing(root, notes, type);
+		return new TypedInvertibleChordVoicing(root, notes, type);
+	}
+
+	@Override
+	public InvertibleChordVoicing invert(int n) {
+		if (type.inversion() == n) {
+			return this;
+		} else {
+			InvertibleChordType invType = type.invert(n);
+			int shift = invType.rootOctave() - type.rootOctave();
+			Pitch invRoot = Pitch.of(root.pitchClass(), root.octave() + shift);
+			return ofRoot(invRoot, invType);
+		}
+	}
+
+	@Override
+	public InvertibleChordVoicing rootPosition() {
+		if (type.inversion() == 0) {
+			return this;
+		} else {
+			return invert(0);
+		}
 	}
 }

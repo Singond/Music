@@ -77,40 +77,40 @@ public class ChordVoicingTest {
 	@Test
 	public void inversions() {
 		System.out.println("Checking inversions:");
-		ChordVoicing chord;
-		chord = TypedChordVoicing.ofRoot(C4, Chords.MAJOR_TRIAD);
+		InvertibleChordVoicing chord;
+		chord = TypedInvertibleChordVoicing.ofRoot(C4, Chords.MAJOR_TRIAD);
 		check(chord, Arrays.asList(C4, E4, G4), C, 0);
 		check(chord.rootPosition(), Arrays.asList(C4, E4, G4), C, 0);
 		check(chord.invert(0), Arrays.asList(C4, E4, G4), C, 0);
 		check(chord.invert(1), Arrays.asList(E4, G4, C5), C, 1);
 		check(chord.invert(2), Arrays.asList(G4, C5, E5), C, 2);
 
-		chord = TypedChordVoicing.ofRoot(C4, Chords.MAJOR_TRIAD_64);
+		chord = TypedInvertibleChordVoicing.ofRoot(C4, Chords.MAJOR_TRIAD_64);
 		check(chord, Arrays.asList(G3, C4, E4), C, 2);
 		check(chord.rootPosition(), Arrays.asList(C3, E3, G3), C, 0);
 		check(chord.invert(0), Arrays.asList(C3, E3, G3), C, 0);
 		check(chord.invert(1), Arrays.asList(E3, G3, C4), C, 1);
 		check(chord.invert(2), Arrays.asList(G3, C4, E4), C, 2);
 
-//		chord = TypedChordVoicing.ofBass(C, Chords.MAJOR_TRIAD);
+//		chord = TypedInvertibleChordVoicing.ofBass(C, Chords.MAJOR_TRIAD);
 //		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
 //		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
 //		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
 //		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
 //
-//		chord = TypedChordVoicing.ofBass(E, Chords.MAJOR_TRIAD_6);
+//		chord = TypedInvertibleChordVoicing.ofBass(E, Chords.MAJOR_TRIAD_6);
 //		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
 //		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
 //		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
 //		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
 //
-//		chord = TypedChordVoicing.ofBass(A, Chords.MAJOR_TRIAD);
+//		chord = TypedInvertibleChordVoicing.ofBass(A, Chords.MAJOR_TRIAD);
 //		check(chord.rootPosition(), Arrays.asList(A, C_SHARP, E), A, 0);
 //		check(chord.invert(0), Arrays.asList(A, C_SHARP, E), A, 0);
 //		check(chord.invert(1), Arrays.asList(C_SHARP, E, A), A, 1);
 //		check(chord.invert(2), Arrays.asList(E, A, C_SHARP), A, 2);
 //
-//		chord = TypedChordVoicing.ofRoot(E, Chords.MAJOR_7);
+//		chord = TypedInvertibleChordVoicing.ofRoot(E, Chords.MAJOR_7);
 //		check(chord.rootPosition(), Arrays.asList(E, G_SHARP, B, D_SHARP), E, 0);
 //		check(chord.invert(0), Arrays.asList(E, G_SHARP, B, D_SHARP), E, 0);
 //		check(chord.invert(1), Arrays.asList(G_SHARP, B, D_SHARP, E), E, 1);
