@@ -61,4 +61,24 @@ public class Chords {
 			PitchClass root, InvertibleChordType type) {
 		return TypedInvertibleChord.ofRoot(root, type);
 	}
+
+	public static final ChordVoicing chordAtBass(
+			Pitch bass, ChordType type) {
+		return TypedChordVoicing.ofBass(bass, type);
+	}
+
+	public static final ChordVoicing chordAtRoot(
+			Pitch root, ChordType type) {
+		return TypedChordVoicing.ofRoot(root, type);
+	}
+
+	public static final InvertibleChordVoicing chordAtBass(
+			Pitch bass, InvertibleChordType type) {
+		return TypedInvertibleChordVoicing.ofBass(bass, type);
+	}
+
+	public static final InvertibleChordVoicing chordAtRoot(
+			Pitch root, InvertibleChordType type) {
+		return TypedInvertibleChordVoicing.ofRoot(root, type);
+	}
 }
