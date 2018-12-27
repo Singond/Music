@@ -47,17 +47,17 @@ public class Chords {
 		return TypedChord.ofBass(bass, type);
 	}
 
+	public static final Chord chordAtRoot(
+			PitchClass root, ChordType type) {
+		return TypedChord.ofRoot(root, type);
+	}
+
 	public static final InvertibleChord chordAtBass(
 			PitchClass bass, InvertibleChordType type) {
 		return TypedInvertibleChord.ofBass(bass, type);
 	}
 
-	public static final TypedChord chordAtRoot(
-			PitchClass root, ChordType type) {
-		return TypedChord.ofRoot(root, type);
-	}
-
-	public static final TypedInvertibleChord chordAtRoot(
+	public static final InvertibleChord chordAtRoot(
 			PitchClass root, InvertibleChordType type) {
 		return TypedInvertibleChord.ofRoot(root, type);
 	}
