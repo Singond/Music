@@ -73,7 +73,7 @@ public class ChordVoicingTest {
 		System.out.println();
 	}
 
-	// TODO: Failing, fix it. Needs redefining the absolute position of inversions.
+	// TODO: Consider redefining the absolute position of inversions.
 	@Test
 	public void inversions() {
 		System.out.println("Checking inversions:");
