@@ -118,8 +118,9 @@ public interface Interval extends Comparable<Interval> {
 	 * Indicates whether a given object is equal to this interval, that is,
 	 * if the given object is also an interval and spans the same number
 	 * of semitones and the same number of diatonic degrees.
-	 * Thus, two intervals with the same width in semitones do not necessarily
-	 * be equal to each other.
+	 * <p>
+	 * Note that two intervals with the same width in semitones are not
+	 * necessarily be equal to each other:
 	 * For example, augmented third is not equal to perfect fourth, despite
 	 * the fact that both of these intervals have the same width.
 	 *
