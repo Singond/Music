@@ -56,7 +56,22 @@ public interface ChordType {
 	int rootIndex();
 
 	/**
+	 * Returns the number of inversion of this chord.
+	 * If the notes in the chord are indexed from 0 starting with the
+	 * <em>root</em> in ascending order and wrapping down to base upon
+	 * reaching the top note, the inversion number is the index
+	 * of the <em>bass</em> note.
+	 * <p>
+	 * Equivalently, if this chord type was produced by calling
+	 * {@code invert(n)}, this method returns the argument {@code n}.
+	 *
+	 * @return the index of the bass note
+	 */
+	int inversion();
+
+	/**
 	 * Returns the number of notes in this chord type.
+	 * This is equivalent to calling {@code structure().size()}.
 	 *
 	 * @return the number of notes
 	 */
@@ -81,18 +96,4 @@ public interface ChordType {
 	 *         between 0 (inclusive) and {@code size()} (exclusive)
 	 */
 	Interval heightAboveBass(int note);
-
-	/**
-	 * Returns the number of inversion of this chord.
-	 * If the notes in the chord are indexed from 0 starting with the
-	 * <em>root</em> in ascending order and wrapping down to base upon
-	 * reaching the top note, the inversion number is the index
-	 * of the <em>bass</em> note.
-	 * <p>
-	 * Equivalently, if this chord type was produced by calling
-	 * {@code invert(n)}, this method returns the argument {@code n}.
-	 *
-	 * @return the index of the bass note
-	 */
-	int inversion();
 }
