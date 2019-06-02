@@ -1,14 +1,15 @@
 Music Theory for Java
 =====================
-A Java library providing implementation of the Western music theory.
+A Java library implementing the Western music theory.
 
-The library implements the widely used concepts in the Western music theory
+This Java library implements the widely used concepts in the Western music theory
 like pitches, pitch classes, intervals, keys, scales, chords etc. in a type-safe
 manner, using immutable value objects wherever possible.
 
 Basics
 ======
 The core types implementing music concepts are the following:
+
 - `Pitch`: The pitch of a musical note, consisting of a _pitch class_ and an
   octave number, like “C4” (C in the fourth octave) or “F#5” (F sharp in
   the fifth octave).
@@ -22,6 +23,7 @@ The core types implementing music concepts are the following:
 - `ChordType`: A type of a chord, like “major triad” or “diminished seventh”.
 
 There are also some utility classes for manipulating the objects:
+
 - `Pitches`: for manipulating instances of `Pitch` and `PitchClass`,
 - `Intervals`: for manipulating instances of `Interval`,
 - `Keys`: for working with instances of `Key`.
