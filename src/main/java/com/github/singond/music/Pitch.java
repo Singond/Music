@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * An exact pitch; that is a pitch class and an octave.
@@ -44,6 +46,9 @@ public final class Pitch implements Comparable<Pitch> {
 
 	private static final Comparator<Pitch> ENHARMONIC_COMPARATOR
 			= new EnharmonicComparator();
+
+	private static final Pattern STRING_PATTERN
+			= Pattern.compile("(.*)([0-9]+)");
 
 	/**
 	 * Pre-cached instances of most common pitches.
@@ -1059,6 +1064,23 @@ public final class Pitch implements Comparable<Pitch> {
 	@Override
 	public String toString() {
 		return pitchClass.toString() + octave;
+	}
+
+	public static Pitch valueOf(String s) {
+		Matcher m = STRING_PATTERN.matcher(s);
+		if (m.matches()) {
+			PitchClass pc = PitchClass.valueOf(m.group(1));
+			String octstr = m.group(2);
+			int octave;
+			try {
+				octave = Integer.parseInt(octstr);
+			} catch (NumberFormatException e) {
+				throw new FormatException("Illegal octave number: " + octstr);
+			}
+			return Pitch.of(pc, octave);
+		} else {
+			throw new FormatException("Illegal pitch format: " + s);
+		}
 	}
 
 	/**

@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * A set of all pitches which are a perfect octave apart.
@@ -139,6 +140,9 @@ public final class PitchClass implements Comparable<PitchClass> {
 
 	private static final Comparator<PitchClass> ENHARMONIC_COMPARATOR
 			= new EnharmonicComparator();
+
+	private static final Pattern STRING_PATTERN
+			= Pattern.compile("[CDEFGABH](b*|#*|x?)");
 
 	private PitchClass(BasePitchClass base, Accidental accidental) {
 		this.base = base;
@@ -279,6 +283,26 @@ public final class PitchClass implements Comparable<PitchClass> {
 	@Override
 	public String toString() {
 		return base + accidental.symbolAscii();
+	}
+
+	public static PitchClass valueOf(String s) {
+		if (s.length() < 1) {
+			throw new FormatException("Expecting at least one character");
+		}
+		String pc = s.substring(0, 1);
+		BasePitchClass base;
+		try {
+			base = BasePitchClass.valueOf(pc);
+		} catch (IllegalArgumentException e) {
+			throw new FormatException("Illegal pitch class format: " + pc);
+		}
+		Accidental acc;
+		if (s.length() > 1) {
+			acc = Accidental.valueOf(s.substring(1));
+		} else {
+			acc = Accidental.NATURAL;
+		}
+		return of(base, acc);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.github.singond.music;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * A modifier which changes the pitch of a note relative to its basic
@@ -19,6 +20,9 @@ public class Accidental implements Comparable<Accidental> {
 	public static final Accidental NATURAL = new Accidental(0);
 	public static final Accidental SHARP = new Accidental(1);
 	public static final Accidental DOUBLE_SHARP = new Accidental(2);
+
+	private static final Pattern FLAT_PATTERN = Pattern.compile("b+");
+	private static final Pattern SHARP_PATTERN = Pattern.compile("#+");
 
 	/**
 	 * The number of semitones above the natural pitch.
@@ -154,6 +158,28 @@ public class Accidental implements Comparable<Accidental> {
 				return "double sharp";
 			default:
 				return shift + " steps";
+		}
+	}
+
+	public static Accidental valueOf(String s) {
+		if (s == null) {
+			throw new NullPointerException("The argument is null");
+		} else if (s.equals("bb") || s.equals("double flat")) {
+			return DOUBLE_FLAT;
+		} else if (s.equals("b") || s.equals("flat")) {
+			return FLAT;
+		} else if (s.equals("") || s.equals("natural")) {
+			return NATURAL;
+		} else if (s.equals("#") || s.equals("sharp")) {
+			return SHARP;
+		} else if (s.equals("x") || s.equals("double sharp")) {
+			return DOUBLE_SHARP;
+		} else if (SHARP_PATTERN.matcher(s).matches()) {
+			return ofSteps(s.length());
+		} else if (FLAT_PATTERN.matcher(s).matches()) {
+			return ofSteps(-s.length());
+		} else {
+			throw new FormatException("Illegal accidental format: " + s);
 		}
 	}
 
