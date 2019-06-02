@@ -1,8 +1,8 @@
 Changelog
 =========
 
-[Unreleased]
-------------
+[0.5.0] - 2019-06-02
+--------------------
 ### Added
 - Added this changelog. Logged preceding versions based on information
   in repository.
