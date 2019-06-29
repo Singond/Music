@@ -31,6 +31,12 @@ class SymbolicPitchClassFormat implements PitchClassFormat {
 		int steps = acc.stepsAboveNatural();
 		if (steps == 0) {
 			return accidentalSymbols.natural;
+		} else if (steps == -1) {
+			return accidentalSymbols.flat;
+		} else if (steps == 1) {
+			return accidentalSymbols.sharp;
+		} else if (steps == -2) {
+			return accidentalSymbols.dblFlat;
 		} else if (steps == 2) {
 			return accidentalSymbols.dblSharp;
 		} else {
@@ -51,27 +57,22 @@ class SymbolicPitchClassFormat implements PitchClassFormat {
 	}
 
 	public enum AccidentalSymbols {
-		ASCII("b", "#", "x"),
-		UNICODE("", "", "");
+		ASCII("bb", "b", "", "#", "x"),
+		UNICODE("\uD834\uDD2B", "\u266D", "", "\u266F", "\uD834\uDD2A");
 
+		private String dblFlat;
 		private String flat;
+		private String natural;
 		private String sharp;
 		private String dblSharp;
-		private String natural;
 
-		AccidentalSymbols(String flat, String sharp, String dblSharp) {
+		AccidentalSymbols(String dblFlat, String flat,
+				String natural, String sharp,String dblSharp) {
+			this.dblFlat = dblFlat;
 			this.flat = flat;
-			this.sharp = sharp;
-			this.dblSharp = dblSharp;
-			this.natural = "";
-		}
-
-		AccidentalSymbols(String flat, String sharp, String dblSharp,
-				String natural) {
-			this.flat = flat;
-			this.sharp = sharp;
-			this.dblSharp = dblSharp;
 			this.natural = natural;
+			this.sharp = sharp;
+			this.dblSharp = dblSharp;
 		}
 	}
 }
