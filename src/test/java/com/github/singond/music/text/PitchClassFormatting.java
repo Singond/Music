@@ -13,9 +13,9 @@ import com.github.singond.music.text.SymbolicPitchClassFormat;
 public class PitchClassFormatting {
 
 	private PitchClassFormat symbAscii = new SymbolicPitchClassFormat(
-			SymbolicPitchClassFormat.AccidentalSymbols.ASCII);
+			AccidentalSymbols.ASCII);
 	private PitchClassFormat symbUnicode = new SymbolicPitchClassFormat(
-			SymbolicPitchClassFormat.AccidentalSymbols.UNICODE);
+			AccidentalSymbols.UNICODE);
 
 	@Test
 	public void symbAscii() {
