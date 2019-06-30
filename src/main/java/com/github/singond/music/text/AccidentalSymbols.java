@@ -6,18 +6,27 @@ package com.github.singond.music.text;
  * and double sharp pitch, which are used in constructing the text
  * representations of a given pitch (or pitch class).
  */
-public class AccidentalSymbols {
+class AccidentalSymbols {
 
 	/**
 	 * An ASCII approximation of accidental symbols.
 	 *
-	 * This uses {@code b} for flats, {@code #} for sharps and {@code x}
-	 * for double sharps.
+	 * This uses {@code b} ({@code U+0062}) for flats,
+	 * {@code #} ({@code U+0023}) for sharps
+	 * and {@code x} ({@code U+0078}) for double sharps.
+	 * Natural pitch is unarked.
 	 */
 	public static final AccidentalSymbols ASCII = new AccidentalSymbols(
 			"bb", "b", "", "#", "x");
+
 	/**
 	 * A set of accidental symbols represented by proper Unicode characters.
+	 *
+	 * This uses {@code U+266D} ({@code MUSIC FLAT SIGN}) for flat,
+	 * {@code U+266F} ({@code MUSIC SHARP SIGN}) for sharp,
+	 * {@code U+1D12B} ({@code MUSICAL SYMBOL DOUBLE FLAT}) for double flat
+	 * and {@code U+1D12A} ({@code MUSICAL SYMBOL DOUBLE SHARP}) for double
+	 * sharp. Natural pitch is unarked.
 	 */
 	public static final AccidentalSymbols UNICODE = new AccidentalSymbols(
 			"\uD834\uDD2B", "\u266D", "", "\u266F", "\uD834\uDD2A");
