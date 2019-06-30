@@ -109,19 +109,11 @@ class SymbolicPitchClassFormat implements PitchClassFormat {
 		} else if (steps == 2) {
 			return accidentalSymbols.getDoubleSharp();
 		} else {
-			String symb;
 			if (steps < 0) {
-				steps = -steps;
-				symb = accidentalSymbols.getFlat();
+				return TextUtil.repeat(accidentalSymbols.getFlat(), -steps);
 			} else {
-				symb = accidentalSymbols.getSharp();
+				return TextUtil.repeat(accidentalSymbols.getSharp(), steps);
 			}
-			assert steps > 0 : steps;
-			StringBuilder value = new StringBuilder();
-			for (int i = 0; i < steps; i++) {
-				value.append(symb);
-			}
-			return value;
 		}
 	}
 }
