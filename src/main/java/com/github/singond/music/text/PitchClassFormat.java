@@ -1,4 +1,6 @@
-package com.github.singond.music;
+package com.github.singond.music.text;
+
+import com.github.singond.music.PitchClass;
 
 /**
  * An interface for classes which can transform a pitch class into a textual

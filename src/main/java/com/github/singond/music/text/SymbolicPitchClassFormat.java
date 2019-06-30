@@ -1,4 +1,7 @@
-package com.github.singond.music;
+package com.github.singond.music.text;
+
+import com.github.singond.music.Accidental;
+import com.github.singond.music.PitchClass;
 
 /**
  * Returns a string with the scientific notation of a given pitch class.
@@ -58,6 +61,9 @@ class SymbolicPitchClassFormat implements PitchClassFormat {
 
 	/**
 	 * A set of symbols to be used for representing sharps and flats.
+	 * This specifies the symbols for natural, flat, sharp, double flat
+	 * and double sharp pitch, which are used in constructing the text
+	 * representations of a given pitch (or pitch class).
 	 */
 	public static class AccidentalSymbols {
 
@@ -74,8 +80,6 @@ class SymbolicPitchClassFormat implements PitchClassFormat {
 
 		/**
 		 * Constructs a new instance representing the given accidental symbols.
-		 * This specifies the symbols for natural, flat, sharp, double flat
-		 * and double sharp.
 		 *
 		 * @param dblFlat  the symbol for double flat pitch
 		 * @param flat     the symbol for flat pitch

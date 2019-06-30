@@ -1,8 +1,14 @@
-package com.github.singond.music;
+package com.github.singond.music.text;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import com.github.singond.music.Accidental;
+import com.github.singond.music.BasePitchClass;
+import com.github.singond.music.PitchClass;
+import com.github.singond.music.text.PitchClassFormat;
+import com.github.singond.music.text.SymbolicPitchClassFormat;
 
 public class PitchClassFormatting {
 
