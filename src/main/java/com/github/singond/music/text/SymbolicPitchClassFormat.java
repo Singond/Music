@@ -9,7 +9,6 @@ import com.github.singond.music.BasePitchClass;
 import com.github.singond.music.PitchClass;
 
 /**
- * Returns a string with the scientific notation of a given pitch class.
  * A pitch class format which uses symbols to represent sharps and flats.
  *
  * Higher order flats or sharps are created by repeating the single
