@@ -1,6 +1,13 @@
 Changelog
 =========
 
+[0.6.0] - 2019-07-03
+--------------------
+### Added
+- Added the `com.github.singond.music.text` package which contains utilities
+  for producing a text representation of pitches and pitch classes in various
+  formats.
+
 [0.5.0] - 2019-06-02
 --------------------
 ### Added
