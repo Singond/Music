@@ -192,8 +192,8 @@ public final class PitchClass implements Comparable<PitchClass> {
 	}
 
 	/**
-	 * Returns the base of this pitch class,
-	 * e.g. for pitch class "C#" returns the base pitch class "C".
+	 * Returns the base of this pitch class;
+	 * for example, for pitch class "C#" returns the base pitch class "C".
 	 *
 	 * @return the base of this pitch class
 	 */

@@ -20,8 +20,8 @@ package com.github.singond.music;
  * The set of natural pitch classes (that is, pitch classes with simple
  * names not involving any accidental).
  * These are the pitches that correspond to the white keys on the piano.
- * This package uses the English-world convention, where the seventh
- * degree of the C major scale is called "B".
+ * These are referred to by their English names, namely
+ * {@code C, D, E, F, G, A, B}.
  * <p>
  * The natural ordering of this enum sorts the constants in the ascending
  * order starting from {@code C}, that is {@code [C, D, E, F, G, A, B]}.
@@ -29,12 +29,34 @@ package com.github.singond.music;
  * @author Singon
  */
 public enum BasePitchClass {
+	/**
+	 * The note "C", also called "Do" or "Ut".
+	 */
 	C (0),
+	/**
+	 * The note "D", also called "Re".
+	 */
 	D (2),
+	/**
+	 * The note "E", also called "Mi".
+	 */
 	E (4),
+	/**
+	 * The note "F", also called "Fa".
+	 */
 	F (5),
+	/**
+	 * The note "G", also called "Sol".
+	 */
 	G (7),
+	/**
+	 * The note "A", also called "La".
+	 */
 	A (9),
+	/**
+	 * The note "B", also called "H" (in German convention), "Si" or "Ti".
+	 * This is the note a half-step below C.
+	 */
 	B (11);
 
 	/**
@@ -87,7 +109,8 @@ public enum BasePitchClass {
 	}
 
 	/**
-	 * Returns the name of the pitch class in upper case, e.g. "C".
+	 * Returns the English name of the pitch class in upper case,
+	 * for example "C".
 	 */
 	@Override
 	public String toString() {
