@@ -70,7 +70,7 @@ artifacts {
 
 publishing {
 	publications {
-		pluginPublication(MavenPublication) {
+		libPublication(MavenPublication) {
 			from components.java
 			artifact sourcesJar
 			artifact javadocJar
@@ -92,13 +92,13 @@ bintray {
 	key = bintrayKey
 	pkg {
 		repo = 'maven'
-		name = project.name
+		name = "java-${project.name}"
 		desc = project.description
 		licenses = ['Apache-2.0']
-		vcsUrl = 'https://github.com/Singond/Gradle-Pandoc.git'
-		issueTrackerUrl = 'https://github.com/Singond/Gradle-Pandoc/issues'
-		labels = ['gradle-plugin', 'pandoc']
-		githubRepo = 'Singond/Gradle-Pandoc'
+		vcsUrl = 'https://github.com/Singond/Music.git'
+		issueTrackerUrl = 'https://github.com/Singond/Music/issues'
+		labels = ['java-library', 'music']
+		githubRepo = 'Singond/Music'
 //		githubReadme = 'README.md'  // Not supported
 //		githubReleaseNotesFile = ''
 		version {
@@ -108,6 +108,6 @@ bintray {
 			vcsTag = "v${project.version}"
 		}
 	}
-	publications = ['pluginPublication']
+	publications = ['libPublication']
 	publish = true                  // Publish automatically upon upload
 }
