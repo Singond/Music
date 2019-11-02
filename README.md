@@ -6,8 +6,34 @@ This Java library implements the widely used concepts in the Western music theor
 like pitches, pitch classes, intervals, keys, scales, chords etc. in a type-safe
 manner, using immutable value objects wherever possible.
 
+Adding as Dependency
+====================
+
+The library is hosted at the following Maven repository:
+`https://dl.bintray.com/singon/maven`.
+
+Gradle
+------
+
+If you're using Gradle, add the following to your `build.gradle`:
+
+```groovy
+repositories {
+	maven {
+		url 'https://dl.bintray.com/singon/maven'
+	}
+}
+dependencies {
+	// Prefer a fixed version instead of '+'
+	compile 'com.github.singond:music:0.6.+'
+}
+```
+
+Usage
+=====
+
 Basics
-======
+------
 The core types implementing music concepts are the following:
 
 - `Pitch`: The pitch of a musical note, consisting of a _pitch class_ and an
@@ -29,7 +55,7 @@ There are also some utility classes for manipulating the objects:
 - `Keys`: for working with instances of `Key`.
 
 Examples
-========
+--------
 For brevity, the following examples don't show the `System.out.println(var)`.
 
 Create pitch from pitch class and octave:
