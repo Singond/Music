@@ -1,6 +1,10 @@
 Changelog
 =========
 
+[0.6.1] - 2019-11-02
+--------------------
+Licensed under Apache 2.0 License and made available on JCenter.
+
 [0.6.0] - 2019-07-03
 --------------------
 ### Added
