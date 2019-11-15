@@ -68,6 +68,10 @@ artifacts {
 	archives javadocJar
 }
 
+test.testLogging {
+//	events "passed", "skipped", "failed"
+}
+
 publishing {
 	publications {
 		libPublication(MavenPublication) {
