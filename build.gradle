@@ -23,7 +23,7 @@ buildscript {
 	}
 }
 
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
 apply plugin: 'com.jfrog.bintray'
@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-	testCompile 'junit:junit:4.12'
+	testImplementation 'junit:junit:4.12'
 }
 
 task printVersion {
