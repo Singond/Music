@@ -1,6 +1,15 @@
 Changelog
 =========
 
+[Unreleased]
+------------
+### Changed
+- The constants in `Degree` were renamed and new were added.
+### Deprecated
+- The old constants in `Degree` were marked as deprecated.
+### Fixed
+- The "constant" lists in `Degree` were not unmodifiable. This has been fixed.
+
 [0.6.1] - 2019-11-02
 --------------------
 Licensed under Apache 2.0 License and made available on JCenter.
