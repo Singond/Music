@@ -9,8 +9,7 @@ manner, using immutable value objects wherever possible.
 Adding as Dependency
 ====================
 
-The library is hosted at the following Maven repository:
-`https://dl.bintray.com/singon/maven`.
+The library is hosted at JCenter <https://bintray.com/singon/maven/java-music>.
 
 Gradle
 ------
@@ -19,9 +18,7 @@ If you're using Gradle, add the following to your `build.gradle`:
 
 ```groovy
 repositories {
-	maven {
-		url 'https://dl.bintray.com/singon/maven'
-	}
+	jcenter()
 }
 dependencies {
 	// Prefer a fixed version instead of '+'
