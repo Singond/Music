@@ -75,16 +75,53 @@ public class Degree {
 	/** The raised seventh degree. */
 	public static final Degree VII_RAISED  = new Degree(7, 1);
 
-	public static final List<Degree> basicDegrees;
-	public static final List<Degree> loweredDegrees;
-	public static final List<Degree> raisedDegrees;
+	/** The seven basic degrees of a diatonic scale. */
+	public static final List<Degree> DIATONIC_DEGREES;
+	/** The diatonic degrees lowered by half-step. */
+	public static final List<Degree> LOWERED_DEGREES;
+	/** The diatonic degrees raised by half-step. */
+	public static final List<Degree> RAISED_DEGREES;
+	/**
+	 * The twelve degrees of an ascending chromatic scale in C.
+	 * These are the seven diatonic degrees and five non-diatonic degrees,
+	 * which are marked as raised variants of the degree below them.
+	 * <p>
+	 * Note that this list of degrees is not suitable for creating scales,
+	 * as scales generated from starting points other than C might contain
+	 * double sharps.
+	 */
+	public static final List<Degree> CHROMATIC_DEGREES_ASC;
+	/**
+	 * The twelve degrees of a descending chromatic scale in C.
+	 * These are the seven diatonic degrees and five non-diatonic degrees,
+	 * which are marked as lowered variants of the degree above them.
+	 * These are sorted in descending manner, starting with VII.
+	 * <p>
+	 * Note that this list of degrees is not suitable for creating scales,
+	 * as scales generated from starting points other than B might contain
+	 * double flats.
+	 */
+	public static final List<Degree> CHROMATIC_DEGREES_DESC;
 	static {
-		basicDegrees = Arrays.asList(I, II, III, IV, V, VI, VII);
-		loweredDegrees = Arrays.asList(I_LOWERED, II_LOWERED, III_LOWERED,
+		DIATONIC_DEGREES = Arrays.asList(I, II, III, IV, V, VI, VII);
+		LOWERED_DEGREES = Arrays.asList(I_LOWERED, II_LOWERED, III_LOWERED,
 				IV_LOWERED, V_LOWERED, VI_LOWERED, VII_LOWERED);
-		raisedDegrees = Arrays.asList(I_RAISED, II_RAISED, III_RAISED,
+		RAISED_DEGREES = Arrays.asList(I_RAISED, II_RAISED, III_RAISED,
 				IV_RAISED, V_RAISED, VI_RAISED, VII_RAISED);
+		CHROMATIC_DEGREES_ASC = Arrays.asList(I, I_RAISED, II, II_RAISED, III,
+				IV, IV_RAISED, V, V_RAISED, VI, VI_RAISED, VII);
+		CHROMATIC_DEGREES_DESC = Arrays.asList(VII, VII_LOWERED, VI, VI_LOWERED,
+				V, V_LOWERED, IV, III, III_LOWERED, II, II_LOWERED, I);
 	}
+	/** A synonym for {@link #DIATONIC_DEGREES}. */
+	@Deprecated
+	public static final List<Degree> basicDegrees = LOWERED_DEGREES;
+	/** A synonym for {@link #LOWERED_DEGREES}. */
+	@Deprecated
+	public static final List<Degree> loweredDegrees = LOWERED_DEGREES;
+	/** A synonym for {@link #RAISED_DEGREES}. */
+	@Deprecated
+	public static final List<Degree> raisedDegrees = RAISED_DEGREES;
 
 	private static final List<String> romanNumerals = Arrays.asList(
 			"I", "II", "III", "IV", "V", "VI", "VII");
@@ -99,11 +136,11 @@ public class Degree {
 
 	public static Degree of(int base, int shift) {
 		if (shift == -1)
-			return loweredDegrees.get(base - 1);
+			return LOWERED_DEGREES.get(base - 1);
 		else if (shift == 0)
-			return basicDegrees.get(base - 1);
+			return DIATONIC_DEGREES.get(base - 1);
 		else if (shift == 1)
-			return raisedDegrees.get(base - 1);
+			return RAISED_DEGREES.get(base - 1);
 		else
 			return new Degree(base, shift);
 	}

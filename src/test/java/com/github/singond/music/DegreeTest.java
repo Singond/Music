@@ -16,7 +16,12 @@
 
 package com.github.singond.music;
 
+import static com.github.singond.music.PitchClass.*;
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -78,7 +83,7 @@ public class DegreeTest {
 		Degree degree = Degree.of(base, shift);
 		assertEquals(base, degree.base());
 		assertEquals(shift, degree.shift());
-		System.out.format("Degree %d shifted by %d: %s%n",
+		System.out.format("Degree %d shifted by %2d: %s%n",
 				base, shift, degree.toString());
 	}
 
@@ -95,9 +100,43 @@ public class DegreeTest {
 		System.out.println();
 	}
 
+	@Test
+	public void diatonicScales() {
+		System.out.println("Diatonic scales:");
+		deg(Keys.C_MAJOR, Degree.DIATONIC_DEGREES, C, D, E, F, G, A, B);
+		deg(Keys.D_MAJOR, Degree.DIATONIC_DEGREES,
+				D, E, F_SHARP, G, A, B, C_SHARP);
+		deg(Keys.E_FLAT_MAJOR, Degree.DIATONIC_DEGREES,
+				E_FLAT, F, G, A_FLAT, B_FLAT, C, D);
+		System.out.println();
+	}
+
+	@Test
+	public void chromaticScales() {
+		System.out.println("Chromatic scales:");
+		deg(Keys.C_MAJOR, Degree.CHROMATIC_DEGREES_ASC, C, C_SHARP,
+				D, D_SHARP, E, F, F_SHARP, G, G_SHARP, A, A_SHARP, B);
+		deg(Keys.C_MAJOR, Degree.CHROMATIC_DEGREES_DESC, B, B_FLAT, A, A_FLAT,
+				G, G_FLAT, F, E, E_FLAT, D, D_FLAT, C);
+		System.out.println();
+	}
+
 	private void deg(Key key, Degree deg, PitchClass exp) {
 		PitchClass pc = key.degree(deg);
-		System.out.format("%s of %s: %s%n", deg, key, pc);
+		System.out.format("%-4s in %-8s: %s%n", deg, key, pc);
 		assertEquals(exp, pc);
+	}
+
+	private void deg(Key key, List<Degree> degs, List<PitchClass> exp) {
+		List<PitchClass> pcs = new ArrayList<PitchClass>(degs.size());
+		for (Degree deg : degs) {
+			pcs.add(key.degree(deg));
+		}
+		System.out.format("%s in %-8s: %s%n", degs, key, pcs);
+		assertEquals(exp, pcs);
+	}
+
+	private void deg(Key key, List<Degree> degs, PitchClass... exp) {
+		deg(key, degs, Arrays.asList(exp));
 	}
 }
