@@ -58,7 +58,7 @@ public final class Pitch implements Comparable<Pitch> {
 	private static final int SEMITONES = 12;
 
 	private static final Comparator<Pitch> STRICT_COMPARATOR
-	= new StrictComparator();
+			= new StrictComparator();
 
 	private static final Comparator<Pitch> ENHARMONIC_COMPARATOR
 			= new EnharmonicComparator();
