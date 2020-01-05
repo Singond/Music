@@ -103,15 +103,17 @@ public class Degree {
 	 */
 	public static final List<Degree> CHROMATIC_DEGREES_DESC;
 	static {
-		DIATONIC_DEGREES = Arrays.asList(I, II, III, IV, V, VI, VII);
-		LOWERED_DEGREES = Arrays.asList(I_LOWERED, II_LOWERED, III_LOWERED,
-				IV_LOWERED, V_LOWERED, VI_LOWERED, VII_LOWERED);
-		RAISED_DEGREES = Arrays.asList(I_RAISED, II_RAISED, III_RAISED,
+		DIATONIC_DEGREES = Util.unmodifiableList(I, II, III, IV, V, VI, VII);
+		LOWERED_DEGREES = Util.unmodifiableList(I_LOWERED, II_LOWERED,
+				III_LOWERED, IV_LOWERED, V_LOWERED, VI_LOWERED, VII_LOWERED);
+		RAISED_DEGREES = Util.unmodifiableList(I_RAISED, II_RAISED, III_RAISED,
 				IV_RAISED, V_RAISED, VI_RAISED, VII_RAISED);
-		CHROMATIC_DEGREES_ASC = Arrays.asList(I, I_RAISED, II, II_RAISED, III,
-				IV, IV_RAISED, V, V_RAISED, VI, VI_RAISED, VII);
-		CHROMATIC_DEGREES_DESC = Arrays.asList(VII, VII_LOWERED, VI, VI_LOWERED,
-				V, V_LOWERED, IV, III, III_LOWERED, II, II_LOWERED, I);
+		CHROMATIC_DEGREES_ASC = Util.unmodifiableList(I, I_RAISED,
+				II, II_RAISED, III, IV, IV_RAISED, V, V_RAISED,
+				VI, VI_RAISED, VII);
+		CHROMATIC_DEGREES_DESC = Util.unmodifiableList(VII, VII_LOWERED,
+				VI, VI_LOWERED, V, V_LOWERED, IV, III, III_LOWERED,
+				II, II_LOWERED, I);
 	}
 	/** A synonym for {@link #DIATONIC_DEGREES}. */
 	@Deprecated
@@ -201,4 +203,5 @@ public class Degree {
 	public String toString() {
 		return makeToString();
 	}
+
 }

@@ -16,6 +16,10 @@
 
 package com.github.singond.music;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * A utility class providing some common methods.
  */
@@ -56,4 +60,16 @@ class Util {
 		return x - y*floorDiv(x, y);
 	}
 
+	/**
+	 * Creates an unmodifiable list containing the given elements.
+	 * This is equivalent to calling
+	 * {@code Collections.unmodifiableList(Arrays.asList(elems))}.
+	 *
+	 * @param elems elements of the list
+	 * @return an unmodifiable view of a new list containing {@code elems}
+	 */
+	@SafeVarargs
+	public static <T> List<T> unmodifiableList(T... elems) {
+		return Collections.unmodifiableList(Arrays.asList(elems));
+	}
 }

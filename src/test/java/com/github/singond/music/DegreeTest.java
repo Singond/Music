@@ -139,4 +139,21 @@ public class DegreeTest {
 	private void deg(Key key, List<Degree> degs, PitchClass... exp) {
 		deg(key, degs, Arrays.asList(exp));
 	}
+
+	@Test
+	public void immutability() {
+		immutability(Degree.DIATONIC_DEGREES);
+		immutability(Degree.LOWERED_DEGREES);
+		immutability(Degree.RAISED_DEGREES);
+		immutability(Degree.CHROMATIC_DEGREES_ASC);
+		immutability(Degree.CHROMATIC_DEGREES_DESC);
+	}
+
+	private void immutability(List<Degree> degrees) {
+		Degree orig = degrees.get(0);
+		try {
+			degrees.set(0, null);
+		} catch (UnsupportedOperationException e) {}
+		assertEquals(orig, degrees.get(0));
+	}
 }
