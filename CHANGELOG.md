@@ -3,6 +3,8 @@ Changelog
 
 [Unreleased]
 ------------
+### Added
+- Added new interface for a generic group of pitches.
 ### Changed
 - The constants in `Degree` were renamed and new were added.
 ### Deprecated
