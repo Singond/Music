@@ -1,3 +1,7 @@
+_Note: The repository has been filtered to avoid possible copyright violation.
+As a consequence, your local version may not agree with upstream. Sorry for
+any inconvenience._
+
 Music Theory for Java
 =====================
 A Java library implementing the Western music theory.
