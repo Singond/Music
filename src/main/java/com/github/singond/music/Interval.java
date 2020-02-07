@@ -120,7 +120,7 @@ public interface Interval extends Comparable<Interval> {
 	 * of semitones and the same number of diatonic degrees.
 	 * <p>
 	 * Note that two intervals with the same width in semitones are not
-	 * necessarily be equal to each other:
+	 * necessarily equal to each other:
 	 * For example, augmented third is not equal to perfect fourth, despite
 	 * the fact that both of these intervals have the same width.
 	 *
