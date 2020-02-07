@@ -53,7 +53,7 @@ public abstract class AbstractInterval implements Interval {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -74,7 +74,7 @@ public abstract class AbstractInterval implements Interval {
 	}
 
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + degrees();
