@@ -19,6 +19,10 @@ public interface InvertibleChordType extends ChordType {
 	 * Apart from this requirement for the bass note, the exact positions
 	 * of remaining notes are un-specified, and the implementations are
 	 * free to choose the exact form of the inversion.
+	 * <p>
+	 * Note the relationship between this method and {@link #inversion}:
+	 * If a chord type is created by calling {@code invert(n)},
+	 * its {@code inversion} method should always return the number {@code n}.
 	 *
 	 * @param n the inversion number <em>n</em> (see above)
 	 * @return an inversion of this chord with the {@code n}-th note
@@ -38,6 +42,18 @@ public interface InvertibleChordType extends ChordType {
 	 * @return the root position of this chord
 	 */
 	InvertibleChordType rootPosition();
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Note the relationship between this method and {@link #invert}:
+	 * If a chord type is created by calling {@code invert(n)},
+	 * this method should always return the number {@code n}.
+	 *
+	 * @return {@inheritDoc}
+	 */
+	@Override
+	int inversion();
 
 	/**
 	 * Returns the number of octaves between the root note of this chord and

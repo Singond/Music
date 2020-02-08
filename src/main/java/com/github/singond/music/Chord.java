@@ -87,9 +87,6 @@ public interface Chord extends Iterable<PitchClass> {
 	 * <em>root</em> in ascending order and wrapping down to base upon
 	 * reaching the top note, the inversion number is the index
 	 * of the <em>bass</em> note.
-	 * <p>
-	 * Equivalently, if this chord was produced by calling {@code invert(n)},
-	 * this method returns the argument {@code n}.
 	 *
 	 * @return the index of the bass note
 	 */
