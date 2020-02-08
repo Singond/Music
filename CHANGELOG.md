@@ -22,6 +22,12 @@ Changelog
 - The default implementation of chords and related objects is now properly
   exposed in the public API.
 
+[0.7.0] - _Skipped_
+-------------------
+This version has been skipped. The release candidates for this version were
+distributed too early and contained features conflicting with those intended
+for later releases.
+
 [0.6.1] - 2019-11-02
 --------------------
 Licensed under Apache 2.0 License and made available on JCenter.
