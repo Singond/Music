@@ -4,7 +4,8 @@ import java.util.List;
 
 /**
  * An implementation of the {@code InvertibleChord} interface which corresponds
- * directly to a {@code ChordType} built on top of a given {@code PitchClass}.
+ * directly to a {@code InvertibleChordType} built on top of a given
+ * {@code PitchClass}.
  *
  * @author Singon
  */
