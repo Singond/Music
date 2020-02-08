@@ -29,13 +29,14 @@ import java.util.List;
  *
  * @author Singon
  */
-public interface ChordVoicing extends Iterable<Pitch> {
+public interface ChordVoicing extends PitchGroup {
 
 	/**
 	 * Returns the notes of this chord sorted from the lowest to highest.
 	 *
 	 * @return the pitches forming this chord
 	 */
+	@Override
 	List<Pitch> pitches();
 
 	/**
@@ -58,6 +59,7 @@ public interface ChordVoicing extends Iterable<Pitch> {
 	 *
 	 * @return the number of notes
 	 */
+	@Override
 	int size();
 
 	/**
