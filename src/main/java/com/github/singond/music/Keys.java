@@ -89,6 +89,6 @@ public final class Keys {
 	public static final Key A_SHARP_MINOR = MinorKey.A_SHARP;
 
 	private Keys() {
-    	throw new UnsupportedOperationException("Non-instantiable class");
-    }
+		throw new UnsupportedOperationException("Non-instantiable class");
+	}
 }

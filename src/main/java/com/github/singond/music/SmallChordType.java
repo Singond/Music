@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author Singon
  */
-class SmallChordType implements ChordType {
+class SmallChordType implements InvertibleChordType {
 
 	/** Interval structure of this chord type. */
 	private final List<Interval> structure;
@@ -49,12 +49,12 @@ class SmallChordType implements ChordType {
 	/** The index of this instance in {@code inversions}. */
 	private final int inversionNumber;
 
-	public static final ChordType
+	public static final InvertibleChordType
 			MAJOR_TRIAD, MAJOR_TRIAD_6, MAJOR_TRIAD_64,
 			MINOR_TRIAD, MINOR_TRIAD_6, MINOR_TRIAD_64,
 			DIMINISHED_TRIAD, DIMINISHED_TRIAD_6, DIMINISHED_TRIAD_64,
 			MAJOR_7, MINOR_7, DOMINANT_7,
-			DIMINISHED_7, HALF_DIMINISHED_7, MINOR_MAJOR_7, AUGMENTED_MAJOR_7;
+			HALF_DIMINISHED_7, MINOR_MAJOR_7, AUGMENTED_MAJOR_7;
 
 	static {
 		List<SmallChordType> inversions;
@@ -91,9 +91,6 @@ class SmallChordType implements ChordType {
 		HALF_DIMINISHED_7 = SmallChordType.inversionsOf(
 				Arrays.<Interval>asList(MINOR_THIRD, MINOR_THIRD, MAJOR_THIRD),
 				"half-diminished 7th", "7/5-").get(0);
-		DIMINISHED_7 = SmallChordType.inversionsOf(
-				Arrays.<Interval>asList(MINOR_THIRD, MINOR_THIRD, MINOR_THIRD),
-				"diminished 7th", "dim").get(0);
 		AUGMENTED_MAJOR_7 = SmallChordType.inversionsOf(
 				Arrays.<Interval>asList(MAJOR_THIRD, MAJOR_THIRD, MINOR_THIRD),
 				"augmented major 7th", "7/5+").get(0);
@@ -203,20 +200,12 @@ class SmallChordType implements ChordType {
 	}
 
 	/**
-	 * @return always {@code true}
-	 */
-	@Override
-	public boolean invertible() {
-		return true;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 * <p>
 	 * This implementation always returns a precomputed result.
 	 */
 	@Override
-	public ChordType invert(int n) {
+	public InvertibleChordType invert(int n) {
 		return inversions.get(n);
 	}
 
@@ -226,8 +215,13 @@ class SmallChordType implements ChordType {
 	}
 
 	@Override
-	public ChordType rootPosition() {
+	public InvertibleChordType rootPosition() {
 		return invert(0);
+	}
+
+	@Override
+	public int rootOctave() {
+		return inversionNumber == 0 ? 0 : 1;
 	}
 
 	/**

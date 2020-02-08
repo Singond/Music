@@ -28,8 +28,10 @@ public class Snippets {
 
 	public static void main(String[] args) {
 //		key();
-		range();
-		chord();
+//		range();
+//		chord();
+//		chordRoot();
+		chordBass();
 	}
 
 	private static void key() {
@@ -52,10 +54,32 @@ public class Snippets {
 		System.out.println(range);
 	}
 
-	// TODO Create and use public API
-	// TODO And implement toString
 	private static void chord() {
-		Chord c = TypedChord.ofRoot(PitchClass.E_FLAT, SmallChordType.MAJOR_TRIAD);
+		Chord c = Chords.chordAtRoot(PitchClass.E_FLAT, Chords.MAJOR_TRIAD);
 		System.out.println(c);
+	}
+
+	private static void chordRoot() {
+		// Root position:
+		PitchClass root = PitchClass.E_FLAT;
+		InvertibleChordType type = Chords.MAJOR_TRIAD;
+		InvertibleChord chord = Chords.chordAtRoot(root, type);
+		System.out.println(chord);
+
+		// First inversion:
+		chord = chord.invert(1);
+		System.out.println(chord);
+
+		// Alternatively, invert the chord type:
+		type = type.invert(1);
+		chord = Chords.chordAtRoot(root, type);
+		System.out.println(chord);
+	}
+
+	private static void chordBass() {
+		PitchClass bass = PitchClass.B_FLAT;
+		ChordType type = Chords.MAJOR_TRIAD.invert(2);
+		Chord chord = Chords.chordAtBass(bass, type);
+		System.out.println(chord);
 	}
 }

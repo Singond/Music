@@ -3,12 +3,24 @@ Changelog
 
 [Unreleased]
 ------------
+### Added
+- `Chord` now extends `Iterable<PitchClass>`. `ChordVoicing` and `Pitch` now
+  extend `PitchGroup`, which itself extends `Iterable<Pitch>`.
+
 ### Changed
 - The constants in `Degree` were renamed and new were added.
+- Support for chord inversions has been completely removed from the basic
+  chord-like interfaces (`Chord`, `ChordType` and `ChordVoicing`), and the
+  respective methods have been moved to dedicated sub-interfaces.
+  See `InvertibleChord`, `InvertibleChordType` and `InvertibleChordVoicing`.
+
 ### Deprecated
 - The old constants in `Degree` were marked as deprecated.
+
 ### Fixed
 - The "constant" lists in `Degree` were not unmodifiable. This has been fixed.
+- The default implementation of chords and related objects is now properly
+  exposed in the public API.
 
 [0.6.1] - 2019-11-02
 --------------------

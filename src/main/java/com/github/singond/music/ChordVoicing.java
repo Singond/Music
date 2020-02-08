@@ -16,6 +16,7 @@
 
 package com.github.singond.music;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -28,13 +29,14 @@ import java.util.List;
  *
  * @author Singon
  */
-public interface ChordVoicing {
+public interface ChordVoicing extends PitchGroup {
 
 	/**
 	 * Returns the notes of this chord sorted from the lowest to highest.
 	 *
 	 * @return the pitches forming this chord
 	 */
+	@Override
 	List<Pitch> pitches();
 
 	/**
@@ -57,37 +59,8 @@ public interface ChordVoicing {
 	 *
 	 * @return the number of notes
 	 */
+	@Override
 	int size();
-
-	/**
-	 * Checks whether this chord has any non-zero inversions,
-	 * ie. whether {{@link #invert} can be called without throwing
-	 * {@code UnsupportedOperationException}.
-	 *
-	 * @return {@code true}, if calling {@link #invert} will not result
-	 *         in {@code UnsupportedOperationException}
-	 */
-	boolean invertible();
-
-	/**
-	 * Returns the <em>n</em>-th inversion of this chord, where <em>n</em>
-	 * is a number between 0 (inclusive) and the chord size (exclusive).
-	 * The <em>n</em>-th inversion of a chord is such a rearrangement of
-	 * its notes that the <em>n</em>-th note (counting from the root,
-	 * which is assigned the index 0) is in the bass.
-	 * <p>
-	 * Apart from this requirement for the bass note, the exact positions
-	 * of remaining notes are un-specified, and the implementations are
-	 * free to choose the exact form of the inversion.
-	 *
-	 * @param n the inversion number <em>n</em> (see above)
-	 * @return an inversion of this chord with the {@code n}-th note
-	 *         in the bass
-	 * @throws IndexOutOfBoundsException if {@code n} is not between
-	 *         0 (inclusive) and {@code size()} (exclusive)
-	 * @throws UnsupportedOperationException if this chord has no inversions
-	 */
-	ChordVoicing invert(int n);
 
 	/**
 	 * Returns the number of inversion of this chord.
@@ -95,23 +68,10 @@ public interface ChordVoicing {
 	 * <em>root</em> in ascending order and wrapping down to base upon
 	 * reaching the top note, the inversion number is the index
 	 * of the <em>bass</em> note.
-	 * <p>
-	 * Equivalently, this is the argument to {@link #invert(int)} needed
-	 * to produce this chord type.
 	 *
 	 * @return the index of the bass note
 	 */
 	int inversion();
-
-	/**
-	 * Returns the root position of this chord.
-	 * The root position of a chord is the position in which the root
-	 * note is equal to the bass note.
-	 * This is equivalent to calling {@code invert(0)}.
-	 *
-	 * @return the root position of this chord
-	 */
-	ChordVoicing rootPosition();
 
 	/**
 	 * Returns the chord type of this chord.
@@ -119,4 +79,16 @@ public interface ChordVoicing {
 	 * @return the chord type
 	 */
 	ChordType type();
+
+	/**
+	 * Returns an iterator over the pitches in this voicing in ascending order
+	 * starting from the bass note.
+	 * The returned iterator does not allow modifications to this voicing.
+	 * Attempts to modify it will result in an
+	 * {@code UnsupportedOperationException}.
+	 *
+	 * @return {@inheritDoc}
+	 */
+	@Override
+	Iterator<Pitch> iterator();
 }

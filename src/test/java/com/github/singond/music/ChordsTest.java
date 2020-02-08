@@ -19,12 +19,13 @@ package com.github.singond.music;
 import static com.github.singond.music.PitchClass.*;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 
-public class ChordGeneration {
+public class ChordsTest {
 
 	@Test
 	public void byBass() {
@@ -50,7 +51,7 @@ public class ChordGeneration {
 				Arrays.asList(D, F_SHARP, A, C_SHARP), D, 0);
 		check(TypedChord.ofBass(D, SmallChordType.MINOR_7),
 				Arrays.asList(D, F, A, C), D, 0);
-		check(TypedChord.ofBass(D, SmallChordType.DIMINISHED_7),
+		check(TypedChord.ofBass(D, DefaultChordType.DIMINISHED_7),
 				Arrays.asList(D, F, A_FLAT, C_FLAT), D, 0);
 		check(TypedChord.ofBass(F, SmallChordType.DOMINANT_7),
 				Arrays.asList(F, A, C, E_FLAT), F, 0);
@@ -90,37 +91,38 @@ public class ChordGeneration {
 	@Test
 	public void inversions() {
 		System.out.println("Checking inversions:");
-		Chord chord = TypedChord.ofRoot(C, SmallChordType.MAJOR_TRIAD);
+		InvertibleChord chord = TypedInvertibleChord.ofRoot(
+				C, SmallChordType.MAJOR_TRIAD);
 		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
 		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
 
-		chord = TypedChord.ofRoot(C, SmallChordType.MAJOR_TRIAD_64);
+		chord = TypedInvertibleChord.ofRoot(C, SmallChordType.MAJOR_TRIAD_64);
 		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
 		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
 
-		chord = TypedChord.ofBass(C, SmallChordType.MAJOR_TRIAD);
+		chord = TypedInvertibleChord.ofBass(C, SmallChordType.MAJOR_TRIAD);
 		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
 		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
 
-		chord = TypedChord.ofBass(E, SmallChordType.MAJOR_TRIAD_6);
+		chord = TypedInvertibleChord.ofBass(E, SmallChordType.MAJOR_TRIAD_6);
 		check(chord.rootPosition(), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(0), Arrays.asList(C, E, G), C, 0);
 		check(chord.invert(1), Arrays.asList(E, G, C), C, 1);
 		check(chord.invert(2), Arrays.asList(G, C, E), C, 2);
 
-		chord = TypedChord.ofBass(A, SmallChordType.MAJOR_TRIAD);
+		chord = TypedInvertibleChord.ofBass(A, SmallChordType.MAJOR_TRIAD);
 		check(chord.rootPosition(), Arrays.asList(A, C_SHARP, E), A, 0);
 		check(chord.invert(0), Arrays.asList(A, C_SHARP, E), A, 0);
 		check(chord.invert(1), Arrays.asList(C_SHARP, E, A), A, 1);
 		check(chord.invert(2), Arrays.asList(E, A, C_SHARP), A, 2);
 
-		chord = TypedChord.ofRoot(E, SmallChordType.MAJOR_7);
+		chord = TypedInvertibleChord.ofRoot(E, SmallChordType.MAJOR_7);
 		check(chord.rootPosition(), Arrays.asList(E, G_SHARP, B, D_SHARP), E, 0);
 		check(chord.invert(0), Arrays.asList(E, G_SHARP, B, D_SHARP), E, 0);
 		check(chord.invert(1), Arrays.asList(G_SHARP, B, D_SHARP, E), E, 1);
@@ -130,17 +132,23 @@ public class ChordGeneration {
 
 	/**
 	 * @param ch the chord under test
-	 * @param notes the expected notes in the chord, from bass to top
+	 * @param expected the expected notes in the chord, from bass to top
 	 * @param root expected value of the root note
 	 * @param inversion expected inversion number of the chord
 	 */
-	private void check(Chord ch, List<PitchClass> notes, PitchClass root,
+	private void check(Chord ch, List<PitchClass> expected, PitchClass root,
 	                   int inversion) {
 		System.out.format("%3s %-20s: %s%n", ch.root(), ch.type(), ch.notes());
-		assertEquals("Unexpected note structure: ", notes, ch.notes());
+
+		assertEquals("Unexpected note structure: ", expected, ch.notes());
 		assertEquals("Unexpected root: ", root, ch.root());
-		assertEquals("Unexpected bass: ", notes.get(0), ch.bass());
-		assertEquals("Unexpected size: ", notes.size(), ch.size());
+		assertEquals("Unexpected bass: ", expected.get(0), ch.bass());
+		assertEquals("Unexpected size: ", expected.size(), ch.size());
 		assertEquals("Unexpected inversion: ", inversion, ch.inversion());
+
+		// Check iterator
+		List<PitchClass> iterated = new ArrayList<>();
+		for (PitchClass pc : ch) iterated.add(pc);
+		assertEquals("Bad iterator: ", iterated, expected);
 	}
 }

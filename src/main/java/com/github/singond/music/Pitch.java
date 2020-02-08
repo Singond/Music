@@ -17,8 +17,10 @@
 package com.github.singond.music;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -35,7 +37,7 @@ import java.util.regex.Pattern;
  *
  * @author Singon
  */
-public final class Pitch implements Comparable<Pitch> {
+public final class Pitch implements Comparable<Pitch>, PitchGroup {
 
 	/** The pitch class */
 	private final PitchClass pitchClass;
@@ -1200,5 +1202,20 @@ public final class Pitch implements Comparable<Pitch> {
 			}
 			return Integer.compare(p1.pitch, p2.pitch);
 		}
+	}
+
+	@Override
+	public Iterator<Pitch> iterator() {
+		return Collections.singleton(this).iterator();
+	}
+
+	@Override
+	public List<Pitch> pitches() {
+		return Collections.singletonList(this);
+	}
+
+	@Override
+	public int size() {
+		return 1;
 	}
 }
