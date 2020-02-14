@@ -117,7 +117,7 @@ public class Degree {
 	}
 	/** A synonym for {@link #DIATONIC_DEGREES}. */
 	@Deprecated
-	public static final List<Degree> basicDegrees = LOWERED_DEGREES;
+	public static final List<Degree> basicDegrees = DIATONIC_DEGREES;
 	/** A synonym for {@link #LOWERED_DEGREES}. */
 	@Deprecated
 	public static final List<Degree> loweredDegrees = LOWERED_DEGREES;

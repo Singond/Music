@@ -19,6 +19,8 @@ Changelog
 
 ### Fixed
 - The "constant" lists in `Degree` were not unmodifiable. This has been fixed.
+- The deprecated constant `basicDegrees` in `Degree` incorrectly pointed
+  to `LOWERED_DEGREES`. It now correctly aliases to `DIATONIC_DEGREES`.
 - The default implementation of chords and related objects is now properly
   exposed in the public API.
 
