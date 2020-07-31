@@ -62,8 +62,6 @@ abstract class SimpleKey extends AbstractKey implements Key {
 	 * @param intervals the intervals of the notes in this key above the tonic.
 	 *        The tonic should not be represented in this list
 	 *        (ie. there should be no unison in this list)
-	 * @return list of pitch classes created by adding each of
-	 *         sorted {@code intervals} to {@code tonic}
 	 * @throws NullPointerException if either {@code tonic} or
 	 *         {@code intervals} is null
 	 * @throws IllegalArgumentException if one of the given
