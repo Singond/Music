@@ -23,6 +23,7 @@ import com.github.singond.music.Pitch;
  * which uses a single letter (possibly with accidentals) to represent
  * the pitch class and a combination of letter case and either numbers
  * or repeated (sub)primes to represent octave.
+ * <p>
  * Note that the variant wherein the lower octaves are represented by
  * repeating the pitch class (for example, {@code CC} for contra-C,
  * ie. {@code C1} in scientific pitch notation), is not supported.
