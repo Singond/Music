@@ -24,6 +24,7 @@ import java.util.Set;
  *
  * @author Singon
  */
+@SuppressWarnings("unused")
 public class Snippets {
 
 	public static void main(String[] args) {
