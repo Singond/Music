@@ -25,8 +25,8 @@ buildscript {
 
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 apply plugin: 'eclipse'
-apply plugin: 'com.jfrog.bintray'
 
 sourceSets {
 	// Code which does not need to be compiled in build
@@ -74,44 +74,52 @@ test.testLogging {
 
 publishing {
 	publications {
-		libPublication(MavenPublication) {
+		maven(MavenPublication) {
 			from components.java
 			artifact sourcesJar
 			artifact javadocJar
 
-			groupId project.group
-			artifactId project.name
-			version project.version
+			pom {
+				name = 'Music'
+				description = project.description
+				url = 'https://github.com/Singond/Music'
+
+				scm {
+					connection = 'scm:git:git://github.com/Singond/Music.git'
+					developerConnection = 'scm:git:ssh://github.com/Singond/Music.git'
+					url = 'https://github.com/Singond/Music/tree/master'
+				}
+
+				licenses {
+					license {
+						name = 'The Apache License, Version 2.0'
+						url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+
+				developers {
+					developer {
+						id = 'Singond'
+						name = 'Singon'
+						email = 'singond@seznam.cz'
+					}
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			credentials {
+				username = sonatypeUser
+				password = sonatypePassword
+			}
+			url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
 		}
 	}
 }
 
-/*
- * The "bintrayUser" and "bintrayKey" properites must be set.
- * This can be done either in the user's $GRADLE_USER_HOME/gradle.properties
- * file or directly when invoking gradle (e.g. -PbintrayUser=someuser).
- */
-bintray {
-	user = bintrayUser
-	key = bintrayKey
-	pkg {
-		repo = 'maven'
-		name = "java-${project.name}"
-		desc = project.description
-		licenses = ['Apache-2.0']
-		vcsUrl = 'https://github.com/Singond/Music.git'
-		issueTrackerUrl = 'https://github.com/Singond/Music/issues'
-		labels = ['java-library', 'music']
-		githubRepo = 'Singond/Music'
-//		githubReadme = 'README.md'  // Not supported
-//		githubReleaseNotesFile = ''
-		version {
-			name = project.version
-			desc = "Version ${project.version}"
-			released = new Date()   // today
-			vcsTag = "v${project.version}"
-		}
-	}
-	publications = ['libPublication']
-	publish = true                  // Publish automatically upon upload
+signing {
+	useGpgCmd()  // use gpg-agent to obtain keys
+	sign configurations.archives
+	sign publishing.publications.maven
 }

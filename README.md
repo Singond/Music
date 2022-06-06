@@ -12,21 +12,34 @@ manner, using immutable value objects wherever possible.
 
 Adding as Dependency
 ====================
+The library is now hosted at Maven Central
+<https://search.maven.org/artifact/io.github.singond/music>.
+Previously, it was hosted on JCenter, before the service was shut down.
+The existing releases are apparently still available,
+but new versions will only be published to Maven Central.
 
-The library is hosted at JCenter <https://bintray.com/singon/maven/java-music>.
+Maven
+-----
+In `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>io.github.singond</groupId>
+  <artifactId>music</artifactId>
+  <version>0.8.0</version>
+</dependency>
+```
 
 Gradle
 ------
-
-If you're using Gradle, add the following to your `build.gradle`:
+In `build.gradle`:
 
 ```groovy
 repositories {
-	jcenter()
+	mavenCentral()
 }
 dependencies {
-	// Prefer a fixed version instead of '+'
-	compile 'com.github.singond:music:0.6.+'
+	implementation 'io.github.singond:music:0.8.0'
 }
 ```
 
