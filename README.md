@@ -4,16 +4,16 @@ any inconvenience._
 
 Music Theory for Java
 =====================
-A Java library implementing the Western music theory.
+Java implementation of Western music theory.
 
-This Java library implements the widely used concepts in the Western music theory
+This library implements the widely used concepts in the Western music theory
 like pitches, pitch classes, intervals, keys, scales, chords etc. in a type-safe
 manner, using immutable value objects wherever possible.
 
 Adding as Dependency
 ====================
 The library is now hosted at Maven Central
-<https://search.maven.org/artifact/io.github.singond/music>.
+<https://mvnrepository.com/artifact/io.github.singond/music/>.
 Previously, it was hosted on JCenter, before the service was shut down.
 The existing releases are apparently still available,
 but new versions will only be published to Maven Central.
